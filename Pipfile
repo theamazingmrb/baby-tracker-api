@@ -15,6 +15,7 @@ numpy = "*"
 drf-spectacular = "*"
 python-dotenv = "*"
 gunicorn = "*"
+whitenoise = "*"
 
 [dev-packages]
 
