@@ -212,3 +212,19 @@ SPECTACULAR_SETTINGS = {
             "tracker.models.PumpingSession.PUMPING_SIDE_CHOICES": list(PumpingSideEnum.choices()),
         }
     }
+
+from django.views.generic import TemplateView
+from django.urls import path, include
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("api/", include("tracker.urls")),
+    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path("api/docs/", SpectacularSwaggerView.as_view(), name="swagger-ui"),
+    path("api/redoc/", SpectacularRedocView.as_view(), name="redoc-ui"),
+    path("api/recipes/", include("recipes.urls")),
+    path("", TemplateView.as_view(template_name='index.html'), name='home'),
+]
+
+urlpatterns += static(STATIC_URL, document_root=STATIC_ROOT)
