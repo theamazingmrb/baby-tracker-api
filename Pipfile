@@ -16,6 +16,7 @@ drf-spectacular = "*"
 python-dotenv = "*"
 gunicorn = "*"
 whitenoise = "*"
+dj-database-url = "*"
 
 [dev-packages]
 
