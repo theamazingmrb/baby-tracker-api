@@ -46,13 +46,12 @@ else:
     ])
 
 # CORS settings
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8081",
-    "http://172.20.10.3:8081"
-]
-
-if not DEBUG:
-    CORS_ALLOWED_ORIGINS.append("https://baby-tracker-app.com")
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True  # Allow all origins in development
+else:
+    CORS_ALLOWED_ORIGINS = [
+        "https://baby-tracker-server-4fa1126c1992.herokuapp.com"
+    ]
 
 # Application definition
 
