@@ -9,8 +9,13 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+from datetime import timedelta
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,11 +28,31 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-b6x4xa58-=r#il7p!#ml!kc(80i$4mr&)_(8c63ls&&58f&8e!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = []
 
-CORS_ALLOW_ALL_ORIGINS = True  # Allow all domains (for now)
+if DEBUG:
+    # Development hosts
+    ALLOWED_HOSTS.extend([
+        '127.0.0.1',
+        'localhost',
+        '172.20.10.3',  # Your local IP for development
+    ])
+else:
+    # Production hosts - add your production domain here
+    ALLOWED_HOSTS.extend([
+        os.environ.get('PRODUCTION_DOMAIN', 'your-production-domain.com'),
+    ])
+
+# CORS settings
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8081",
+    "http://172.20.10.3:8081"
+]
+
+if not DEBUG:
+    CORS_ALLOWED_ORIGINS.append("https://baby-tracker-app.com")
 
 # Application definition
 
@@ -38,9 +63,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "rest_framework",  # Django REST Framework
-    "corsheaders",  # Handle frontend requests from React Native
-    "tracker",  # Our app (to be crea
+    "rest_framework",
+    "corsheaders",
+    "tracker",
+    "drf_yasg",
+    "rest_framework_simplejwt",
+    "drf_spectacular",
+    "recipes"
 ]
 
 MIDDLEWARE = [
@@ -118,11 +147,41 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+# Media files
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),  # Tokens expire after 1 day
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),  # Refresh token lasts 7 days
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "AUTH_HEADER_TYPES": ("Bearer",),
+}
+
+from tracker.enums import FeedingSideEnum, PumpingSideEnum
+
+SPECTACULAR_SETTINGS = {
+        "ENUM_NAME_OVERRIDES": {
+            "tracker.models.Feeding.FEEDING_SIDE_CHOICES": list(FeedingSideEnum.choices()),
+            "tracker.models.PumpingSession.PUMPING_SIDE_CHOICES": list(PumpingSideEnum.choices()),
+        }
+    }
