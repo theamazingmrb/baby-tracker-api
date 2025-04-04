@@ -45,16 +45,7 @@ else:
         os.environ.get('PRODUCTION_DOMAIN', 'your-production-domain.com'),
     ])
 
-# CORS settings
-if DEBUG:
-    CORS_ALLOW_ALL_ORIGINS = True  # Allow all origins in development
-else:
-    CORS_ALLOWED_ORIGINS = [
-        "https://baby-tracker-server-4fa1126c1992.herokuapp.com"
-    ]
-
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -102,7 +93,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'babytracker.wsgi.application'
 
-
 # Database
 DATABASES = {
     'default': {
@@ -129,14 +119,6 @@ else:
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 
-# Update database configuration with Heroku's DATABASE_URL
-if os.environ.get('DATABASE_URL'):
-    DATABASES['default'] = dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),
-        conn_max_age=600,
-        ssl_require=True
-    )
-
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
@@ -155,7 +137,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -166,7 +147,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = 'static/'
@@ -184,6 +164,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# REST Framework settings
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -191,30 +172,24 @@ REST_FRAMEWORK = {
     ),
 }
 
+# Spectacular settings
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Baby Tracker API',
-    'DESCRIPTION': 'API for baby tracking application',
+    'DESCRIPTION': 'API documentation for Baby Tracker application',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
 }
 
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),  # Tokens expire after 1 day
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),  # Refresh token lasts 7 days
-    "ROTATE_REFRESH_TOKENS": True,
-    "BLACKLIST_AFTER_ROTATION": True,
-    "AUTH_HEADER_TYPES": ("Bearer",),
-}
+# CORS settings
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True  # Allow all origins in development
+else:
+    CORS_ALLOWED_ORIGINS = [
+        "https://baby-tracker-server-4fa1126c1992.herokuapp.com"
+    ]
+CORS_ALLOW_CREDENTIALS = True
 
-from tracker.enums import FeedingSideEnum, PumpingSideEnum
-
-SPECTACULAR_SETTINGS = {
-        "ENUM_NAME_OVERRIDES": {
-            "tracker.models.Feeding.FEEDING_SIDE_CHOICES": list(FeedingSideEnum.choices()),
-            "tracker.models.PumpingSession.PUMPING_SIDE_CHOICES": list(PumpingSideEnum.choices()),
-        }
-    }
-
+# URL configuration
 from django.urls import path, include
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
 from django.views.generic import TemplateView
@@ -234,3 +209,21 @@ urlpatterns += static(STATIC_URL, document_root=STATIC_ROOT)
 # Media files
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# JWT settings
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),  # Tokens expire after 1 day
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),  # Refresh token lasts 7 days
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "AUTH_HEADER_TYPES": ("Bearer",),
+}
+
+from tracker.enums import FeedingSideEnum, PumpingSideEnum
+
+SPECTACULAR_SETTINGS = {
+        "ENUM_NAME_OVERRIDES": {
+            "tracker.models.Feeding.FEEDING_SIDE_CHOICES": list(FeedingSideEnum.choices()),
+            "tracker.models.PumpingSession.PUMPING_SIDE_CHOICES": list(PumpingSideEnum.choices()),
+        }
+    }
