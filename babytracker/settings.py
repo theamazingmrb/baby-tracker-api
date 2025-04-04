@@ -180,17 +180,20 @@ SIMPLE_JWT = {
 
 # URL configuration
 from django.urls import path, include
-from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
 from django.views.generic import TemplateView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("tracker.urls")),
+    path("api/", include("recipes.urls")),
+    path("", TemplateView.as_view(template_name='index.html'), name='home'),
+]
+
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+urlpatterns += [
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
     path("api/redoc/", SpectacularRedocView.as_view(url_name="schema"), name="redoc-ui"),
-    path("api/recipes/", include("recipes.urls")),
-    path("", TemplateView.as_view(template_name='index.html'), name='home'),
 ]
 
 urlpatterns += static(STATIC_URL, document_root=STATIC_ROOT)
