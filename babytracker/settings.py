@@ -171,15 +171,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# For Heroku
 STATICFILES_DIRS = []
+
 if not os.environ.get('DATABASE_URL'):  # Only add local static dir in development
     STATICFILES_DIRS.append(os.path.join(BASE_DIR, 'static'))
-
-# Media files
-MEDIA_URL = 'media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # WhiteNoise settings for static files
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -228,3 +223,7 @@ urlpatterns = [
 ]
 
 urlpatterns += static(STATIC_URL, document_root=STATIC_ROOT)
+
+# Media files
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
