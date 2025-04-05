@@ -190,6 +190,7 @@ urlpatterns = [
     path("", TemplateView.as_view(template_name='index.html'), name='home'),
 ]
 
+# Add drf_spectacular URLs
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
 urlpatterns += [
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
