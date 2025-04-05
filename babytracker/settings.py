@@ -25,16 +25,12 @@ load_dotenv()
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'your-secret-key')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'your-secure-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
+DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    os.environ.get('PRODUCTION_DOMAIN', 'https://baby-tracker-server-4fa1126c1992.herokuapp.com/'),
-]
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
 
 # Application definition
 INSTALLED_APPS = [
@@ -98,17 +94,12 @@ DATABASES = {
 
 # For Heroku
 import dj_database_url
-if os.environ.get('DATABASE_URL'):
+if 'DATABASE_URL' in os.environ:
     DATABASES['default'] = dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),
+        default=os.environ['DATABASE_URL'],
         conn_max_age=600,
         ssl_require=True
     )
-else:
-    DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -161,9 +152,7 @@ SPECTACULAR_SETTINGS = {
 
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = DEBUG  # Allow all origins in development
-CORS_ALLOWED_ORIGINS = [
-    "https://baby-tracker-server-4fa1126c1992.herokuapp.com"
-] if not DEBUG else []
+CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', '').split(',')
 CORS_ALLOW_CREDENTIALS = True
 
 # JWT settings
@@ -176,7 +165,7 @@ SIMPLE_JWT = {
 }
 
 # Media files
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 SPECTACULAR_SETTINGS = {
