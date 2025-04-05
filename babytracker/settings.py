@@ -33,7 +33,7 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    os.environ.get('PRODUCTION_DOMAIN', 'your-production-domain.com'),
+    os.environ.get('PRODUCTION_DOMAIN', 'https://baby-tracker-server-4fa1126c1992.herokuapp.com/'),
 ]
 
 # Application definition
