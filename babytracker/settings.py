@@ -178,28 +178,6 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
-# URL configuration
-from django.urls import path, include
-from django.views.generic import TemplateView
-from django.contrib import admin
-
-urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("api/", include("tracker.urls")),
-    path("api/", include("recipes.urls")),
-    path("", TemplateView.as_view(template_name='index.html'), name='home'),
-]
-
-# Add drf_spectacular URLs
-from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
-urlpatterns += [
-    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
-    path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
-]
-
-urlpatterns += static(STATIC_URL, document_root=STATIC_ROOT)
-
 # Media files
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
