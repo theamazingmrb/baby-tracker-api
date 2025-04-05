@@ -182,11 +182,19 @@ SIMPLE_JWT = {
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-from tracker.enums import FeedingSideEnum, PumpingSideEnum
-
 SPECTACULAR_SETTINGS = {
-        "ENUM_NAME_OVERRIDES": {
-            "tracker.models.Feeding.FEEDING_SIDE_CHOICES": list(FeedingSideEnum.choices()),
-            "tracker.models.PumpingSession.PUMPING_SIDE_CHOICES": list(PumpingSideEnum.choices()),
-        }
+    "ENUM_NAME_OVERRIDES": {
+        "tracker.models.Feeding.FEEDING_SIDE_CHOICES": [
+            ("LEFT", "Left"),
+            ("RIGHT", "Right"),
+            ("BOTH", "Both"),
+            ("NONE", "None")
+        ],
+        "tracker.models.PumpingSession.PUMPING_SIDE_CHOICES": [
+            ("LEFT", "Left"),
+            ("RIGHT", "Right"),
+            ("BOTH", "Both"),
+            ("NONE", "None")
+        ]
     }
+}
