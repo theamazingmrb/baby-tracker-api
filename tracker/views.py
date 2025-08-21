@@ -12,6 +12,7 @@ from datetime import timedelta, date
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from .ai_insights import AIInsights
+from rest_framework_simplejwt.tokens import RefreshToken
 
 class BabyListCreateView(generics.ListCreateAPIView):
     serializer_class = BabySerializer
@@ -45,7 +46,17 @@ class RegisterView(generics.CreateAPIView):
             return Response({"error": "Username already exists"}, status=status.HTTP_400_BAD_REQUEST)
 
         user = User.objects.create_user(username=username, email=email, password=password)
-        return Response({"message": "User created successfully"}, status=status.HTTP_201_CREATED)
+        
+        # Generate JWT tokens
+        refresh = RefreshToken.for_user(user)
+        
+        return Response({
+            "message": "User created successfully",
+            "tokens": {
+                "refresh": str(refresh),
+                "access": str(refresh.access_token)
+            }
+        }, status=status.HTTP_201_CREATED)
 
 class FeedingListCreateView(generics.ListCreateAPIView):
     queryset = Feeding.objects.all()

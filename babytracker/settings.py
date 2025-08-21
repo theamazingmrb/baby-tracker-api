@@ -30,12 +30,26 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'your-secure-secret-key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
+# Get network configuration from environment or use defaults
+NETWORK_HOST = os.environ.get('NETWORK_HOST', '0.0.0.0')
+NETWORK_PORT = os.environ.get('NETWORK_PORT', '8000')
+
+# Build allowed hosts
 allowed_hosts = os.environ.get('ALLOWED_HOSTS', '')
 ALLOWED_HOSTS = [host.strip() for host in allowed_hosts.split(',') if host.strip()]
 if not ALLOWED_HOSTS:
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'baby-tracker-server-4fa1126c1992.herokuapp.com']
+    ALLOWED_HOSTS = [
+        'localhost',
+        '127.0.0.1',
+        'baby-tracker-server-4fa1126c1992.herokuapp.com',
+        '172.20.10.3',
+        f'{NETWORK_HOST}:{NETWORK_PORT}'
+    ]
 
-CSRF_TRUSTED_ORIGINS = ['https://baby-tracker-server-4fa1126c1992.herokuapp.com']
+CSRF_TRUSTED_ORIGINS = [
+    'https://baby-tracker-server-4fa1126c1992.herokuapp.com',
+    f'http://{NETWORK_HOST}:{NETWORK_PORT}'
+]
 
 # Application definition
 INSTALLED_APPS = [
@@ -166,10 +180,10 @@ SPECTACULAR_SETTINGS = {
 
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = DEBUG  # Allow all origins in development
-cors_origins = os.environ.get('CORS_ALLOWED_ORIGINS', '')
-CORS_ALLOWED_ORIGINS = [origin.strip() for origin in cors_origins.split(',') if origin.strip()]
-if not CORS_ALLOWED_ORIGINS and not CORS_ALLOW_ALL_ORIGINS:
-    CORS_ALLOWED_ORIGINS = ['https://baby-tracker-server-4fa1126c1992.herokuapp.com']
+CORS_ALLOWED_ORIGINS = [
+    'https://baby-tracker-server-4fa1126c1992.herokuapp.com',
+    f'http://{NETWORK_HOST}:{NETWORK_PORT}'
+]
 CORS_ALLOW_CREDENTIALS = True
 
 # JWT settings
