@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=baby_tracker
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      - DJANGO_DEBUG=True
+      - SECRET_KEY=your-secure-secret-key-here
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/baby_tracker
+      - ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
+    volumes:
+      - static_volume:/app/staticfiles
+      # Mount directories for development
+      - ./babytracker:/app/babytracker
+      - ./tracker:/app/tracker
+      - ./recipes:/app/recipes
+      - ./templates:/app/templates
+      - ./static:/app/static
+      - ./manage.py:/app/manage.py
+      - ./frontend/src:/app/frontend/src
+      - ./frontend/public:/app/frontend/public
+      - ./frontend/next.config.mjs:/app/frontend/next.config.mjs
+      - ./frontend/package.json:/app/frontend/package.json
+      - ./frontend/package-lock.json:/app/frontend/package-lock.json
+      - ./frontend/tailwind.config.ts:/app/frontend/tailwind.config.ts
+      - ./frontend/tsconfig.json:/app/frontend/tsconfig.json
+    ports:
+      - "8000:8000"
+    # Use the entrypoint script from Dockerfile instead of overriding command
+
+volumes:
+  postgres_data:
+  static_volume:

@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_demo_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_PASSWORD=demo_password
+      - POSTGRES_USER=demo_user
+      - POSTGRES_DB=baby_tracker_demo
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U demo_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DJANGO_DEBUG=True
+      - SECRET_KEY=demo_secret_key_not_for_production
+      - DATABASE_URL=postgres://demo_user:demo_password@db:5432/baby_tracker_demo
+      - ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
+      - ENVIRONMENT=development
+    volumes:
+      - static_demo_volume:/app/staticfiles
+    ports:
+      - "8000:8000"
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py collectstatic --no-input &&
+             python manage.py loaddata demo_data.json &&
+             python manage.py runserver 0.0.0.0:8000"
+
+volumes:
+  postgres_demo_data:
+  static_demo_volume:

@@ -16,20 +16,38 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+from .views import serve_nextjs, NextJSStaticView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/tracker/", include("tracker.urls")),
     path("api/recipes/", include("recipes.urls")),
-    path("", TemplateView.as_view(template_name='index.html'), name='home'),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+    
+    # Serve Next.js static files with more specific patterns first
+    re_path(r'^_next/static/chunks/(?P<path>.*)$', NextJSStaticView.as_view(), name='nextjs_chunks'),
+    re_path(r'^_next/static/(?P<path>.*)$', NextJSStaticView.as_view(), name='nextjs_static_files'),
+    re_path(r'^_next/(?P<path>.*)$', NextJSStaticView.as_view(), name='nextjs_static'),
+    
+    # Handle specific Next.js assets
+    re_path(r'^(?P<path>favicon\.ico)$', NextJSStaticView.as_view(), name='nextjs_favicon'),
+    re_path(r'^(?P<path>.*\.svg)$', NextJSStaticView.as_view(), name='nextjs_svg'),
+    
+    # Handle font files specifically
+    re_path(r'^(?P<path>.*\.(woff|woff2|ttf|eot|otf))$', NextJSStaticView.as_view(), name='nextjs_fonts'),
+    
+    # Handle other static assets from Next.js
+    re_path(r'^(?P<path>.*\.(js|css|png|jpg|jpeg|ico|json))$', NextJSStaticView.as_view(), name='nextjs_assets'),
+    
+    # Serve the main Next.js app - this should be last to avoid conflicts
+    path("", serve_nextjs, name='home'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

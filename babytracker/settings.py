@@ -114,13 +114,15 @@ DATABASES = {
     }
 }
 
-# For Heroku
+# For Heroku or Docker
 import dj_database_url
 if 'DATABASE_URL' in os.environ:
+    # Check if we're in production (Heroku) or development (Docker)
+    is_production = os.environ.get('ENVIRONMENT', '').lower() == 'production'
     DATABASES['default'] = dj_database_url.config(
         default=os.environ['DATABASE_URL'],
         conn_max_age=600,
-        ssl_require=True
+        ssl_require=is_production  # Only require SSL in production
     )
 
 # Password validation
@@ -150,6 +152,8 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
+    BASE_DIR / 'frontend' / 'out',
+    BASE_DIR / 'frontend' / 'out' / '_next',
 ]
 
 # Media files
@@ -157,7 +161,19 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # WhiteNoise settings for static files
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Use a simpler storage backend to avoid MIME type issues with Next.js files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
+# Configure WhiteNoise to serve Next.js files with correct MIME types
+WHITENOISE_MIMETYPES = {
+    '.js': 'application/javascript',
+    '.css': 'text/css',
+    '.woff': 'font/woff',
+    '.woff2': 'font/woff2',
+    '.ttf': 'font/ttf',
+    '.eot': 'application/vnd.ms-fontobject',
+    '.otf': 'font/otf',
+}
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

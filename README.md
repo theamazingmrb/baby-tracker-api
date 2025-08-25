@@ -1,6 +1,12 @@
 # Baby Tracker API
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A comprehensive API for tracking baby activities including feedings, diapers, sleep, growth milestones, and more. Built with Django REST Framework.
+
+## 🚀 Open Source Baby Tracking Solution
+
+Baby Tracker is a privacy-first, self-hostable solution that gives parents complete control over their baby's data. Track all aspects of your baby's development and get AI-powered insights to help establish healthy routines.
 
 ## Features
 
@@ -16,6 +22,7 @@ A comprehensive API for tracking baby activities including feedings, diapers, sl
 - **AI Insights**: Get recommendations for feeding times and sleep patterns based on historical data
 - **Recipe Management**: Store and manage baby food recipes
 - **JWT Authentication**: Secure API access with token-based authentication
+- **Multi-Tenancy**: Complete tenant isolation ensures users can only access their own data
 
 ## Tech Stack
 
@@ -42,6 +49,18 @@ A comprehensive API for tracking baby activities including feedings, diapers, sl
 | `/api/token/` | JWT token authentication |
 
 ## Getting Started
+
+### Demo Configuration
+
+Want to try Baby Tracker without setting up a full environment? Use our demo configuration:
+
+```bash
+docker-compose -f docker-compose.demo.yml up -d
+```
+
+This will start a pre-configured instance with sample data at http://localhost:8000/api/
+- Demo username: `demo`
+- Demo password: `babytracker123`
 
 ### Prerequisites
 
@@ -95,12 +114,179 @@ A comprehensive API for tracking baby activities including feedings, diapers, sl
 
 API documentation is available at `/api/schema/` endpoint. You can view the interactive documentation by visiting `/api/schema/swagger-ui/` or `/api/schema/redoc/` in your browser.
 
-## Deployment
+## Landing Page
 
-The application is configured for deployment on Heroku with the following features:
-- PostgreSQL database
-- WhiteNoise for static files
-- Environment variable configuration
+The project includes a responsive landing page that showcases the Baby Tracker features and provides links to documentation. The landing page is implemented using HTML with inline CSS for simplicity and reliability, avoiding external CSS file dependencies.
+
+### Key Features of the Landing Page:
+
+- Responsive design that works on mobile and desktop
+- Feature showcase with icons and descriptions
+- Links to API documentation
+- GitHub repository links
+- Simple navigation to different sections
+
+The landing page is served by Django at the root URL (`/`) and is the first thing users see when accessing the application.
+
+## Testing
+
+Baby Tracker has comprehensive test coverage for all API endpoints to ensure functionality and security.
+
+### Running Tests
+
+To run the test suite locally:
+
+```bash
+python manage.py test
+```
+
+To run tests with coverage reporting:
+
+```bash
+coverage run --source='.' manage.py test
+coverage report
+```
+
+### Test Structure
+
+Tests are organized by feature and API endpoint, located in each app's `tests/` directory:
+
+- Authentication tests
+- Baby management tests
+- Activity tracking tests (feeding, sleep, diaper changes, etc.)
+- Recipe management tests
+- AI insights tests
+- Visualization tests
+
+Each test file focuses on a specific model or feature, with comprehensive coverage of:
+- CRUD operations
+- Authentication and authorization
+- Tenant isolation
+- Input validation
+- Error handling
+
+### Continuous Integration
+
+Tests run automatically on GitHub Actions for every push and pull request to ensure code quality and prevent regressions. The CI workflow:
+
+1. Sets up a test environment with PostgreSQL
+2. Runs the full test suite
+3. Generates and reports test coverage
+
+For more details on writing tests, see the [Testing Guide](docs/testing_guide.md).
+
+## Project Structure
+
+```
+babytracker/          # Main Django project directory
+├── settings.py       # Project settings
+├── urls.py           # Main URL routing
+├── views.py          # Views including landing page
+└── wsgi.py           # WSGI configuration
+
+tracker/              # Main application directory
+├── ai_insights.py    # AI insights and analytics module
+├── models.py         # Database models
+├── permissions.py    # Custom permission classes
+├── serializers.py    # API serializers
+├── urls.py           # API URL routing
+├── views.py          # API views
+└── tests/            # Test directory
+    ├── test_ai_insights.py       # Tests for AI insights
+    ├── test_ai_insights_api.py   # Tests for AI insights API
+    ├── test_baby_api.py          # Tests for baby management API
+    ├── test_baby_stats_api.py    # Tests for baby statistics API
+    ├── test_diaper_change_api.py # Tests for diaper change API
+    ├── test_doctor_appointment_api.py # Tests for doctor appointments API
+    ├── test_feeding_api.py       # Tests for feeding API
+    ├── test_growth_milestone_api.py # Tests for growth milestones API
+    ├── test_medication_api.py    # Tests for medication API
+    ├── test_milestone_api.py     # Tests for milestones API
+    ├── test_permissions.py       # Tests for permissions
+    ├── test_pumping_session_api.py # Tests for pumping sessions API
+    ├── test_reminder_api.py      # Tests for reminders API
+    ├── test_serializers.py       # Tests for serializers
+    ├── test_sleep_api.py         # Tests for sleep API
+    ├── test_tenant_isolation.py  # Tests for tenant isolation
+    └── test_visualization_api.py # Tests for visualization API
+
+recipes/              # Recipe management app
+├── models.py         # Recipe models
+├── serializers.py    # Recipe serializers
+├── views.py          # Recipe views
+└── tests/            # Recipe tests
+    └── test_recipe_api.py        # Tests for recipe API
+
+templates/            # HTML templates
+├── index.html        # Default template
+└── landing.html      # Landing page with inline styles
+
+static/               # Static files
+
+docs/                 # Documentation
+└── testing_guide.md  # Guide for writing tests
+
+.github/              # GitHub configuration
+└── workflows/        # GitHub Actions workflows
+    └── test.yml      # CI testing workflow
+```
+
+## Security Features
+
+### Multi-Tenancy
+
+This API implements complete tenant isolation to ensure data security in a multi-user environment:
+
+- **Permission Control**: Custom `IsTenantUser` permission class ensures users can only access their own data
+- **Query Filtering**: All API endpoints filter data based on the authenticated user
+- **Validation**: Serializers validate that users can only create/modify data for their own babies
+- **Comprehensive Testing**: Tenant isolation is verified through extensive test coverage
+
+This multi-layered approach guarantees that users can only view and manipulate their own data, making the API safe for public deployment.
+
+## Deployment Options
+
+### Docker Deployment (Recommended)
+
+The easiest way to deploy Baby Tracker is using Docker and docker-compose:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/baby-tracker-backend.git
+   cd baby-tracker-backend
+   ```
+
+2. Create an `.env` file from the example:
+   ```bash
+   cp .env.example .env
+   # Edit .env with your settings
+   ```
+
+3. Build and start the containers:
+   ```bash
+   docker-compose up -d
+   ```
+
+4. Create a superuser:
+   ```bash
+   docker-compose exec web python manage.py createsuperuser
+   ```
+
+5. Access the API at http://localhost:8000/api/ and admin interface at http://localhost:8000/admin/
+
+### Manual Deployment
+
+The application can also be deployed on any platform that supports Django:
+
+- **Heroku**: Configured for easy deployment with PostgreSQL
+- **AWS/GCP/Azure**: Can be deployed as a containerized application
+- **VPS/Dedicated Server**: Follow standard Django deployment practices
+
+Key configuration for production:
+- Use PostgreSQL database
+- Configure WhiteNoise for static files
+- Set proper environment variables
+- Use HTTPS in production
 
 ## License
 
@@ -108,10 +294,22 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome and greatly appreciated! Baby Tracker is a community project, and we love to have parents and developers contribute to make it better.
+
+Please see [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on how to contribute to this project.
+
+### Quick Start for Contributors
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+
+### Areas Where Help is Needed
+
+- Frontend development (React/Vue/Angular client)
+- Additional AI insights and analytics
+- Mobile app development
+- Translations
+- Documentation improvements
