@@ -24,7 +24,10 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, Sp
 from .views import serve_nextjs, NextJSStaticView
 
 urlpatterns = [
+    # Django Admin
     path("admin/", admin.site.urls),
+    
+    # API endpoints - these take precedence over frontend routes
     path("api/tracker/", include("tracker.urls")),
     path("api/recipes/", include("recipes.urls")),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
@@ -46,8 +49,8 @@ urlpatterns = [
     # Handle other static assets from Next.js
     re_path(r'^(?P<path>.*\.(js|css|png|jpg|jpeg|ico|json))$', NextJSStaticView.as_view(), name='nextjs_assets'),
     
-    # Serve the main Next.js app - this should be last to avoid conflicts
-    path("", serve_nextjs, name='home'),
+    # Catch-all pattern for frontend routes - serves appropriate HTML files
+    re_path(r'^(?P<path>.*)$', serve_nextjs, name='nextjs_app'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

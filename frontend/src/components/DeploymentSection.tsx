@@ -15,8 +15,8 @@ const DeploymentSection = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-elevated border border-gray-200 overflow-hidden h-full transition-all hover:-translate-y-0.5 hover:shadow-lg">
               <div className="p-6 flex flex-col h-full">
-                <div className="flex items-center mb-4">
-                  <div className="bg-blue-100 p-3 rounded-md mr-3">
+                <div className="flex flex-col sm:flex-row sm:items-center mb-4">
+                  <div className="bg-blue-100 p-3 rounded-md mr-3 mb-2 sm:mb-0">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                     </svg>
@@ -36,8 +36,8 @@ const DeploymentSection = () => {
             
             <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-elevated border border-gray-200 overflow-hidden h-full transition-all hover:-translate-y-0.5 hover:shadow-lg">
               <div className="p-6 flex flex-col h-full">
-                <div className="flex items-center mb-4">
-                  <div className="bg-green-100 p-3 rounded-md mr-3">
+                <div className="flex flex-col sm:flex-row sm:items-center mb-4">
+                  <div className="bg-green-100 p-3 rounded-md mr-3 mb-2 sm:mb-0">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
                     </svg>
@@ -57,8 +57,8 @@ const DeploymentSection = () => {
             
             <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-elevated border border-gray-200 overflow-hidden h-full transition-all hover:-translate-y-0.5 hover:shadow-lg">
               <div className="p-6 flex flex-col h-full">
-                <div className="flex items-center mb-4">
-                  <div className="bg-purple-100 p-3 rounded-md mr-3">
+                <div className="flex flex-col sm:flex-row sm:items-center mb-4">
+                  <div className="bg-purple-100 p-3 rounded-md mr-3 mb-2 sm:mb-0">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
                     </svg>

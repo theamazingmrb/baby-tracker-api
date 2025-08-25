@@ -7,6 +7,7 @@ const nextConfig = {
   },
   output: 'export',
   distDir: 'out',
+  trailingSlash: false,
   // Configure base path if not serving from root
   // basePath: '',
   images: {

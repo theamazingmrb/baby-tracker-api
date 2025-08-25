@@ -5,8 +5,8 @@ const SetupSection = () => {
     <section className="py-16" id="setup">
       <div className="container-padded">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Developer Setup</h2>
-          <p className="text-xl text-white max-w-3xl mx-auto">
+          <h2 className="text-3xl font-bold mb-4 text-gray-900">Developer Setup</h2>
+          <p className="text-xl text-gray-900 max-w-3xl mx-auto">
             Get up and running with Baby Tracker in minutes
           </p>
         </div>
@@ -14,7 +14,7 @@ const SetupSection = () => {
         <div className="max-w-4xl mx-auto">
           <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-elevated border border-gray-200 overflow-hidden mb-8 transition-all hover:-translate-y-0.5 hover:shadow-lg">
             <div className="p-6">
-              <h3 className="text-xl font-bold mb-4">Prerequisites</h3>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">Prerequisites</h3>
               <ul className="list-disc pl-5 space-y-2 text-gray-900">
                 <li>Python 3.9+</li>
                 <li>PostgreSQL 12+ (or use Docker)</li>
@@ -26,13 +26,13 @@ const SetupSection = () => {
           
           <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-elevated border border-gray-200 overflow-hidden mb-8 transition-all hover:-translate-y-0.5 hover:shadow-lg">
             <div className="p-6">
-              <h3 className="text-xl font-bold mb-4">Quick Start with Docker (Recommended)</h3>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">Quick Start with Docker (Recommended)</h3>
               <p className="mb-4 text-gray-900">
                 The easiest way to get started is using Docker Compose, which includes PostgreSQL and all dependencies.
               </p>
               
               <div className="mb-6">
-                <h4 className="font-bold mb-2">1. Clone and start the application</h4>
+                <h4 className="font-bold mb-2 text-gray-900">1. Clone and start the application</h4>
                 <div className="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto font-mono text-sm ring-1 ring-white/10">
                   <div className="text-gray-400"># Clone the repository</div>
                   <div>git clone https://github.com/your-username/baby-tracker-backend.git</div>
@@ -44,7 +44,7 @@ const SetupSection = () => {
               </div>
               
               <div className="mb-6">
-                <h4 className="font-bold mb-2">2. Initialize the database</h4>
+                <h4 className="font-bold mb-2 text-gray-900">2. Initialize the database</h4>
                 <div className="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto font-mono text-sm ring-1 ring-white/10">
                   <div className="text-gray-400"># Run migrations</div>
                   <div>docker-compose exec web python manage.py migrate</div>
@@ -71,13 +71,13 @@ const SetupSection = () => {
           
           <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-elevated border border-gray-200 overflow-hidden mb-8 transition-all hover:-translate-y-0.5 hover:shadow-lg">
             <div className="p-6">
-              <h3 className="text-xl font-bold mb-4">Local Development Setup</h3>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">Local Development Setup</h3>
               <p className="mb-4 text-gray-900">
                 For local development without Docker, follow these steps:
               </p>
               
               <div className="mb-6">
-                <h4 className="font-bold mb-2">1. Clone and setup Python environment</h4>
+                <h4 className="font-bold mb-2 text-gray-900">1. Clone and setup Python environment</h4>
                 <div className="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto font-mono text-sm ring-1 ring-white/10">
                   <div>git clone https://github.com/your-username/baby-tracker-backend.git</div>
                   <div>cd baby-tracker-backend</div>
@@ -92,7 +92,7 @@ const SetupSection = () => {
               </div>
               
               <div className="mb-6">
-                <h4 className="font-bold mb-2">2. Configure environment variables</h4>
+                <h4 className="font-bold mb-2 text-gray-900">2. Configure environment variables</h4>
                 <div className="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto font-mono text-sm ring-1 ring-white/10">
                   <div className="text-gray-400"># Copy environment template</div>
                   <div>cp .env.example .env</div>
@@ -105,7 +105,7 @@ const SetupSection = () => {
               </div>
               
               <div className="mb-6">
-                <h4 className="font-bold mb-2">3. Setup PostgreSQL database</h4>
+                <h4 className="font-bold mb-2 text-gray-900">3. Setup PostgreSQL database</h4>
                 <div className="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto font-mono text-sm ring-1 ring-white/10">
                   <div className="text-gray-400"># Create database (adjust for your PostgreSQL setup)</div>
                   <div>createdb babytracker</div>
@@ -125,13 +125,13 @@ const SetupSection = () => {
           
           <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-elevated border border-gray-200 overflow-hidden mb-8 transition-all hover:-translate-y-0.5 hover:shadow-lg">
             <div className="p-6">
-              <h3 className="text-xl font-bold mb-4">Environment Variables</h3>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">Environment Variables</h3>
               <p className="mb-4 text-gray-900">
                 Key environment variables you need to configure:
               </p>
               
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
+                <table className="min-w-full divide-y divide-gray-200 text-gray-900">
                   <thead className="bg-slate-900">
                     <tr>
                       <th className="px-4 py-3 text-left text-xs font-bold text-white uppercase">Variable</th>
@@ -173,14 +173,14 @@ const SetupSection = () => {
           
           <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-elevated border border-gray-200 overflow-hidden transition-all hover:-translate-y-0.5 hover:shadow-lg">
             <div className="p-6">
-              <h3 className="text-xl font-bold mb-4">Testing the API</h3>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">Testing the API</h3>
               <p className="mb-4 text-gray-900">
                 Once the server is running, you can test the API endpoints:
               </p>
               
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <h4 className="font-semibold mb-2">Using curl</h4>
+                  <h4 className="font-semibold mb-2 text-gray-900">Using curl</h4>
                   <div className="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto font-mono text-sm ring-1 ring-white/10">
                     <div className="text-gray-400"># Register a new user</div>
                     <div>curl -X POST http://localhost:8000/api/tracker/register/ \</div>
@@ -194,7 +194,7 @@ const SetupSection = () => {
                 </div>
                 
                 <div>
-                  <h4 className="font-semibold mb-2">Using Python requests</h4>
+                  <h4 className="font-semibold mb-2 text-gray-900">Using Python requests</h4>
                   <div className="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto font-mono text-sm ring-1 ring-white/10">
                     <div className="text-blue-400">import</div> <div className="text-white">requests</div>
                     <br />

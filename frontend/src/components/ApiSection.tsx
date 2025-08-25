@@ -14,8 +14,8 @@ const ApiSection = () => {
         <div className="max-w-4xl mx-auto">
           <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-elevated border border-gray-200 overflow-hidden transition-shadow hover:shadow-lg">
             <div className="p-6">
-              <h3 className="text-xl font-bold mb-4 text-primary">RESTful Endpoints</h3>
-              <p className="mb-6 text-secondary">
+              <h3 className="text-xl text-gray-900 font-bold mb-4 text-primary">RESTful Endpoints</h3>
+              <p className="mb-6 text-secondary text-gray-900">
                 Baby Tracker provides a comprehensive set of RESTful endpoints for tracking all aspects of your baby&apos;s development.
                 The API is fully documented with Swagger/OpenAPI and includes authentication, filtering, and pagination.
               </p>
@@ -224,7 +224,7 @@ const ApiSection = () => {
           {/* Authentication Section */}
           <div className="mt-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-elevated border border-gray-200 overflow-hidden transition-shadow hover:shadow-lg">
             <div className="p-6">
-              <h3 className="text-xl font-bold mb-4 text-primary">Authentication</h3>
+              <h3 className="text-xl text-gray-900 font-bold mb-4 text-primary">Authentication</h3>
               <p className="mb-4 text-secondary">Baby Tracker uses JWT (JSON Web Token) authentication. All endpoints except registration and token obtaining require authentication.</p>
               
               <div className="grid md:grid-cols-2 gap-6">
@@ -264,13 +264,13 @@ const ApiSection = () => {
           </div>
           
           {/* Examples Section */}
-          <div className="mt-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-elevated border border-gray-200 overflow-hidden transition-shadow hover:shadow-lg">
+          <div className="mt-8  bg-white/80 backdrop-blur-md rounded-2xl shadow-elevated border border-gray-200 overflow-hidden transition-shadow hover:shadow-lg">
             <div className="p-6">
-              <h3 className="text-xl font-bold mb-4 text-primary">API Examples</h3>
+              <h3 className="text-xl text-gray-900 font-bold mb-4">API Examples</h3>
               
               <div className="space-y-6">
                 <div>
-                  <h4 className="font-semibold mb-2 text-primary">Create a Baby Profile</h4>
+                  <h4 className="font-semibold mb-2 text-gray-900">Create a Baby Profile</h4>
                   <div className="bg-slate-900 text-slate-100 p-4 rounded-xl text-sm font-mono overflow-x-auto ring-1 ring-white/10">
                     <div className="text-blue-400">POST</div>
                     <div className="text-white">/api/babies/</div>
@@ -284,7 +284,7 @@ const ApiSection = () => {
                 </div>
                 
                 <div>
-                  <h4 className="font-semibold mb-2 text-primary">Log a Feeding Session</h4>
+                  <h4 className="font-semibold mb-2 text-gray-900">Log a Feeding Session</h4>
                   <div className="bg-slate-900 text-slate-100 p-4 rounded-xl text-sm font-mono overflow-x-auto ring-1 ring-white/10">
                     <div className="text-blue-400">POST</div>
                     <div className="text-white">/api/feedings/</div>
@@ -299,7 +299,7 @@ const ApiSection = () => {
                 </div>
                 
                 <div>
-                  <h4 className="font-semibold mb-2 text-primary">Get AI Insights for a Baby</h4>
+                  <h4 className="font-semibold mb-2 text-gray-900">Get AI Insights for a Baby</h4>
                   <div className="bg-slate-900 text-slate-100 p-4 rounded-xl text-sm font-mono overflow-x-auto ring-1 ring-white/10">
                     <div className="text-blue-400">GET</div>
                     <div className="text-white">/api/babies/1/ai-insights/?type=feeding</div>
@@ -311,7 +311,7 @@ const ApiSection = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-semibold mb-2 text-primary">Update an Appointment</h4>
+                  <h4 className="font-semibold mb-2 text-gray-900">Update an Appointment</h4>
                   <div className="bg-slate-900 text-slate-100 p-4 rounded-xl text-sm font-mono overflow-x-auto ring-1 ring-white/10">
                     <div className="text-blue-400">PUT</div>
                     <div className="text-white">/api/appointments/1/</div>
@@ -331,12 +331,12 @@ const ApiSection = () => {
           {/* Data Models Section */}
           <div className="mt-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-elevated border border-gray-200 overflow-hidden transition-shadow hover:shadow-lg">
             <div className="p-6">
-              <h3 className="text-xl font-bold mb-4 text-primary">Data Models</h3>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">Data Models</h3>
               <p className="mb-6 text-secondary">Understanding the data structures used in Baby Tracker API:</p>
               
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <h4 className="font-semibold mb-2 text-primary">Baby Model</h4>
+                  <h4 className="font-semibold mb-2 text-gray-900">Baby Model</h4>
                   <div className="bg-slate-900 text-slate-100 p-4 rounded-xl text-sm font-mono overflow-x-auto ring-1 ring-white/10">
                     <ul className="space-y-2">
                       <li><span className="text-white">id:</span> <span className="text-yellow-400">integer (read-only)</span></li>
@@ -349,7 +349,7 @@ const ApiSection = () => {
                 </div>
                 
                 <div>
-                  <h4 className="font-semibold mb-2 text-primary">Feeding Model</h4>
+                  <h4 className="font-semibold mb-2 text-gray-900">Feeding Model</h4>
                   <div className="bg-slate-900 text-slate-100 p-4 rounded-xl text-sm font-mono overflow-x-auto ring-1 ring-white/10">
                     <ul className="space-y-2">
                       <li><span className="text-white">id:</span> <span className="text-yellow-400">integer (read-only)</span></li>
@@ -363,7 +363,7 @@ const ApiSection = () => {
                 </div>
                 
                 <div>
-                  <h4 className="font-semibold mb-2 text-primary">Sleep Model</h4>
+                  <h4 className="font-semibold mb-2 text-gray-900">Sleep Model</h4>
                   <div className="bg-slate-900 text-slate-100 p-4 rounded-xl text-sm font-mono overflow-x-auto ring-1 ring-white/10">
                     <ul className="space-y-2">
                       <li><span className="text-white">id:</span> <span className="text-yellow-400">integer (read-only)</span></li>
@@ -375,7 +375,7 @@ const ApiSection = () => {
                 </div>
                 
                 <div>
-                  <h4 className="font-semibold mb-2 text-primary">Diaper Change Model</h4>
+                  <h4 className="font-semibold mb-2 text-gray-900">Diaper Change Model</h4>
                   <div className="bg-slate-900 text-slate-100 p-4 rounded-xl text-sm font-mono overflow-x-auto ring-1 ring-white/10">
                     <ul className="space-y-2">
                       <li><span className="text-white">id:</span> <span className="text-yellow-400">integer (read-only)</span></li>

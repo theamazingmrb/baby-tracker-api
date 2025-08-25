@@ -67,28 +67,28 @@ Each API test class should:
 
 Example:
 
-```python
-def setUp(self):
-    # Create test users
-    self.user1 = User.objects.create_user(
-        username='testuser1',
-        email='test1@example.com',
-        password='testpassword1'
-    )
-    
-    # Create test data
-    self.baby1 = Baby.objects.create(
-        name='Baby One',
-        birth_date='2023-01-01',
-        gender='Male',
-        user=self.user1
-    )
-    
-    # Setup API clients
-    self.client1 = APIClient()
-    self.client1.force_authenticate(user=self.user1)
-    self.unauthenticated_client = APIClient()
-```
+    ```python
+    def setUp(self):
+        # Create test users
+        self.user1 = User.objects.create_user(
+            username='testuser1',
+            email='test1@example.com',
+            password='testpassword1'
+        )
+        
+        # Create test data
+        self.baby1 = Baby.objects.create(
+            name='Baby One',
+            birth_date='2023-01-01',
+            gender='Male',
+            user=self.user1
+        )
+        
+        # Setup API clients
+        self.client1 = APIClient()
+        self.client1.force_authenticate(user=self.user1)
+        self.unauthenticated_client = APIClient()
+    ```
 
 ### Test Methods
 
@@ -102,28 +102,28 @@ For each endpoint, test:
 
 Example test method:
 
-```python
-def test_create_feeding(self):
-    """Test creating a new feeding record"""
-    url = reverse('feeding-list')
-    data = {
-        'baby': self.baby1.id,
-        'start_time': '2023-01-01T08:00:00Z',
-        'end_time': '2023-01-01T08:30:00Z',
-        'type': 'bottle',
-        'amount': 120,
-        'unit': 'ml',
-        'notes': 'Test feeding'
-    }
-    
-    # Test authenticated owner can create
-    response = self.client1.post(url, data)
-    self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-    
-    # Test unauthenticated user cannot create
-    response = self.unauthenticated_client.post(url, data)
-    self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-```
+    ```python
+    def test_create_feeding(self):
+        """Test creating a new feeding record"""
+        url = reverse('feeding-list')
+        data = {
+            'baby': self.baby1.id,
+            'start_time': '2023-01-01T08:00:00Z',
+            'end_time': '2023-01-01T08:30:00Z',
+            'type': 'bottle',
+            'amount': 120,
+            'unit': 'ml',
+            'notes': 'Test feeding'
+        }
+        
+        # Test authenticated owner can create
+        response = self.client1.post(url, data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        
+        # Test unauthenticated user cannot create
+        response = self.unauthenticated_client.post(url, data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+    ```
 
 ### Testing Patterns
 
@@ -151,20 +151,20 @@ def test_create_feeding(self):
 
 Use `unittest.mock.patch` to mock external services or complex functions:
 
-```python
-@patch('tracker.views.generate_ai_insights')
-def test_ai_insights_endpoint(self, mock_generate_ai_insights):
-    # Mock the AI insights generation function
-    mock_insights = {
-        "feeding_insights": "Baby is feeding well...",
-    }
-    mock_generate_ai_insights.return_value = mock_insights
-    
-    # Test the endpoint
-    url = reverse('ai-insights', kwargs={'pk': self.baby1.id})
-    response = self.client1.get(url)
-    self.assertEqual(response.status_code, status.HTTP_200_OK)
-```
+    ```python
+    @patch('tracker.views.generate_ai_insights')
+    def test_ai_insights_endpoint(self, mock_generate_ai_insights):
+        # Mock the AI insights generation function
+        mock_insights = {
+            "feeding_insights": "Baby is feeding well...",
+        }
+        mock_generate_ai_insights.return_value = mock_insights
+        
+        # Test the endpoint
+        url = reverse('ai-insights', kwargs={'pk': self.baby1.id})
+        response = self.client1.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+    ```
 
 ## CI Integration
 

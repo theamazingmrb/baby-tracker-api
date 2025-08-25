@@ -5,8 +5,8 @@ const ContributeSection = () => {
     <section className="py-16" id="contribute">
       <div className="container-padded">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Contributing to Baby Tracker</h2>
-          <p className="text-xl text-white max-w-3xl mx-auto">
+          <h2 className="text-3xl font-bold mb-4 text-gray-900">Contributing to Baby Tracker</h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Join our community and help make Baby Tracker better for everyone
           </p>
         </div>
@@ -14,7 +14,7 @@ const ContributeSection = () => {
         <div className="max-w-4xl mx-auto">
           <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-elevated border border-gray-200 overflow-hidden mb-8 transition-all hover:-translate-y-0.5 hover:shadow-lg">
             <div className="p-6">
-              <h3 className="text-xl font-bold mb-4">Ways to Contribute</h3>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">Ways to Contribute</h3>
               
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-4">
@@ -25,7 +25,7 @@ const ContributeSection = () => {
                       </svg>
                     </div>
                     <div>
-                      <h4 className="font-bold">🐛 Report Bugs</h4>
+                      <h4 className="font-bold text-gray-900">🐛 Report Bugs</h4>
                       <p className="text-gray-900 text-sm">Found an issue? Help us fix it by reporting detailed bug reports.</p>
                     </div>
                   </div>
@@ -37,7 +37,7 @@ const ContributeSection = () => {
                       </svg>
                     </div>
                     <div>
-                      <h4 className="font-bold">💡 Suggest Features</h4>
+                      <h4 className="font-bold text-gray-900">💡 Suggest Features</h4>
                       <p className="text-gray-900 text-sm">Have ideas for new features? Share them with the community.</p>
                     </div>
                   </div>
@@ -49,7 +49,7 @@ const ContributeSection = () => {
                       </svg>
                     </div>
                     <div>
-                      <h4 className="font-bold">🔧 Write Code</h4>
+                      <h4 className="font-bold text-gray-900">🔧 Write Code</h4>
                       <p className="text-gray-900 text-sm">Contribute new features, fix bugs, or improve existing functionality.</p>
                     </div>
                   </div>
@@ -63,7 +63,7 @@ const ContributeSection = () => {
                       </svg>
                     </div>
                     <div>
-                      <h4 className="font-bold">📚 Improve Documentation</h4>
+                      <h4 className="font-bold text-gray-900">📚 Improve Documentation</h4>
                       <p className="text-gray-900 text-sm">Help others by improving docs, guides, and API references.</p>
                     </div>
                   </div>
@@ -75,7 +75,7 @@ const ContributeSection = () => {
                       </svg>
                     </div>
                     <div>
-                      <h4 className="font-bold">🔒 Security Review</h4>
+                      <h4 className="font-bold text-gray-900">🔒 Security Review</h4>
                       <p className="text-gray-900 text-sm">Help keep Baby Tracker secure by reviewing code and reporting vulnerabilities.</p>
                     </div>
                   </div>
@@ -87,7 +87,7 @@ const ContributeSection = () => {
                       </svg>
                     </div>
                     <div>
-                      <h4 className="font-bold">🤝 Community Support</h4>
+                      <h4 className="font-bold text-gray-900">🤝 Community Support</h4>
                       <p className="text-gray-900 text-sm">Help other users with questions and share your experience.</p>
                     </div>
                   </div>
@@ -201,11 +201,11 @@ const ContributeSection = () => {
           
           <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-elevated border border-gray-200 overflow-hidden mb-8 transition-all hover:-translate-y-0.5 hover:shadow-lg">
             <div className="p-6">
-              <h3 className="text-xl font-bold mb-4">Code Style & Standards</h3>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">Code Style & Standards</h3>
               
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <h4 className="font-bold mb-2">Python Standards</h4>
+                  <h4 className="font-bold mb-2 text-gray-900">Python Standards</h4>
                   <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
                     <li>Follow PEP 8 style guide</li>
                     <li>Use type hints for function parameters</li>
@@ -216,7 +216,7 @@ const ContributeSection = () => {
                 </div>
                 
                 <div>
-                  <h4 className="font-bold mb-2">Django Conventions</h4>
+                  <h4 className="font-bold mb-2 text-gray-900">Django Conventions</h4>
                   <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
                     <li>Follow Django naming conventions</li>
                     <li>Use Django's built-in features when possible</li>
@@ -227,7 +227,7 @@ const ContributeSection = () => {
                 </div>
                 
                 <div>
-                  <h4 className="font-bold mb-2">Git Workflow</h4>
+                  <h4 className="font-bold mb-2 text-gray-900">Git Workflow</h4>
                   <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
                     <li>Use descriptive commit messages</li>
                     <li>One feature per pull request</li>
@@ -238,7 +238,7 @@ const ContributeSection = () => {
                 </div>
                 
                 <div>
-                  <h4 className="font-bold mb-2">Testing Requirements</h4>
+                  <h4 className="font-bold mb-2 text-gray-900">Testing Requirements</h4>
                   <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
                     <li>Write tests for new features</li>
                     <li>Maintain high test coverage</li>
@@ -253,14 +253,14 @@ const ContributeSection = () => {
           
           <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-elevated border border-gray-200 overflow-hidden transition-all hover:-translate-y-0.5 hover:shadow-lg">
             <div className="p-6">
-              <h3 className="text-xl font-bold mb-4">Issue Reporting & Feature Requests</h3>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">Issue Reporting & Feature Requests</h3>
               <p className="mb-4 text-gray-800">
                 Help us improve Baby Tracker by reporting issues or suggesting new features:
               </p>
               
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <h4 className="font-bold mb-2">🐛 Bug Reports</h4>
+                  <h4 className="font-bold mb-2 text-gray-900">🐛 Bug Reports</h4>
                   <p className="text-sm text-gray-800 mb-2">Include the following information:</p>
                   <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
                     <li>Steps to reproduce the issue</li>
@@ -272,7 +272,7 @@ const ContributeSection = () => {
                 </div>
                 
                 <div>
-                  <h4 className="font-bold mb-2">💡 Feature Requests</h4>
+                  <h4 className="font-bold mb-2 text-gray-900">💡 Feature Requests</h4>
                   <p className="text-sm text-gray-800 mb-2">Help us understand your needs:</p>
                   <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
                     <li>Describe the feature clearly</li>
@@ -293,7 +293,7 @@ const ContributeSection = () => {
             <div className="bg-gray-50 px-6 py-4">
               <div className="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-4">
                 <a 
-                  href="https://github.com/your-username/baby-tracker-backend/issues/new?template=bug_report.md" 
+                  href="https://github.com/theamazingmrb/baby-backend-server/issues/new?template=bug_report.md" 
                   className="btn-primary"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -301,7 +301,7 @@ const ContributeSection = () => {
                   Report Bug
                 </a>
                 <a 
-                  href="https://github.com/your-username/baby-tracker-backend/issues/new?template=feature_request.md" 
+                  href="https://github.com/theamazingmrb/baby-backend-server/issues/new?template=feature_request.md" 
                   className="btn-ghost"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -309,7 +309,7 @@ const ContributeSection = () => {
                   Request Feature
                 </a>
                 <a 
-                  href="https://github.com/your-username/baby-tracker-backend/discussions" 
+                  href="https://github.com/theamazingmrb/baby-backend-server/discussions" 
                   className="btn-ghost"
                   target="_blank"
                   rel="noopener noreferrer"

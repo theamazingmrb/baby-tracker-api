@@ -9,14 +9,32 @@ logger = logging.getLogger(__name__)
 
 # Serve Next.js app
 @never_cache
-def serve_nextjs(request):
-    # Serve the Next.js app's index.html from the build output directory
+def serve_nextjs(request, path=''):
     try:
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        index_path = os.path.join(base_dir, 'frontend', 'out', 'index.html')
         
-        # Check if the Next.js build exists
+        # Handle root path
+        if not path or path == '':
+            html_file = 'index.html'
+        else:
+            # Clean the path
+            path = path.strip('/')
+            # Try the path as-is first, then with .html extension
+            html_file = f"{path}.html"
+        
+        # Try to serve the specific HTML file for the route
+        html_path = os.path.join(base_dir, 'frontend', 'out', html_file)
+        
+        if os.path.exists(html_path):
+            logger.info(f"Serving Next.js file: {html_path}")
+            with open(html_path, 'rb') as f:
+                content = f.read()
+            return HttpResponse(content, content_type='text/html')
+        
+        # If specific HTML file doesn't exist, try index.html as fallback
+        index_path = os.path.join(base_dir, 'frontend', 'out', 'index.html')
         if os.path.exists(index_path):
+            logger.info(f"Serving fallback index.html for path: {path}")
             with open(index_path, 'rb') as f:
                 content = f.read()
             return HttpResponse(content, content_type='text/html')
