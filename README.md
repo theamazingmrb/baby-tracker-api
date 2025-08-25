@@ -33,11 +33,13 @@ Baby Tracker is a privacy-first, self-hostable solution that gives parents compl
 - **Documentation**: OpenAPI (via drf-spectacular)
 - **Data Analysis**: Pandas for AI insights
 
-### Frontend
+### Documentation Frontend
 - **Framework**: Next.js with React
 - **Styling**: Tailwind CSS
-- **Documentation**: Interactive documentation pages
+- **Purpose**: Interactive API and project documentation
 - **Responsive Design**: Mobile-first approach
+
+**Note**: This frontend serves as documentation and does not provide a user interface for tracking babies. It's designed to help developers understand the API and project structure.
 
 ## API Endpoints
 
@@ -50,10 +52,49 @@ Baby Tracker is a privacy-first, self-hostable solution that gives parents compl
 | `/api/growth-milestones/` | Growth milestone tracking |
 | `/api/appointments/` | Doctor appointment management |
 | `/api/medications/` | Medication tracking |
-| `/api/pumping-sessions/` | Breast milk pumping sessions |
-| `/api/babies/ai-insights/` | AI-powered insights on baby patterns |
-| `/api/recipes/recipes/` | Baby food recipes |
+| `/api/milestones/` | Developmental milestone tracking |
+| `/api/pumping-sessions/` | Breast milk pumping tracking |
+| `/api/reminders/` | Reminder management |
+| `/api/recipes/` | Baby food recipe management |
+| `/api/ai-insights/` | AI-powered insights and recommendations |
+| `/api/auth/` | Authentication endpoints |
 | `/api/token/` | JWT token authentication |
+
+## Building a Custom Frontend
+
+This project provides a robust API but does not include a user-facing frontend application for tracking babies. The included Next.js application serves as documentation only. To create a functional baby tracking application, you'll need to build your own frontend.
+
+### Getting Started with a Custom Frontend
+
+1. **Choose a Framework**: React, Vue, Angular, or any other frontend framework
+2. **Authentication**: Implement JWT authentication flow using the `/api/auth/` endpoints
+3. **Core Features**: Build UI components for:
+   - Baby profiles
+   - Feeding tracking
+   - Diaper change logging
+   - Sleep tracking
+   - Growth milestone recording
+   - Doctor appointment management
+
+### API Integration Example
+
+```javascript
+// Example React code for fetching baby data
+async function fetchBabies() {
+  const token = localStorage.getItem('token');
+  const response = await fetch('http://your-api-url/api/babies/', {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  });
+  return await response.json();
+}
+```
+
+### Mobile Considerations
+
+Consider building a mobile-first interface or even a native mobile app, as parents often need to log events quickly on mobile devices while caring for their baby.
 
 ## Getting Started
 
@@ -224,7 +265,7 @@ recipes/              # Recipe management app
 └── tests/            # Recipe tests
     └── test_recipe_api.py        # Tests for recipe API
 
-frontend/             # Next.js frontend application
+frontend/             # Next.js documentation site
 ├── public/           # Static assets
 ├── src/              # Source code
 │   ├── app/          # Next.js app directory
@@ -303,9 +344,9 @@ The easiest way to deploy Baby Tracker is using Docker and docker-compose:
 
 5. Access the API at http://localhost:8000/api/ and admin interface at http://localhost:8000/admin/
 
-### Frontend Deployment
+### Documentation Site Deployment
 
-The project includes a Next.js frontend that can be deployed separately:
+The project includes a Next.js documentation site that can be deployed separately:
 
 1. Navigate to the frontend directory:
    ```bash
@@ -317,19 +358,21 @@ The project includes a Next.js frontend that can be deployed separately:
    npm install
    ```
 
-3. Build the frontend:
+3. Build the documentation site:
    ```bash
    npm run build
    ```
 
-4. Start the frontend server:
+4. Start the documentation server:
    ```bash
    npm start
    ```
 
-5. Access the frontend at http://localhost:3000/
+5. Access the documentation at http://localhost:3000/
 
-Alternatively, you can deploy the frontend to a service like Vercel or Netlify for production use.
+Alternatively, you can deploy the documentation site to a service like Vercel or Netlify for production use.
+
+**Note**: This frontend is for documentation purposes only and does not provide a user interface for the baby tracking functionality. Developers using this API would need to build their own frontend application to interact with the API endpoints.
 
 ### Manual Deployment
 
