@@ -41,15 +41,20 @@ if not ALLOWED_HOSTS:
     ALLOWED_HOSTS = [
         'localhost',
         '127.0.0.1',
-        'baby-tracker-server-4fa1126c1992.herokuapp.com',
         '172.20.10.3',
         f'{NETWORK_HOST}:{NETWORK_PORT}'
     ]
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://baby-tracker-server-4fa1126c1992.herokuapp.com',
-    f'http://{NETWORK_HOST}:{NETWORK_PORT}'
-]
+# Add production domain if specified
+PRODUCTION_DOMAIN = os.environ.get('PRODUCTION_DOMAIN', '')
+if PRODUCTION_DOMAIN:
+    ALLOWED_HOSTS.append(PRODUCTION_DOMAIN)
+
+CSRF_TRUSTED_ORIGINS = [f'http://{NETWORK_HOST}:{NETWORK_PORT}']
+
+# Add production domain to CSRF trusted origins if specified
+if PRODUCTION_DOMAIN:
+    CSRF_TRUSTED_ORIGINS.append(f'https://{PRODUCTION_DOMAIN}')
 
 # Application definition
 INSTALLED_APPS = [
@@ -195,11 +200,24 @@ SPECTACULAR_SETTINGS = {
 }
 
 # CORS settings
-CORS_ALLOW_ALL_ORIGINS = DEBUG  # Allow all origins in development
-CORS_ALLOWED_ORIGINS = [
-    'https://baby-tracker-server-4fa1126c1992.herokuapp.com',
-    f'http://{NETWORK_HOST}:{NETWORK_PORT}'
-]
+CORS_ALLOW_ALL_ORIGINS = os.environ.get('CORS_ALLOW_ALL_ORIGINS', str(DEBUG)).lower() == 'true'
+
+# Parse CORS allowed origins from environment variable
+cors_origins = os.environ.get('CORS_ALLOWED_ORIGINS', '')
+CORS_ALLOWED_ORIGINS = [origin.strip() for origin in cors_origins.split(',') if origin.strip()]
+
+# Add default development origins if none specified
+if not CORS_ALLOWED_ORIGINS:
+    CORS_ALLOWED_ORIGINS = [f'http://{NETWORK_HOST}:{NETWORK_PORT}']
+    
+# Add frontend domain if specified
+FRONTEND_DOMAIN = os.environ.get('FRONTEND_DOMAIN', '')
+if FRONTEND_DOMAIN:
+    if FRONTEND_DOMAIN.startswith('http'):
+        CORS_ALLOWED_ORIGINS.append(FRONTEND_DOMAIN)
+    else:
+        CORS_ALLOWED_ORIGINS.append(f'https://{FRONTEND_DOMAIN}')
+        CORS_ALLOWED_ORIGINS.append(f'http://{FRONTEND_DOMAIN}')
 CORS_ALLOW_CREDENTIALS = True
 
 # JWT settings

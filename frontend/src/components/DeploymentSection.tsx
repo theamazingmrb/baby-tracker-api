@@ -165,9 +165,19 @@ const DeploymentSection = () => {
                       <td className="px-4 py-3 text-sm text-gray-800">Generate secure random key</td>
                     </tr>
                     <tr>
+                      <td className="px-4 py-3 text-sm font-medium text-indigo-600">PRODUCTION_DOMAIN</td>
+                      <td className="px-4 py-3 text-sm font-mono text-gray-800">api.yourdomain.com</td>
+                      <td className="px-4 py-3 text-sm text-gray-800">Your API backend domain</td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-3 text-sm font-medium text-indigo-600">FRONTEND_DOMAIN</td>
+                      <td className="px-4 py-3 text-sm font-mono text-gray-800">app.yourdomain.com</td>
+                      <td className="px-4 py-3 text-sm text-gray-800">Your frontend application domain</td>
+                    </tr>
+                    <tr>
                       <td className="px-4 py-3 text-sm font-medium text-indigo-600">ALLOWED_HOSTS</td>
-                      <td className="px-4 py-3 text-sm font-mono text-gray-800">yourdomain.com,www.yourdomain.com</td>
-                      <td className="px-4 py-3 text-sm text-gray-800">Your domain names</td>
+                      <td className="px-4 py-3 text-sm font-mono text-gray-800">api.yourdomain.com</td>
+                      <td className="px-4 py-3 text-sm text-gray-800">Your API domain names</td>
                     </tr>
                     <tr>
                       <td className="px-4 py-3 text-sm font-medium text-indigo-600">DATABASE_URL</td>
@@ -176,8 +186,8 @@ const DeploymentSection = () => {
                     </tr>
                     <tr>
                       <td className="px-4 py-3 text-sm font-medium text-indigo-600">CORS_ALLOWED_ORIGINS</td>
-                      <td className="px-4 py-3 text-sm font-mono text-gray-800">https://yourdomain.com</td>
-                      <td className="px-4 py-3 text-sm text-gray-800">Frontend domain with HTTPS</td>
+                      <td className="px-4 py-3 text-sm font-mono text-gray-800">https://app.yourdomain.com</td>
+                      <td className="px-4 py-3 text-sm text-gray-800">Frontend domains with HTTPS</td>
                     </tr>
                   </tbody>
                 </table>

@@ -385,8 +385,22 @@ The application can also be deployed on any platform that supports Django:
 Key configuration for production:
 - Use PostgreSQL database
 - Configure WhiteNoise for static files
-- Set proper environment variables
+- Set proper environment variables (see below)
 - Use HTTPS in production
+
+### Environment Variables
+
+The following environment variables should be configured for deployment:
+
+- `PRODUCTION_DOMAIN`: Your API backend domain (e.g., api.example.com)
+- `FRONTEND_DOMAIN`: Your frontend application domain (e.g., app.example.com)
+- `CORS_ALLOWED_ORIGINS`: Comma-separated list of origins allowed to access the API
+- `CORS_ALLOW_ALL_ORIGINS`: Set to 'True' to allow all origins (not recommended for production)
+- `DATABASE_URL`: PostgreSQL connection string
+- `SECRET_KEY`: Django secret key
+- `DJANGO_DEBUG`: Set to 'False' in production
+
+These variables can be set in your deployment environment or in the .env file.
 
 ## License
 
