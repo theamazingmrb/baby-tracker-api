@@ -5,7 +5,7 @@ const DeploymentSection = () => {
     <section className="py-16 bg-gray-50 text-black" id="deployment">
       <div className="container-padded">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Deployment Options</h2>
+          <h2 className="text-3xl font-bold mb-4 text-gray-900">Deployment Options</h2>
           <p className="text-xl text-gray-900 max-w-3xl mx-auto">
             Deploy Baby Tracker to your preferred hosting environment with complete privacy and control
           </p>
@@ -104,8 +104,8 @@ const DeploymentSection = () => {
                   <h4 className="font-bold mb-2">2. Application Deployment</h4>
                   <div className="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto font-mono text-sm ring-1 ring-white/10">
                     <div className="text-gray-500"># Clone the repository</div>
-                    <div>git clone https://github.com/your-username/baby-tracker-backend.git</div>
-                    <div>cd baby-tracker-backend</div>
+                    <div>git clone https://github.com/theamazingmrb/baby-tracker-api.git</div>
+                    <div>cd baby-tracker-api</div>
                     <br />
                     <div className="text-gray-500"># Configure production environment</div>
                     <div>cp .env.example .env</div>
@@ -258,7 +258,7 @@ const DeploymentSection = () => {
                 </p>
                 <div className="flex space-x-3 text-sm">
                   <a 
-                    href="https://github.com/your-username/baby-tracker-backend/blob/main/DEPLOYMENT.md" 
+                    href="https://github.com/theamazingmrb/baby-tracker-api/blob/main/DEPLOYMENT.md" 
                     className="btn-primary"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -266,7 +266,7 @@ const DeploymentSection = () => {
                     Deployment Guide
                   </a>
                   <a 
-                    href="https://github.com/your-username/baby-tracker-backend/issues" 
+                    href="https://github.com/theamazingmrb/baby-tracker-api/issues" 
                     className="btn-ghost"
                     target="_blank"
                     rel="noopener noreferrer"

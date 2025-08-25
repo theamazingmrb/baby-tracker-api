@@ -35,8 +35,8 @@ const SetupSection = () => {
                 <h4 className="font-bold mb-2 text-gray-900">1. Clone and start the application</h4>
                 <div className="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto font-mono text-sm ring-1 ring-white/10">
                   <div className="text-gray-400"># Clone the repository</div>
-                  <div>git clone https://github.com/your-username/baby-tracker-backend.git</div>
-                  <div>cd baby-tracker-backend</div>
+                  <div>git clone https://github.com/theamazingmrb/baby-tracker-api.git</div>
+                  <div>cd baby-tracker-api</div>
                   <br />
                   <div className="text-gray-400"># Start all services</div>
                   <div>docker-compose up -d</div>
@@ -79,8 +79,8 @@ const SetupSection = () => {
               <div className="mb-6">
                 <h4 className="font-bold mb-2 text-gray-900">1. Clone and setup Python environment</h4>
                 <div className="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto font-mono text-sm ring-1 ring-white/10">
-                  <div>git clone https://github.com/your-username/baby-tracker-backend.git</div>
-                  <div>cd baby-tracker-backend</div>
+                  <div>git clone https://github.com/theamazingmrb/baby-tracker-api.git</div>
+                  <div>cd baby-tracker-api</div>
                   <br />
                   <div className="text-gray-400"># Create virtual environment</div>
                   <div>python -m venv venv</div>

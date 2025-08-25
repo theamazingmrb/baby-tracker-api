@@ -42,7 +42,7 @@ export default function Footer() {
               <ul className="space-y-4">
                 <li>
                   <a 
-                    href="https://github.com/theamazingmrb/baby-tracker-backend" 
+                    href="https://github.com/theamazingmrb/baby-tracker-api" 
                     className="text-secondary hover:text-primary transition-all duration-300 flex items-center space-x-3 group"
                     target="_blank"
                     rel="noopener noreferrer"

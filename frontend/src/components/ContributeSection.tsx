@@ -109,9 +109,9 @@ const ContributeSection = () => {
                   <div className="ml-11">
                     <p className="text-gray-800 mb-2">Fork the repository and clone your copy:</p>
                     <div className="bg-slate-900 text-slate-100 p-3 rounded-xl font-mono text-sm ring-1 ring-white/10">
-                      <div>git clone https://github.com/YOUR-USERNAME/baby-tracker-backend.git</div>
-                      <div>cd baby-tracker-backend</div>
-                      <div>git remote add upstream https://github.com/original-repo/baby-tracker-backend.git</div>
+                      <div>git clone https://github.com/YOUR-USERNAME/baby-tracker-api.git</div>
+                      <div>cd baby-tracker-api</div>
+                      <div>git remote add upstream https://github.com/theamazingmrb/baby-tracker-api.git</div>
                     </div>
                   </div>
                 </div>
@@ -293,7 +293,7 @@ const ContributeSection = () => {
             <div className="bg-gray-50 px-6 py-4">
               <div className="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-4">
                 <a 
-                  href="https://github.com/theamazingmrb/baby-backend-server/issues/new?template=bug_report.md" 
+                  href="https://github.com/theamazingmrb/baby-tracker-api/issues/new?template=bug_report.md" 
                   className="btn-primary"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -301,7 +301,7 @@ const ContributeSection = () => {
                   Report Bug
                 </a>
                 <a 
-                  href="https://github.com/theamazingmrb/baby-backend-server/issues/new?template=feature_request.md" 
+                  href="https://github.com/theamazingmrb/baby-tracker-api/issues/new?template=feature_request.md" 
                   className="btn-ghost"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -309,7 +309,7 @@ const ContributeSection = () => {
                   Request Feature
                 </a>
                 <a 
-                  href="https://github.com/theamazingmrb/baby-backend-server/discussions" 
+                  href="https://github.com/theamazingmrb/baby-tracker-api/discussions" 
                   className="btn-ghost"
                   target="_blank"
                   rel="noopener noreferrer"

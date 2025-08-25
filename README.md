@@ -120,8 +120,8 @@ This will start a pre-configured instance with sample data at http://localhost:8
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/theamazingmrb/baby-backend-server.git
-   cd baby-tracker-backend
+   git clone https://github.com/theamazingmrb/baby-tracker-api.git
+   cd baby-tracker-api
    ```
 
 2. Create a virtual environment:
@@ -322,8 +322,8 @@ The easiest way to deploy Baby Tracker is using Docker and docker-compose:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/theamazingmrb/baby-backend-server.git
-   cd baby-tracker-backend
+   git clone https://github.com/theamazingmrb/baby-tracker-api.git
+   cd baby-tracker-api
    ```
 
 2. Create an `.env` file from the example:

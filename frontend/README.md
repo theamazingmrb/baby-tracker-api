@@ -13,8 +13,8 @@ This is the documentation website for the Baby Tracker API, built with Next.js a
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/your-username/baby-tracker-backend.git
-cd baby-tracker-backend/frontend
+git clone https://github.com/theamazingmrb/baby-tracker-api.git
+cd baby-tracker-api/frontend
 ```
 
 2. Install dependencies:

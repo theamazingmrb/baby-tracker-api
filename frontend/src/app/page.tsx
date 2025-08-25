@@ -21,7 +21,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row justify-center gap-3">
             <a href="#setup" className="btn-primary">Get Started</a>
             <a
-              href="https://github.com/theamazingmrb/baby-tracker-backend"
+              href="https://github.com/theamazingmrb/baby-tracker-api"
               className="btn-ghost"
               target="_blank"
               rel="noopener noreferrer"
