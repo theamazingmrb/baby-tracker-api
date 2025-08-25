@@ -26,11 +26,18 @@ Baby Tracker is a privacy-first, self-hostable solution that gives parents compl
 
 ## Tech Stack
 
+### Backend
 - **Framework**: Django + Django REST Framework
 - **Database**: PostgreSQL
 - **Authentication**: JWT (JSON Web Tokens)
 - **Documentation**: OpenAPI (via drf-spectacular)
 - **Data Analysis**: Pandas for AI insights
+
+### Frontend
+- **Framework**: Next.js with React
+- **Styling**: Tailwind CSS
+- **Documentation**: Interactive documentation pages
+- **Responsive Design**: Mobile-first approach
 
 ## API Endpoints
 
@@ -72,7 +79,7 @@ This will start a pre-configured instance with sample data at http://localhost:8
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/theamazingmrb/baby-backend-server.git
    cd baby-tracker-backend
    ```
 
@@ -217,6 +224,25 @@ recipes/              # Recipe management app
 └── tests/            # Recipe tests
     └── test_recipe_api.py        # Tests for recipe API
 
+frontend/             # Next.js frontend application
+├── public/           # Static assets
+├── src/              # Source code
+│   ├── app/          # Next.js app directory
+│   │   ├── api-docs/       # API documentation page
+│   │   ├── contribute/     # Contribution guide page
+│   │   ├── deployment-guide/ # Deployment guide page
+│   │   ├── setup-guide/    # Setup guide page
+│   │   ├── testing-guide/  # Testing guide page
+│   │   └── page.tsx        # Home page
+│   ├── components/   # React components
+│   │   ├── ApiSection.tsx        # API documentation component
+│   │   ├── ContributeSection.tsx # Contribution guide component
+│   │   ├── DeploymentSection.tsx # Deployment guide component
+│   │   ├── Header.tsx            # Header component
+│   │   ├── SetupSection.tsx      # Setup guide component
+│   │   └── TestingGuideSection.tsx # Testing guide component
+│   └── styles/       # CSS styles
+
 templates/            # HTML templates
 ├── index.html        # Default template
 └── landing.html      # Landing page with inline styles
@@ -227,6 +253,9 @@ docs/                 # Documentation
 └── testing_guide.md  # Guide for writing tests
 
 .github/              # GitHub configuration
+├── ISSUE_TEMPLATE/   # GitHub issue templates
+│   ├── bug_report.md # Bug report template
+│   └── feature_request.md # Feature request template
 └── workflows/        # GitHub Actions workflows
     └── test.yml      # CI testing workflow
 ```
@@ -252,7 +281,7 @@ The easiest way to deploy Baby Tracker is using Docker and docker-compose:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/baby-tracker-backend.git
+   git clone https://github.com/theamazingmrb/baby-backend-server.git
    cd baby-tracker-backend
    ```
 
@@ -273,6 +302,34 @@ The easiest way to deploy Baby Tracker is using Docker and docker-compose:
    ```
 
 5. Access the API at http://localhost:8000/api/ and admin interface at http://localhost:8000/admin/
+
+### Frontend Deployment
+
+The project includes a Next.js frontend that can be deployed separately:
+
+1. Navigate to the frontend directory:
+   ```bash
+   cd frontend
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Build the frontend:
+   ```bash
+   npm run build
+   ```
+
+4. Start the frontend server:
+   ```bash
+   npm start
+   ```
+
+5. Access the frontend at http://localhost:3000/
+
+Alternatively, you can deploy the frontend to a service like Vercel or Netlify for production use.
 
 ### Manual Deployment
 

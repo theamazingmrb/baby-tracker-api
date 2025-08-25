@@ -4,7 +4,6 @@ __pycache__/
 *$py.class
 *.so
 .Python
-env/
 build/
 develop-eggs/
 dist/
@@ -39,6 +38,7 @@ env/
 
 # Database
 *.sqlite3
+db.sqlite3
 
 # Logs
 *.log
@@ -61,42 +61,23 @@ coverage.xml
 .coverage
 htmlcov/
 
-# Django
-*.log
-local_settings.py
-db.sqlite3
+# Next.js
+.next/
+out/
 
 # Heroku
 Procfile
-
-# Environment variables
-.env
-.env.local
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
 
 # Build artifacts
 *.pyc
 *.pyo
 *.pyd
-*.so
 *.o
 *.a
 *.lib
 *.pdb
 *.dll
 *.dylib
-*.so
-*.pyc
-*.pyo
-*.pyd
-*.pyc
-*.pyo
-*.pyd
 *.pyc
 *.pyo
 *.pyd
