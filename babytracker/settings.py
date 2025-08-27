@@ -49,12 +49,20 @@ if not ALLOWED_HOSTS:
 PRODUCTION_DOMAIN = os.environ.get('PRODUCTION_DOMAIN', '')
 if PRODUCTION_DOMAIN:
     ALLOWED_HOSTS.append(PRODUCTION_DOMAIN)
+    # Also add www subdomain
+    if not PRODUCTION_DOMAIN.startswith('www.'):
+        ALLOWED_HOSTS.append(f'www.{PRODUCTION_DOMAIN}')
 
 CSRF_TRUSTED_ORIGINS = [f'http://{NETWORK_HOST}:{NETWORK_PORT}']
 
 # Add production domain to CSRF trusted origins if specified
 if PRODUCTION_DOMAIN:
     CSRF_TRUSTED_ORIGINS.append(f'https://{PRODUCTION_DOMAIN}')
+    CSRF_TRUSTED_ORIGINS.append(f'http://{PRODUCTION_DOMAIN}')
+    # Also add www subdomain
+    if not PRODUCTION_DOMAIN.startswith('www.'):
+        CSRF_TRUSTED_ORIGINS.append(f'https://www.{PRODUCTION_DOMAIN}')
+        CSRF_TRUSTED_ORIGINS.append(f'http://www.{PRODUCTION_DOMAIN}')
 
 # Application definition
 INSTALLED_APPS = [

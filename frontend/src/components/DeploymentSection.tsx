@@ -181,8 +181,8 @@ const DeploymentSection = () => {
                     </tr>
                     <tr>
                       <td className="px-4 py-3 text-sm font-medium text-indigo-600">ALLOWED_HOSTS</td>
-                      <td className="px-4 py-3 text-sm font-mono text-gray-800">api.yourdomain.com</td>
-                      <td className="px-4 py-3 text-sm text-gray-800">Your API domain names</td>
+                      <td className="px-4 py-3 text-sm font-mono text-gray-800">yourdomain.com,www.yourdomain.com</td>
+                      <td className="px-4 py-3 text-sm text-gray-800">Your domain and www subdomain</td>
                     </tr>
                     <tr>
                       <td className="px-4 py-3 text-sm font-medium text-indigo-600">DATABASE_URL</td>
@@ -191,8 +191,8 @@ const DeploymentSection = () => {
                     </tr>
                     <tr>
                       <td className="px-4 py-3 text-sm font-medium text-indigo-600">CORS_ALLOWED_ORIGINS</td>
-                      <td className="px-4 py-3 text-sm font-mono text-gray-800">https://app.yourdomain.com</td>
-                      <td className="px-4 py-3 text-sm text-gray-800">Frontend domains with HTTPS</td>
+                      <td className="px-4 py-3 text-sm font-mono text-gray-800">http://yourdomain.com,https://yourdomain.com,http://www.yourdomain.com,https://www.yourdomain.com</td>
+                      <td className="px-4 py-3 text-sm text-gray-800">Both HTTP and HTTPS versions of your domains</td>
                     </tr>
                   </tbody>
                 </table>
@@ -216,8 +216,8 @@ const DeploymentSection = () => {
                 <div className="text-gray-500"># Stop Docker containers to free port 80</div>
                 <div>docker-compose down</div>
                 <br />
-                <div className="text-gray-500"># Obtain SSL certificate</div>
-                <div>sudo certbot certonly --standalone -d yourdomain.com</div>
+                <div className="text-gray-500"># Obtain SSL certificate for both domain and www subdomain</div>
+                <div>sudo certbot certonly --standalone -d yourdomain.com -d www.yourdomain.com</div>
                 <br />
                 <div className="text-gray-500"># Set up Nginx as reverse proxy with SSL</div>
                 <div>mkdir -p nginx</div>

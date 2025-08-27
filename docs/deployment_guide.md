@@ -111,9 +111,10 @@ Important settings to configure:
 DJANGO_DEBUG=False
 
 # Production settings
-PRODUCTION_DOMAIN=your-ec2-instance-ip-or-domain
-FRONTEND_DOMAIN=your-frontend-domain-or-same-as-production
-CORS_ALLOWED_ORIGINS=http://your-frontend-domain,http://localhost:3000
+PRODUCTION_DOMAIN=your-domain.com
+FRONTEND_DOMAIN=your-domain.com
+CORS_ALLOWED_ORIGINS=http://your-domain.com,https://your-domain.com,http://www.your-domain.com,https://www.your-domain.com
+ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0,your-domain.com,www.your-domain.com
 
 # Database settings
 DATABASE_URL=postgresql://postgres:postgres@db:5432/baby_tracker
@@ -129,6 +130,8 @@ EMAIL_USE_TLS=True
 EMAIL_HOST_USER=your-email@example.com
 EMAIL_HOST_PASSWORD=your-email-password
 ```
+
+Note: The `ALLOWED_HOSTS` setting is important for Django to accept requests from your domain and www subdomain. The application will automatically add your PRODUCTION_DOMAIN to ALLOWED_HOSTS, but explicitly setting it ensures both the root domain and www subdomain work properly.
 
 3. **Start the application**:
 
@@ -210,8 +213,8 @@ For production environments, HTTPS is strongly recommended:
    # Stop Docker containers temporarily to free up port 80
    docker-compose down
    
-   # Get certificate
-   sudo certbot certonly --standalone -d your-domain.com
+   # Get certificate for both domain and www subdomain
+   sudo certbot certonly --standalone -d your-domain.com -d www.your-domain.com
    
    # Start containers again
    docker-compose up -d

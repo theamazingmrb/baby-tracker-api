@@ -447,9 +447,10 @@ Key configuration for any production deployment:
 
 The following environment variables should be configured for deployment:
 
-- `PRODUCTION_DOMAIN`: Your API backend domain (e.g., api.example.com or EC2 IP address)
-- `FRONTEND_DOMAIN`: Your frontend application domain (e.g., app.example.com)
-- `CORS_ALLOWED_ORIGINS`: Comma-separated list of origins allowed to access the API
+- `PRODUCTION_DOMAIN`: Your API backend domain (e.g., babytracker.xyz or EC2 IP address)
+- `FRONTEND_DOMAIN`: Your frontend application domain (e.g., babytracker.xyz)
+- `ALLOWED_HOSTS`: Comma-separated list of domains allowed to serve the application (e.g., localhost,127.0.0.1,babytracker.xyz,www.babytracker.xyz)
+- `CORS_ALLOWED_ORIGINS`: Comma-separated list of origins allowed to access the API (should include both HTTP and HTTPS versions of your domains)
 - `CORS_ALLOW_ALL_ORIGINS`: Set to 'True' to allow all origins (not recommended for production)
 - `DATABASE_URL`: PostgreSQL connection string
 - `SECRET_KEY`: Django secret key (use a strong, random value)
