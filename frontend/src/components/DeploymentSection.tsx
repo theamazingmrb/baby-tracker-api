@@ -80,7 +80,7 @@ const DeploymentSection = () => {
           <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-elevated border border-gray-200 overflow-hidden mb-8 transition-all hover:-translate-y-0.5 hover:shadow-lg">
             <div className="p-6">
               <h3 className="text-xl font-bold mb-4">🚀 AWS EC2 Deployment with Docker Compose</h3>
-              <p className="text-gray-800 mb-6">The simplest and most cost-effective way to deploy Baby Tracker to production:</p>
+              <p className="text-gray-800 mb-6">The simplest and most cost-effective way to deploy Baby Tracker to production. Choose between standard HTTP deployment or secure HTTPS deployment:</p>
               
               <div className="space-y-6">
                 <div>
@@ -128,8 +128,12 @@ const DeploymentSection = () => {
                     <div>cp .env.example .env</div>
                     <div>nano .env  # Edit with your production settings</div>
                     <br />
-                    <div className="text-gray-500"># Start the application</div>
+                    <div className="text-gray-500"># Option 1: Start with basic HTTP setup</div>
                     <div>docker-compose up -d</div>
+                    <br />
+                    <div className="text-gray-500"># OR Option 2: Start with HTTPS setup</div>
+                    <div>mkdir -p nginx/conf nginx/certbot/conf nginx/certbot/www</div>
+                    <div>docker-compose -f docker-compose.https.yml up -d</div>
                     <br />
                     <div className="text-gray-500"># Create admin user</div>
                     <div>docker-compose exec web python manage.py createsuperuser</div>
@@ -203,15 +207,54 @@ const DeploymentSection = () => {
           <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-elevated border border-gray-200 overflow-hidden mb-8 transition-all hover:-translate-y-0.5 hover:shadow-lg">
             <div className="p-6">
               <h3 className="text-xl font-bold mb-4">SSL/HTTPS Setup with Let's Encrypt</h3>
-              <p className="mb-4 text-gray-800">Secure your EC2 deployment with free SSL certificates:</p>
+              <p className="mb-4 text-gray-800">Secure your EC2 deployment with free SSL certificates using our integrated HTTPS setup:</p>
               
               <div className="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto font-mono text-sm ring-1 ring-white/10">
+                <div className="text-gray-500"># Option 1: Using the Integrated HTTPS Setup (Recommended)</div>
+                <div className="text-gray-500"># Create required directories</div>
+                <div>mkdir -p nginx/conf nginx/certbot/conf nginx/certbot/www</div>
+                <br />
+                <div className="text-gray-500"># Create a basic Nginx configuration</div>
+                <div>{`cat > nginx/conf/app.conf << 'EOL'`}</div>
+                <div>{`server {`}</div>
+                <div>{`    listen 80;`}</div>
+                <div>{`    server_name yourdomain.com www.yourdomain.com;`}</div>
+                <div>{`    `}</div>
+                <div>{`    location /.well-known/acme-challenge/ {`}</div>
+                <div>{`        root /var/www/certbot;`}</div>
+                <div>{`    }`}</div>
+                <div>{`    `}</div>
+                <div>{`    location / {`}</div>
+                <div>{`        return 301 https://$host$request_uri;`}</div>
+                <div>{`    }`}</div>
+                <div>{`}`}</div>
+                <div>{`EOL`}</div>
+                <br />
+                <div className="text-gray-500"># Replace domain placeholders with your actual domain</div>
+                <div>sed -i 's/yourdomain.com/example.com/g' nginx/conf/app.conf  # Replace example.com with your domain</div>
+                <br />
+                <div className="text-gray-500"># Start the application with HTTPS configuration</div>
+                <div>docker-compose -f docker-compose.https.yml up -d</div>
+                <br />
+                <div className="text-gray-500"># Obtain SSL certificates (after DNS is properly configured)</div>
+                <div>{`docker-compose -f docker-compose.https.yml exec certbot certbot certonly --webroot \
+  -w /var/www/certbot -d yourdomain.com -d www.yourdomain.com \
+  --email your-email@example.com --agree-tos --no-eff-email`}</div>
+                <br />
+                <div className="text-gray-500"># Reload Nginx to apply the certificates</div>
+                <div>docker-compose -f docker-compose.https.yml exec nginx nginx -s reload</div>
+              </div>
+              
+              <div className="mt-4 mb-4 text-gray-800">Alternative manual setup (if needed):</div>
+              
+              <div className="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto font-mono text-sm ring-1 ring-white/10">
+                <div className="text-gray-500"># Option 2: Manual HTTPS Setup</div>
                 <div className="text-gray-500"># For Amazon Linux 2023</div>
                 <div>sudo dnf install -y augeas-libs</div>
                 <div>sudo python3 -m pip install certbot</div>
                 <br />
                 <div className="text-gray-500"># For Ubuntu</div>
-                <div>sudo apt install -y certbot python3-certbot-nginx</div>
+                <div>sudo apt install -y certbot</div>
                 <br />
                 <div className="text-gray-500"># Stop Docker containers to free port 80</div>
                 <div>docker-compose down</div>
@@ -220,14 +263,9 @@ const DeploymentSection = () => {
                 <div>sudo certbot certonly --standalone -d yourdomain.com -d www.yourdomain.com</div>
                 <br />
                 <div className="text-gray-500"># Set up Nginx as reverse proxy with SSL</div>
-                <div>mkdir -p nginx</div>
-                <div>nano nginx/nginx.conf  # Configure with SSL paths</div>
-                <div>docker-compose -f docker-compose.nginx.yml up -d</div>
-                <br />
-                <div className="text-gray-500"># Auto-renewal (certificate expires in 90 days)</div>
-                <div>nano renew-cert.sh  # Create renewal script</div>
-                <div>chmod +x renew-cert.sh</div>
-                <div>crontab -e  # Add monthly renewal job</div>
+                <div>mkdir -p nginx/conf</div>
+                <div>nano nginx/conf/app.conf  # Configure with SSL paths</div>
+                <div>{`docker-compose -f docker-compose.https.yml up -d`}</div>
               </div>
             </div>
           </div>
@@ -242,12 +280,14 @@ const DeploymentSection = () => {
                   <div className="bg-gray-50 p-3 rounded-xl text-sm border border-gray-200 text-gray-800">
                     <div className="mb-2">Check EC2 system status:</div>
                     <code className="text-xs text-gray-900">top</code>
-                    <div className="mt-2 mb-2">Check container status:</div>
+                    <div className="mt-2 mb-2">Check container status (HTTP setup):</div>
                     <code className="text-xs text-gray-900">cd ~/baby-tracker-api && docker-compose ps</code>
+                    <div className="mt-2 mb-2">Check container status (HTTPS setup):</div>
+                    <code className="text-xs text-gray-900">cd ~/baby-tracker-api && docker-compose -f docker-compose.https.yml ps</code>
                     <div className="mt-2 mb-2">View application logs:</div>
                     <code className="text-xs text-gray-900">docker-compose logs -f web</code>
-                    <div className="mt-2 mb-2">View database logs:</div>
-                    <code className="text-xs text-gray-900">docker-compose logs -f db</code>
+                    <div className="mt-2 mb-2">View HTTPS-related logs:</div>
+                    <code className="text-xs text-gray-900">docker-compose -f docker-compose.https.yml logs -f nginx certbot</code>
                   </div>
                 </div>
                 
@@ -279,8 +319,10 @@ docker-compose exec -T db pg_dump -U postgres postgres {'>'} $BACKUP_DIR/backup-
                     <code className="text-xs text-gray-900">cd ~/baby-tracker-api && git pull origin main</code>
                     <div className="mt-2 mb-2">Backup database before update:</div>
                     <code className="text-xs text-gray-900">./backup-db.sh</code>
-                    <div className="mt-2 mb-2">Rebuild and restart containers:</div>
+                    <div className="mt-2 mb-2">Rebuild and restart containers (HTTP deployment):</div>
                     <code className="text-xs text-gray-900">docker-compose down && docker-compose up -d --build</code>
+                    <div className="mt-2 mb-2">OR for HTTPS deployment:</div>
+                    <code className="text-xs text-gray-900">docker-compose -f docker-compose.https.yml down && docker-compose -f docker-compose.https.yml up -d --build</code>
                     <div className="mt-2 mb-2">Run migrations:</div>
                     <code className="text-xs text-gray-900">docker-compose exec web python manage.py migrate</code>
                   </div>
@@ -293,12 +335,14 @@ docker-compose exec -T db pg_dump -U postgres postgres {'>'} $BACKUP_DIR/backup-
                     <code className="text-xs text-gray-900">df -h</code>
                     <div className="mt-2 mb-2">Restart Docker service:</div>
                     <code className="text-xs text-gray-900">sudo systemctl restart docker</code>
-                    <div className="mt-2 mb-2">Restart application containers:</div>
+                    <div className="mt-2 mb-2">Restart application containers (HTTP):</div>
                     <code className="text-xs text-gray-900">cd ~/baby-tracker-api && docker-compose restart</code>
-                    <div className="mt-2 mb-2">Reset application completely:</div>
-                    <code className="text-xs text-gray-900">docker-compose down && docker-compose up -d</code>
+                    <div className="mt-2 mb-2">Restart application containers (HTTPS):</div>
+                    <code className="text-xs text-gray-900">cd ~/baby-tracker-api && docker-compose -f docker-compose.https.yml restart</code>
                     <div className="mt-2 mb-2">View detailed application errors:</div>
                     <code className="text-xs text-gray-900">docker-compose logs -f web</code>
+                    <div className="mt-2 mb-2">View Nginx logs (HTTPS setup):</div>
+                    <code className="text-xs text-gray-900">docker-compose -f docker-compose.https.yml logs -f nginx</code>
                   </div>
                 </div>
               </div>

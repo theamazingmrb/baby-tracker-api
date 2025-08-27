@@ -355,12 +355,67 @@ The easiest way to deploy Baby Tracker to production is using AWS EC2 with Docke
    ```bash
    cp .env.example .env
    # Edit .env with your production settings
-   # Make sure to set DJANGO_DEBUG=False and update PRODUCTION_DOMAIN
+   # Make sure to set:
+   # - DJANGO_DEBUG=False
+   # - PRODUCTION_DOMAIN=your-domain.com
+   # - FRONTEND_DOMAIN=your-domain.com
+   # - ALLOWED_HOSTS=localhost,127.0.0.1,your-domain.com,www.your-domain.com
+   # - CORS_ALLOWED_ORIGINS=http://your-domain.com,https://your-domain.com,http://www.your-domain.com,https://www.your-domain.com
    ```
 
-6. **Start the application**:
+6. **Choose your deployment option**:
+
+   **Option A: Basic HTTP deployment**
    ```bash
    docker-compose up -d
+   ```
+
+   **Option B: HTTPS deployment with Nginx and Let's Encrypt**
+   ```bash
+   # Create required directories for Nginx and Certbot
+   mkdir -p nginx/conf nginx/certbot/conf nginx/certbot/www
+   
+   # Create a basic Nginx configuration
+   cat > nginx/conf/app.conf << 'EOL'
+   server {
+       listen 80;
+       server_name your-domain.com www.your-domain.com;
+       
+       location /.well-known/acme-challenge/ {
+           root /var/www/certbot;
+       }
+       
+       location / {
+           return 301 https://$host$request_uri;
+       }
+   }
+   
+   server {
+       listen 443 ssl;
+       server_name your-domain.com www.your-domain.com;
+       
+       ssl_certificate /etc/letsencrypt/live/your-domain.com/fullchain.pem;
+       ssl_certificate_key /etc/letsencrypt/live/your-domain.com/privkey.pem;
+       
+       location / {
+           proxy_pass http://web:8000;
+           proxy_set_header Host $host;
+           proxy_set_header X-Real-IP $remote_addr;
+       }
+   }
+   EOL
+   
+   # Replace your-domain.com with your actual domain
+   sed -i 's/your-domain.com/example.com/g' nginx/conf/app.conf  # Replace example.com with your domain
+   
+   # Start with HTTPS configuration
+   docker-compose -f docker-compose.https.yml up -d
+   
+   # Get SSL certificates (after DNS is properly configured)
+   docker-compose -f docker-compose.https.yml exec certbot certbot certonly --webroot -w /var/www/certbot -d your-domain.com -d www.your-domain.com --email your-email@example.com --agree-tos --no-eff-email
+   
+   # Reload Nginx to apply the certificates
+   docker-compose -f docker-compose.https.yml exec nginx nginx -s reload
    ```
 
 7. **Create a superuser**:
@@ -368,7 +423,7 @@ The easiest way to deploy Baby Tracker to production is using AWS EC2 with Docke
    docker-compose exec web python manage.py createsuperuser
    ```
 
-8. **Access your application** at http://your-instance-ip/ and the admin interface at http://your-instance-ip/admin/
+8. **Access your application** at http://your-domain.com/ (or https://your-domain.com/ if using HTTPS) and the admin interface at http://your-domain.com/admin/ (or https://your-domain.com/admin/)
 
 ### Local Docker Deployment
 
@@ -455,22 +510,47 @@ The following environment variables should be configured for deployment:
 - `DATABASE_URL`: PostgreSQL connection string
 - `SECRET_KEY`: Django secret key (use a strong, random value)
 - `DJANGO_DEBUG`: Set to 'False' in production
+- `POSTGRES_USER`: PostgreSQL username (used by Docker)
+- `POSTGRES_PASSWORD`: PostgreSQL password (used by Docker)
+- `POSTGRES_DB`: PostgreSQL database name (used by Docker)
+- `WEB_PORT`: Port to expose the web service on (default: 80)
+- `NETWORK_HOST`: Host to bind the Django server to (default: 0.0.0.0)
+- `NETWORK_PORT`: Port for the Django server (default: 8000)
 
 These variables should be set in your `.env` file for Docker Compose deployments.
 
 ### Production Considerations
 
 - **Domain Setup**: To use a custom domain, configure DNS to point to your EC2 instance IP and set up Nginx or use AWS Route 53
-- **HTTPS**: For production, set up SSL/TLS using Let's Encrypt with Certbot
+- **HTTPS**: For production, set up SSL/TLS using Let's Encrypt with Certbot (see the HTTPS deployment option above)
 - **Backups**: Set up regular PostgreSQL database backups (the database is stored in Docker volumes)
 - **Monitoring**: Consider adding basic monitoring for your EC2 instance
 - **Updates**: To update your application:
   ```bash
   cd baby-tracker-api
   git pull
+  
+  # For basic HTTP deployment
   docker-compose down
   docker-compose up -d --build
+  
+  # For HTTPS deployment
+  docker-compose -f docker-compose.https.yml down
+  docker-compose -f docker-compose.https.yml up -d --build
   ```
+
+### Deployment Configuration Files
+
+The project includes two Docker Compose configuration files:
+
+1. **docker-compose.yml**: Basic deployment without HTTPS
+   - Suitable for development or when using an external HTTPS proxy
+   - Exposes the web service directly on port 80
+
+2. **docker-compose.https.yml**: Production deployment with HTTPS
+   - Includes Nginx as a reverse proxy and Certbot for SSL certificates
+   - Handles automatic HTTPS redirection and certificate renewal
+   - Recommended for production deployments
 
 ## License
 

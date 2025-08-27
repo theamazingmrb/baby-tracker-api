@@ -189,9 +189,82 @@ If you want to use a custom domain instead of the EC2 instance IP:
    docker-compose up -d
    ```
 
-## Setting Up HTTPS with Let's Encrypt (Optional but Recommended)
+## Setting Up HTTPS with Let's Encrypt (Recommended for Production)
 
-For production environments, HTTPS is strongly recommended:
+For production environments, HTTPS is strongly recommended. The project now includes a dedicated Docker Compose configuration file (`docker-compose.https.yml`) that sets up Nginx as a reverse proxy and Certbot for automatic SSL certificate management.
+
+### Option 1: Using the Integrated HTTPS Setup (Recommended)
+
+1. **Create required directories**:
+
+   ```bash
+   mkdir -p nginx/conf nginx/certbot/conf nginx/certbot/www
+   ```
+
+2. **Create a basic Nginx configuration**:
+
+   ```bash
+   cat > nginx/conf/app.conf << 'EOL'
+   server {
+       listen 80;
+       server_name your-domain.com www.your-domain.com;
+       
+       location /.well-known/acme-challenge/ {
+           root /var/www/certbot;
+       }
+       
+       location / {
+           return 301 https://$host$request_uri;
+       }
+   }
+   
+   server {
+       listen 443 ssl;
+       server_name your-domain.com www.your-domain.com;
+       
+       ssl_certificate /etc/letsencrypt/live/your-domain.com/fullchain.pem;
+       ssl_certificate_key /etc/letsencrypt/live/your-domain.com/privkey.pem;
+       
+       location / {
+           proxy_pass http://web:8000;
+           proxy_set_header Host $host;
+           proxy_set_header X-Real-IP $remote_addr;
+           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+           proxy_set_header X-Forwarded-Proto $scheme;
+       }
+   }
+   EOL
+   ```
+
+3. **Replace domain placeholders** with your actual domain:
+
+   ```bash
+   sed -i 's/your-domain.com/example.com/g' nginx/conf/app.conf  # Replace example.com with your domain
+   ```
+
+4. **Start the application** with HTTPS configuration:
+
+   ```bash
+   docker-compose -f docker-compose.https.yml up -d
+   ```
+
+5. **Obtain SSL certificates** (after DNS is properly configured):
+
+   ```bash
+   docker-compose -f docker-compose.https.yml exec certbot certbot certonly --webroot -w /var/www/certbot \
+     -d your-domain.com -d www.your-domain.com \
+     --email your-email@example.com --agree-tos --no-eff-email
+   ```
+
+6. **Reload Nginx** to apply the certificates:
+
+   ```bash
+   docker-compose -f docker-compose.https.yml exec nginx nginx -s reload
+   ```
+
+### Option 2: Manual HTTPS Setup
+
+If you prefer to set up HTTPS manually or have specific requirements:
 
 1. **Install Certbot**:
 
@@ -203,12 +276,11 @@ For production environments, HTTPS is strongly recommended:
 
    For Ubuntu:
    ```bash
-   sudo apt install -y certbot python3-certbot-nginx
+   sudo apt install -y certbot
    ```
 
 2. **Obtain SSL certificate**:
 
-   If you're using the default setup with port 80 exposed:
    ```bash
    # Stop Docker containers temporarily to free up port 80
    docker-compose down
@@ -232,13 +304,13 @@ For production environments, HTTPS is strongly recommended:
    ```nginx
    server {
        listen 80;
-       server_name your-domain.com;
+       server_name your-domain.com www.your-domain.com;
        return 301 https://$host$request_uri;
    }
 
    server {
        listen 443 ssl;
-       server_name your-domain.com;
+       server_name your-domain.com www.your-domain.com;
 
        ssl_certificate /etc/letsencrypt/live/your-domain.com/fullchain.pem;
        ssl_certificate_key /etc/letsencrypt/live/your-domain.com/privkey.pem;
@@ -255,37 +327,56 @@ For production environments, HTTPS is strongly recommended:
    }
    ```
 
-4. **Create a Docker Compose file for Nginx**:
+4. **Create a custom Nginx configuration**:
 
    ```bash
-   nano docker-compose.nginx.yml
+   mkdir -p nginx/conf
+   nano nginx/conf/app.conf
    ```
 
-   Add the following content:
-   ```yaml
-   version: '3'
+   Add the following content (replace yourdomain.com with your actual domain):
+   ```nginx
+   server {
+       listen 80;
+       server_name yourdomain.com www.yourdomain.com;
+       return 301 https://$host$request_uri;
+   }
 
-   services:
-     nginx:
-       image: nginx:latest
-       ports:
-         - "80:80"
-         - "443:443"
-       volumes:
-         - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-         - /etc/letsencrypt:/etc/letsencrypt
-       restart: always
-       network_mode: "host"
+   server {
+       listen 443 ssl;
+       server_name yourdomain.com www.yourdomain.com;
+
+       ssl_certificate /etc/letsencrypt/live/yourdomain.com/fullchain.pem;
+       ssl_certificate_key /etc/letsencrypt/live/yourdomain.com/privkey.pem;
+       ssl_protocols TLSv1.2 TLSv1.3;
+       ssl_prefer_server_ciphers on;
+
+       location / {
+           proxy_pass http://web:8000;
+           proxy_set_header Host $host;
+           proxy_set_header X-Real-IP $remote_addr;
+           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+           proxy_set_header X-Forwarded-Proto $scheme;
+       }
+   }
    ```
 
-5. **Start Nginx**:
+5. **Start the application with HTTPS support**:
 
    ```bash
-   docker-compose -f docker-compose.nginx.yml up -d
+   docker-compose -f docker-compose.https.yml up -d
    ```
 
-6. **Set up automatic certificate renewal**:
+6. **Certificate renewal is handled automatically**:
 
+   The Certbot container in the `docker-compose.https.yml` configuration will automatically attempt to renew certificates when needed. However, you can also manually trigger renewal:
+
+   ```bash
+   docker-compose -f docker-compose.https.yml exec certbot certbot renew
+   docker-compose -f docker-compose.https.yml exec nginx nginx -s reload
+   ```
+
+   If you prefer a scheduled renewal script:
    ```bash
    # Create a renewal script
    nano renew-cert.sh
@@ -294,9 +385,8 @@ For production environments, HTTPS is strongly recommended:
    Add the following content:
    ```bash
    #!/bin/bash
-   docker-compose -f docker-compose.nginx.yml down
-   certbot renew
-   docker-compose -f docker-compose.nginx.yml up -d
+   docker-compose -f docker-compose.https.yml exec certbot certbot renew
+   docker-compose -f docker-compose.https.yml exec nginx nginx -s reload
    ```
 
    Make it executable:
@@ -306,7 +396,7 @@ For production environments, HTTPS is strongly recommended:
 
    Add a cron job to run it monthly:
    ```bash
-   (crontab -l 2>/dev/null; echo "0 0 1 * * /home/ec2-user/baby-tracker-api/renew-cert.sh") | crontab -
+   (crontab -l 2>/dev/null; echo "0 0 1 * * $(pwd)/renew-cert.sh") | crontab -
    ```
 
 ## Database Backups
@@ -359,9 +449,13 @@ cd baby-tracker-api
 # Pull the latest code
 git pull
 
-# Rebuild and restart containers
+# For basic HTTP deployment
 docker-compose down
 docker-compose up -d --build
+
+# OR for HTTPS deployment
+docker-compose -f docker-compose.https.yml down
+docker-compose -f docker-compose.https.yml up -d --build
 ```
 
 ## Troubleshooting
@@ -369,7 +463,7 @@ docker-compose up -d --build
 ### Common Issues and Solutions
 
 1. **Container fails to start**:
-   - Check logs: `docker-compose logs web`
+   - Check logs: `docker-compose logs web` or `docker-compose -f docker-compose.https.yml logs web`
    - Verify environment variables in `.env`
    - Ensure database connection is working
 
@@ -384,15 +478,18 @@ docker-compose up -d --build
 
 4. **Port conflicts**:
    - Check if another service is using port 80: `sudo lsof -i :80`
-   - Modify port mapping in docker-compose.yml if needed
+   - Modify port mapping in `.env` by setting `WEB_PORT=8080` (or another available port)
 
 5. **SSL/HTTPS issues**:
    - Verify certificate paths in Nginx configuration
-   - Check certificate validity: `sudo certbot certificates`
+   - Check certificate validity: `docker-compose -f docker-compose.https.yml exec certbot certbot certificates`
+   - Ensure DNS is properly configured for your domain
+   - Check Nginx logs: `docker-compose -f docker-compose.https.yml logs nginx`
 
 ### Viewing Logs
 
 ```bash
+# For basic HTTP deployment
 # View all logs
 docker-compose logs
 
@@ -402,6 +499,18 @@ docker-compose logs db
 
 # Follow logs in real-time
 docker-compose logs -f web
+
+# For HTTPS deployment
+# View all logs
+docker-compose -f docker-compose.https.yml logs
+
+# View specific service logs
+docker-compose -f docker-compose.https.yml logs web
+docker-compose -f docker-compose.https.yml logs nginx
+docker-compose -f docker-compose.https.yml logs certbot
+
+# Follow logs in real-time
+docker-compose -f docker-compose.https.yml logs -f web
 ```
 
 ## Monitoring (Optional)
@@ -445,8 +554,39 @@ For basic monitoring of your EC2 instance:
 
 6. **Monitor your instance** for unusual activity.
 
+## Deployment Configuration Files
+
+The project includes two Docker Compose configuration files to suit different deployment needs:
+
+1. **docker-compose.yml**: Basic deployment without HTTPS
+   - Suitable for development or when using an external HTTPS proxy
+   - Exposes the web service directly on port 80 (or the port specified in `WEB_PORT`)
+   - Simpler configuration with fewer containers
+
+2. **docker-compose.https.yml**: Production deployment with HTTPS
+   - Includes Nginx as a reverse proxy and Certbot for SSL certificates
+   - Handles automatic HTTPS redirection and certificate renewal
+   - Recommended for production deployments
+
+## Environment Variables
+
+The following environment variables can be configured in your `.env` file:
+
+- `PRODUCTION_DOMAIN`: Your API backend domain (e.g., babytracker.xyz)
+- `FRONTEND_DOMAIN`: Your frontend application domain (e.g., babytracker.xyz)
+- `ALLOWED_HOSTS`: Comma-separated list of domains allowed to serve the application
+- `CORS_ALLOWED_ORIGINS`: Comma-separated list of origins allowed to access the API
+- `POSTGRES_USER`: PostgreSQL username (used by Docker)
+- `POSTGRES_PASSWORD`: PostgreSQL password (used by Docker)
+- `POSTGRES_DB`: PostgreSQL database name (used by Docker)
+- `WEB_PORT`: Port to expose the web service on (default: 80)
+- `NETWORK_HOST`: Host to bind the Django server to (default: 0.0.0.0)
+- `NETWORK_PORT`: Port for the Django server (default: 8000)
+
 ## Conclusion
 
 You now have a fully functional Baby Tracker application deployed on AWS EC2 using Docker Compose. This setup provides a cost-effective, flexible, and secure way to run your application in production.
+
+The new deployment configuration with separate files for HTTP and HTTPS makes it easy to choose the right setup for your needs, while the environment variable-based configuration allows for easy customization without modifying the Docker Compose files directly.
 
 For any questions or issues, please refer to the project's GitHub repository or create an issue for support.
