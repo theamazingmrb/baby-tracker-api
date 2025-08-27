@@ -48,10 +48,10 @@ yarn dev
 - Database setup instructions
 
 ### Deployment Documentation  
-- Production deployment with Docker
+- AWS EC2 + Docker Compose deployment (recommended)
 - Environment configuration for production
 - SSL/HTTPS setup with Let's Encrypt
-- Monitoring and maintenance guides
+- Monitoring, maintenance, and database backup guides
 
 ### Contributing Guidelines
 - How to contribute code, documentation, and bug reports
@@ -101,7 +101,8 @@ frontend/
 
 ### Changing Deployment Info
 - Edit `src/components/DeploymentSection.tsx` for deployment instructions
-- Update production configuration and hosting information
+- The current deployment documentation focuses on AWS EC2 + Docker Compose as the recommended approach
+- Update EC2 configuration, Docker commands, and monitoring instructions as needed
 
 ### Updating Contributing Guidelines
 - Modify `src/components/ContributeSection.tsx` for contribution information

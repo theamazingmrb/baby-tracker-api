@@ -747,9 +747,17 @@
                     </div>
                 </div>
                 <div class="setup-step">
-                    <h3>Quick Start with Docker</h3>
-                    <p>The easiest way to get started is with Docker</p>
+                    <h3>Quick Start with AWS EC2 + Docker Compose</h3>
+                    <p>Our recommended approach for simple, cost-effective deployment</p>
                     <div class="code-block">
+                        # Launch an EC2 instance (t3.nano recommended)
+                        # Install Docker and Docker Compose
+                        # Clone the repository
+                        git clone https://github.com/theamazingmrb/baby-tracker-api.git
+                        cd baby-tracker-api
+                        # Configure environment variables
+                        cp .env.example .env
+                        # Start the application
                         docker-compose up -d
                     </div>
                 </div>
@@ -824,7 +832,7 @@
                     <ul>
                         <li><a href="#setup">Setup Guide</a></li>
                         <li><a href="#contribute">Contribute</a></li>
-                        <li><a href="#deployment">Deployment</a></li>
+                        <li><a href="#deployment">AWS EC2 Deployment</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">

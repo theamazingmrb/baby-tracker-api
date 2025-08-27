@@ -264,7 +264,7 @@ export default function Home() {
               <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-elevated border border-gray-200 hover:shadow-lg transition duration-300 hover:-translate-y-1 h-full">
                 <div className="text-indigo-600 mb-4 text-3xl">🚀</div>
                 <h3 className="text-xl font-bold mb-2 text-gray-900">Deployment Guide</h3>
-                <p className="text-gray-800 mb-4">Step-by-step instructions for deploying the Baby Tracker application using Docker or manual setup.</p>
+                <p className="text-gray-800 mb-4">Step-by-step instructions for deploying the Baby Tracker application using AWS EC2 + Docker Compose, our recommended approach for simple, cost-effective deployment.</p>
                 <div className="text-indigo-600 font-medium flex items-center">
                   View Guide
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">

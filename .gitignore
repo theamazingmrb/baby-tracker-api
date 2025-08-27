@@ -81,3 +81,8 @@ Procfile
 *.pyc
 *.pyo
 *.pyd
+
+# Deployment Files
+*.pem
+*.key
+nginx/

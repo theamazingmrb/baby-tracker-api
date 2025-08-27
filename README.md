@@ -316,9 +316,63 @@ This multi-layered approach guarantees that users can only view and manipulate t
 
 ## Deployment Options
 
-### Docker Deployment (Recommended)
+### AWS EC2 Deployment with Docker Compose (Recommended)
 
-The easiest way to deploy Baby Tracker is using Docker and docker-compose:
+The easiest way to deploy Baby Tracker to production is using AWS EC2 with Docker Compose:
+
+1. **Launch an EC2 instance**:
+   - Use a t3.nano instance (sufficient for most use cases, ~$5-6/month)
+   - Select Amazon Linux 2023 or Ubuntu Server
+   - Configure security group to allow HTTP (port 80), HTTPS (port 443), and SSH (port 22)
+   - Create or use an existing key pair for SSH access
+
+2. **Connect to your instance**:
+   ```bash
+   ssh -i your-key.pem ec2-user@your-instance-ip
+   ```
+
+3. **Install Docker and Docker Compose**:
+   ```bash
+   # For Amazon Linux 2023
+   sudo yum update -y
+   sudo yum install -y docker
+   sudo systemctl start docker
+   sudo systemctl enable docker
+   sudo usermod -aG docker $USER
+   
+   # Install Docker Compose
+   sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+   sudo chmod +x /usr/local/bin/docker-compose
+   ```
+
+4. **Clone the repository**:
+   ```bash
+   git clone https://github.com/theamazingmrb/baby-tracker-api.git
+   cd baby-tracker-api
+   ```
+
+5. **Create and configure environment variables**:
+   ```bash
+   cp .env.example .env
+   # Edit .env with your production settings
+   # Make sure to set DJANGO_DEBUG=False and update PRODUCTION_DOMAIN
+   ```
+
+6. **Start the application**:
+   ```bash
+   docker-compose up -d
+   ```
+
+7. **Create a superuser**:
+   ```bash
+   docker-compose exec web python manage.py createsuperuser
+   ```
+
+8. **Access your application** at http://your-instance-ip/ and the admin interface at http://your-instance-ip/admin/
+
+### Local Docker Deployment
+
+For local development or self-hosting on your own hardware:
 
 1. Clone the repository:
    ```bash
@@ -342,7 +396,7 @@ The easiest way to deploy Baby Tracker is using Docker and docker-compose:
    docker-compose exec web python manage.py createsuperuser
    ```
 
-5. Access the API at http://localhost:8000/api/ and admin interface at http://localhost:8000/admin/
+5. Access the API at http://localhost:80/api/ and admin interface at http://localhost:80/admin/
 
 ### Documentation Site Deployment
 
@@ -374,33 +428,48 @@ Alternatively, you can deploy the documentation site to a service like Vercel or
 
 **Note**: This frontend is for documentation purposes only and does not provide a user interface for the baby tracking functionality. Developers using this API would need to build their own frontend application to interact with the API endpoints.
 
-### Manual Deployment
+### Custom Deployment Options
 
-The application can also be deployed on any platform that supports Django:
+While the EC2 + Docker Compose method above is recommended for simplicity and cost-effectiveness, you can deploy Baby Tracker on any platform that supports Docker or Django:
 
-- **Heroku**: Configured for easy deployment with PostgreSQL
-- **AWS/GCP/Azure**: Can be deployed as a containerized application
-- **VPS/Dedicated Server**: Follow standard Django deployment practices
+- **Other Cloud Providers**: GCP, Azure, DigitalOcean, etc.
+- **Kubernetes**: For more complex, scalable deployments
+- **VPS/Dedicated Server**: Any server that can run Docker
+- **Platform as a Service**: Heroku, Render, Railway, etc.
 
-Key configuration for production:
+Key configuration for any production deployment:
 - Use PostgreSQL database
-- Configure WhiteNoise for static files
-- Set proper environment variables (see below)
-- Use HTTPS in production
+- Configure proper environment variables (see below)
+- Enable HTTPS in production
+- Set up regular database backups
 
 ### Environment Variables
 
 The following environment variables should be configured for deployment:
 
-- `PRODUCTION_DOMAIN`: Your API backend domain (e.g., api.example.com)
+- `PRODUCTION_DOMAIN`: Your API backend domain (e.g., api.example.com or EC2 IP address)
 - `FRONTEND_DOMAIN`: Your frontend application domain (e.g., app.example.com)
 - `CORS_ALLOWED_ORIGINS`: Comma-separated list of origins allowed to access the API
 - `CORS_ALLOW_ALL_ORIGINS`: Set to 'True' to allow all origins (not recommended for production)
 - `DATABASE_URL`: PostgreSQL connection string
-- `SECRET_KEY`: Django secret key
+- `SECRET_KEY`: Django secret key (use a strong, random value)
 - `DJANGO_DEBUG`: Set to 'False' in production
 
-These variables can be set in your deployment environment or in the .env file.
+These variables should be set in your `.env` file for Docker Compose deployments.
+
+### Production Considerations
+
+- **Domain Setup**: To use a custom domain, configure DNS to point to your EC2 instance IP and set up Nginx or use AWS Route 53
+- **HTTPS**: For production, set up SSL/TLS using Let's Encrypt with Certbot
+- **Backups**: Set up regular PostgreSQL database backups (the database is stored in Docker volumes)
+- **Monitoring**: Consider adding basic monitoring for your EC2 instance
+- **Updates**: To update your application:
+  ```bash
+  cd baby-tracker-api
+  git pull
+  docker-compose down
+  docker-compose up -d --build
+  ```
 
 ## License
 
