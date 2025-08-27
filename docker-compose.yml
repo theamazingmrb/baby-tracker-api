@@ -47,7 +47,7 @@ services:
       - ./frontend/tailwind.config.ts:/app/frontend/tailwind.config.ts
       - ./frontend/tsconfig.json:/app/frontend/tsconfig.json
     ports:
-      - "8000:8000"
+      - "80:8000"
     # Use the entrypoint script from Dockerfile instead of overriding command
 
 volumes:
