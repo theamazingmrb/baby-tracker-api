@@ -19,7 +19,7 @@ export default function Home() {
             A privacy-first, self-hostable solution for tracking your baby’s development.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-3">
-            <a href="#setup" className="btn-primary">Get Started</a>
+            <a href="/setup-guide" className="btn-primary">Get Started</a>
             <a
               href="https://github.com/theamazingmrb/baby-tracker-api"
               className="btn-ghost"
