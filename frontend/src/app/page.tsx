@@ -2,6 +2,7 @@
 import ApiSection from "@/components/ApiSection";
 import SetupSection from "@/components/SetupSection";
 import ContributeSection from "@/components/ContributeSection";
+import ExampleWorkflowSection from "@/components/ExampleWorkflowSection";
 import Link from "next/link";
 
 export default function Home() {
@@ -201,6 +202,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Example Workflow Section */}
+      <ExampleWorkflowSection />
 
       {/* Documentation Section */}
       <section className="py-16 bg-gray-50" id="documentation">

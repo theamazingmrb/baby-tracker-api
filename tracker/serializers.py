@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Baby, Feeding, DiaperChange, Sleep, Reminder, GrowthMilestone, Medication, DoctorAppointment, PumpingSession, Milestone
 from django.core.exceptions import PermissionDenied
+from django.contrib.auth.models import User
 
 class BabyInsightSerializer(serializers.Serializer):
     feeding_insights = serializers.JSONField(required=False)
@@ -130,3 +131,19 @@ class MilestoneSerializer(serializers.ModelSerializer):
         if request and request.user and value.user != request.user:
             raise serializers.ValidationError("You don't have permission to add data for this baby.")
         return value
+
+class RegisterSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(required=True)
+    password = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})
+    
+    class Meta:
+        model = User
+        fields = ['username', 'password', 'email']
+        
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            email=validated_data['email'],
+            password=validated_data['password']
+        )
+        return user

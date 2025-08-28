@@ -205,6 +205,7 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'API documentation for Baby Tracker application',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
+    'ENUM_NAMESPACES': ['tracker.models']
 }
 
 # CORS settings
@@ -237,19 +238,4 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
-SPECTACULAR_SETTINGS = {
-    "ENUM_NAME_OVERRIDES": {
-        "tracker.models.Feeding.FEEDING_SIDE_CHOICES": [
-            ("LEFT", "Left"),
-            ("RIGHT", "Right"),
-            ("BOTH", "Both"),
-            ("NONE", "None")
-        ],
-        "tracker.models.PumpingSession.PUMPING_SIDE_CHOICES": [
-            ("LEFT", "Left"),
-            ("RIGHT", "Right"),
-            ("BOTH", "Both"),
-            ("NONE", "None")
-        ]
-    }
-}
+# The SPECTACULAR_SETTINGS dictionary is now defined above

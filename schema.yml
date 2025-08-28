@@ -1,117 +1,14 @@
 openapi: 3.0.3
 info:
-  title: ''
-  version: 0.0.0
+  title: Baby Tracker API
+  version: 1.0.0
+  description: API documentation for Baby Tracker application
 paths:
-  /api/appointments/:
+  /api/recipes/:
     get:
-      operationId: appointments_list
+      operationId: recipes_list
       tags:
-      - appointments
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/DoctorAppointment'
-          description: ''
-    post:
-      operationId: appointments_create
-      tags:
-      - appointments
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DoctorAppointment'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/DoctorAppointment'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/DoctorAppointment'
-        required: true
-      security:
-      - jwtAuth: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DoctorAppointment'
-          description: ''
-  /api/appointments/{id}/:
-    delete:
-      operationId: appointments_destroy
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - appointments
-      security:
-      - jwtAuth: []
-      responses:
-        '204':
-          description: No response body
-  /api/babies/:
-    get:
-      operationId: babies_list
-      tags:
-      - babies
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Baby'
-          description: ''
-    post:
-      operationId: babies_create
-      tags:
-      - babies
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Baby'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Baby'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Baby'
-        required: true
-      security:
-      - jwtAuth: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Baby'
-          description: ''
-  /api/babies/{id}/:
-    get:
-      operationId: babies_retrieve
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - babies
+      - recipes
       security:
       - jwtAuth: []
       - {}
@@ -120,10 +17,58 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Baby'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Recipe'
+          description: ''
+    post:
+      operationId: recipes_create
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Recipe'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Recipe'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Recipe'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+          description: ''
+  /api/recipes/{id}/:
+    get:
+      operationId: recipes_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
           description: ''
     put:
-      operationId: babies_update
+      operationId: recipes_update
       parameters:
       - in: path
         name: id
@@ -131,31 +76,30 @@ paths:
           type: integer
         required: true
       tags:
-      - babies
+      - recipes
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Baby'
+              $ref: '#/components/schemas/Recipe'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Baby'
+              $ref: '#/components/schemas/Recipe'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Baby'
+              $ref: '#/components/schemas/Recipe'
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Baby'
+                $ref: '#/components/schemas/Recipe'
           description: ''
     patch:
-      operationId: babies_partial_update
+      operationId: recipes_partial_update
       parameters:
       - in: path
         name: id
@@ -163,30 +107,29 @@ paths:
           type: integer
         required: true
       tags:
-      - babies
+      - recipes
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedBaby'
+              $ref: '#/components/schemas/PatchedRecipe'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedBaby'
+              $ref: '#/components/schemas/PatchedRecipe'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedBaby'
+              $ref: '#/components/schemas/PatchedRecipe'
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Baby'
+                $ref: '#/components/schemas/Recipe'
           description: ''
     delete:
-      operationId: babies_destroy
+      operationId: recipes_destroy
       parameters:
       - in: path
         name: id
@@ -194,369 +137,7 @@ paths:
           type: integer
         required: true
       tags:
-      - babies
-      security:
-      - jwtAuth: []
-      - {}
-      responses:
-        '204':
-          description: No response body
-  /api/babies/ai-insights/:
-    get:
-      operationId: babies_ai_insights_retrieve
-      tags:
-      - babies
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BabyInsight'
-          description: ''
-  /api/babies/stats/:
-    get:
-      operationId: babies_stats_retrieve
-      tags:
-      - babies
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BabyStats'
-          description: ''
-  /api/diaper-changes/:
-    get:
-      operationId: diaper_changes_list
-      tags:
-      - diaper-changes
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/DiaperChange'
-          description: ''
-    post:
-      operationId: diaper_changes_create
-      tags:
-      - diaper-changes
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DiaperChange'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/DiaperChange'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/DiaperChange'
-        required: true
-      security:
-      - jwtAuth: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DiaperChange'
-          description: ''
-  /api/feedings/:
-    get:
-      operationId: feedings_list
-      tags:
-      - feedings
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Feeding'
-          description: ''
-    post:
-      operationId: feedings_create
-      tags:
-      - feedings
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Feeding'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Feeding'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Feeding'
-        required: true
-      security:
-      - jwtAuth: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Feeding'
-          description: ''
-  /api/feedings/{id}/:
-    get:
-      operationId: feedings_retrieve
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - feedings
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Feeding'
-          description: ''
-    put:
-      operationId: feedings_update
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - feedings
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Feeding'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Feeding'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Feeding'
-        required: true
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Feeding'
-          description: ''
-    patch:
-      operationId: feedings_partial_update
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - feedings
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedFeeding'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedFeeding'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedFeeding'
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Feeding'
-          description: ''
-    delete:
-      operationId: feedings_destroy
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - feedings
-      security:
-      - jwtAuth: []
-      responses:
-        '204':
-          description: No response body
-  /api/growth-milestones/:
-    get:
-      operationId: growth_milestones_list
-      tags:
-      - growth-milestones
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/GrowthMilestone'
-          description: ''
-    post:
-      operationId: growth_milestones_create
-      tags:
-      - growth-milestones
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GrowthMilestone'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/GrowthMilestone'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/GrowthMilestone'
-        required: true
-      security:
-      - jwtAuth: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GrowthMilestone'
-          description: ''
-  /api/medications/:
-    get:
-      operationId: medications_list
-      tags:
-      - medications
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Medication'
-          description: ''
-    post:
-      operationId: medications_create
-      tags:
-      - medications
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Medication'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Medication'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Medication'
-        required: true
-      security:
-      - jwtAuth: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Medication'
-          description: ''
-  /api/medications/{id}/:
-    delete:
-      operationId: medications_destroy
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - medications
-      security:
-      - jwtAuth: []
-      responses:
-        '204':
-          description: No response body
-  /api/pumping-sessions/:
-    get:
-      operationId: pumping_sessions_list
-      tags:
-      - pumping-sessions
-      security:
-      - jwtAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PumpingSession'
-          description: ''
-    post:
-      operationId: pumping_sessions_create
-      tags:
-      - pumping-sessions
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PumpingSession'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PumpingSession'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PumpingSession'
-        required: true
-      security:
-      - jwtAuth: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PumpingSession'
-          description: ''
-  /api/pumping-sessions/{id}/:
-    delete:
-      operationId: pumping_sessions_destroy
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - pumping-sessions
+      - recipes
       security:
       - jwtAuth: []
       responses:
@@ -646,14 +227,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Ingredient'
           description: ''
-  /api/recipes/recipes/:
+  /api/tracker/appointments/:
     get:
-      operationId: recipes_recipes_list
+      operationId: tracker_appointments_list
       tags:
-      - recipes
+      - tracker
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -661,23 +241,23 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Recipe'
+                  $ref: '#/components/schemas/DoctorAppointment'
           description: ''
     post:
-      operationId: recipes_recipes_create
+      operationId: tracker_appointments_create
       tags:
-      - recipes
+      - tracker
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Recipe'
+              $ref: '#/components/schemas/DoctorAppointment'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Recipe'
+              $ref: '#/components/schemas/DoctorAppointment'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Recipe'
+              $ref: '#/components/schemas/DoctorAppointment'
         required: true
       security:
       - jwtAuth: []
@@ -686,11 +266,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Recipe'
+                $ref: '#/components/schemas/DoctorAppointment'
           description: ''
-  /api/recipes/recipes/{id}/:
+  /api/tracker/appointments/{id}/:
     get:
-      operationId: recipes_recipes_retrieve
+      operationId: tracker_appointments_retrieve
       parameters:
       - in: path
         name: id
@@ -698,19 +278,18 @@ paths:
           type: integer
         required: true
       tags:
-      - recipes
+      - tracker
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Recipe'
+                $ref: '#/components/schemas/DoctorAppointment'
           description: ''
     put:
-      operationId: recipes_recipes_update
+      operationId: tracker_appointments_update
       parameters:
       - in: path
         name: id
@@ -718,18 +297,18 @@ paths:
           type: integer
         required: true
       tags:
-      - recipes
+      - tracker
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Recipe'
+              $ref: '#/components/schemas/DoctorAppointment'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Recipe'
+              $ref: '#/components/schemas/DoctorAppointment'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Recipe'
+              $ref: '#/components/schemas/DoctorAppointment'
         required: true
       security:
       - jwtAuth: []
@@ -738,10 +317,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Recipe'
+                $ref: '#/components/schemas/DoctorAppointment'
           description: ''
     patch:
-      operationId: recipes_recipes_partial_update
+      operationId: tracker_appointments_partial_update
       parameters:
       - in: path
         name: id
@@ -749,18 +328,18 @@ paths:
           type: integer
         required: true
       tags:
-      - recipes
+      - tracker
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedRecipe'
+              $ref: '#/components/schemas/PatchedDoctorAppointment'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedRecipe'
+              $ref: '#/components/schemas/PatchedDoctorAppointment'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedRecipe'
+              $ref: '#/components/schemas/PatchedDoctorAppointment'
       security:
       - jwtAuth: []
       responses:
@@ -768,10 +347,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Recipe'
+                $ref: '#/components/schemas/DoctorAppointment'
           description: ''
     delete:
-      operationId: recipes_recipes_destroy
+      operationId: tracker_appointments_destroy
       parameters:
       - in: path
         name: id
@@ -779,17 +358,1119 @@ paths:
           type: integer
         required: true
       tags:
-      - recipes
+      - tracker
       security:
       - jwtAuth: []
       responses:
         '204':
           description: No response body
-  /api/reminders/:
+  /api/tracker/babies/:
     get:
-      operationId: reminders_list
+      operationId: tracker_babies_list
       tags:
-      - reminders
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Baby'
+          description: ''
+    post:
+      operationId: tracker_babies_create
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Baby'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Baby'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Baby'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Baby'
+          description: ''
+  /api/tracker/babies/{baby_id}/ai-insights/:
+    get:
+      operationId: tracker_babies_ai_insights_retrieve
+      parameters:
+      - in: path
+        name: baby_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BabyInsight'
+          description: ''
+    post:
+      operationId: tracker_babies_ai_insights_create
+      parameters:
+      - in: path
+        name: baby_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BabyInsight'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BabyInsight'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BabyInsight'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BabyInsight'
+          description: ''
+  /api/tracker/babies/{baby_id}/milestones/:
+    get:
+      operationId: tracker_babies_milestones_list
+      parameters:
+      - in: path
+        name: baby_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Milestone'
+          description: ''
+    post:
+      operationId: tracker_babies_milestones_create
+      parameters:
+      - in: path
+        name: baby_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Milestone'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Milestone'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Milestone'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Milestone'
+          description: ''
+  /api/tracker/babies/{baby_id}/milestones/{id}/:
+    get:
+      operationId: tracker_babies_milestones_retrieve
+      parameters:
+      - in: path
+        name: baby_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Milestone'
+          description: ''
+    put:
+      operationId: tracker_babies_milestones_update
+      parameters:
+      - in: path
+        name: baby_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Milestone'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Milestone'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Milestone'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Milestone'
+          description: ''
+    patch:
+      operationId: tracker_babies_milestones_partial_update
+      parameters:
+      - in: path
+        name: baby_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedMilestone'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedMilestone'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedMilestone'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Milestone'
+          description: ''
+    delete:
+      operationId: tracker_babies_milestones_destroy
+      parameters:
+      - in: path
+        name: baby_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/tracker/babies/{baby_id}/visualizations/:
+    get:
+      operationId: tracker_babies_visualizations_retrieve
+      parameters:
+      - in: path
+        name: baby_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BabyInsight'
+          description: ''
+  /api/tracker/babies/{id}/:
+    get:
+      operationId: tracker_babies_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Baby'
+          description: ''
+    put:
+      operationId: tracker_babies_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Baby'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Baby'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Baby'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Baby'
+          description: ''
+    patch:
+      operationId: tracker_babies_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedBaby'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedBaby'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBaby'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Baby'
+          description: ''
+    delete:
+      operationId: tracker_babies_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/tracker/babies/stats/:
+    get:
+      operationId: tracker_babies_stats_retrieve
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BabyStats'
+          description: ''
+  /api/tracker/diaper-changes/:
+    get:
+      operationId: tracker_diaper_changes_list
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DiaperChange'
+          description: ''
+    post:
+      operationId: tracker_diaper_changes_create
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DiaperChange'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DiaperChange'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DiaperChange'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiaperChange'
+          description: ''
+  /api/tracker/diaper-changes/{id}/:
+    get:
+      operationId: tracker_diaper_changes_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiaperChange'
+          description: ''
+    put:
+      operationId: tracker_diaper_changes_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DiaperChange'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DiaperChange'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DiaperChange'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiaperChange'
+          description: ''
+    patch:
+      operationId: tracker_diaper_changes_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedDiaperChange'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedDiaperChange'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedDiaperChange'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiaperChange'
+          description: ''
+    delete:
+      operationId: tracker_diaper_changes_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/tracker/feedings/:
+    get:
+      operationId: tracker_feedings_list
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Feeding'
+          description: ''
+    post:
+      operationId: tracker_feedings_create
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Feeding'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Feeding'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Feeding'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feeding'
+          description: ''
+  /api/tracker/feedings/{id}/:
+    get:
+      operationId: tracker_feedings_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feeding'
+          description: ''
+    put:
+      operationId: tracker_feedings_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Feeding'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Feeding'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Feeding'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feeding'
+          description: ''
+    patch:
+      operationId: tracker_feedings_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedFeeding'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedFeeding'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedFeeding'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feeding'
+          description: ''
+    delete:
+      operationId: tracker_feedings_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/tracker/growth-milestones/:
+    get:
+      operationId: tracker_growth_milestones_list
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GrowthMilestone'
+          description: ''
+    post:
+      operationId: tracker_growth_milestones_create
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GrowthMilestone'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GrowthMilestone'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GrowthMilestone'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrowthMilestone'
+          description: ''
+  /api/tracker/growth-milestones/{id}/:
+    get:
+      operationId: tracker_growth_milestones_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrowthMilestone'
+          description: ''
+    put:
+      operationId: tracker_growth_milestones_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GrowthMilestone'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GrowthMilestone'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GrowthMilestone'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrowthMilestone'
+          description: ''
+    patch:
+      operationId: tracker_growth_milestones_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedGrowthMilestone'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedGrowthMilestone'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedGrowthMilestone'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrowthMilestone'
+          description: ''
+    delete:
+      operationId: tracker_growth_milestones_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/tracker/medications/:
+    get:
+      operationId: tracker_medications_list
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Medication'
+          description: ''
+    post:
+      operationId: tracker_medications_create
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Medication'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Medication'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Medication'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Medication'
+          description: ''
+  /api/tracker/medications/{id}/:
+    get:
+      operationId: tracker_medications_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Medication'
+          description: ''
+    put:
+      operationId: tracker_medications_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Medication'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Medication'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Medication'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Medication'
+          description: ''
+    patch:
+      operationId: tracker_medications_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedMedication'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedMedication'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedMedication'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Medication'
+          description: ''
+    delete:
+      operationId: tracker_medications_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/tracker/pumping-sessions/:
+    get:
+      operationId: tracker_pumping_sessions_list
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PumpingSession'
+          description: ''
+    post:
+      operationId: tracker_pumping_sessions_create
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PumpingSession'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PumpingSession'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PumpingSession'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PumpingSession'
+          description: ''
+  /api/tracker/pumping-sessions/{id}/:
+    get:
+      operationId: tracker_pumping_sessions_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PumpingSession'
+          description: ''
+    put:
+      operationId: tracker_pumping_sessions_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PumpingSession'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PumpingSession'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PumpingSession'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PumpingSession'
+          description: ''
+    patch:
+      operationId: tracker_pumping_sessions_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPumpingSession'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPumpingSession'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPumpingSession'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PumpingSession'
+          description: ''
+    delete:
+      operationId: tracker_pumping_sessions_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/tracker/register/:
+    post:
+      operationId: tracker_register_create
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Register'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Register'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Register'
+          description: ''
+  /api/tracker/reminders/:
+    get:
+      operationId: tracker_reminders_list
+      tags:
+      - tracker
       security:
       - jwtAuth: []
       responses:
@@ -802,9 +1483,9 @@ paths:
                   $ref: '#/components/schemas/Reminder'
           description: ''
     post:
-      operationId: reminders_create
+      operationId: tracker_reminders_create
       tags:
-      - reminders
+      - tracker
       requestBody:
         content:
           application/json:
@@ -826,156 +1507,107 @@ paths:
               schema:
                 $ref: '#/components/schemas/Reminder'
           description: ''
-  /api/schema/:
+  /api/tracker/reminders/{id}/:
     get:
-      operationId: schema_retrieve
-      description: |-
-        OpenApi3 schema for this API. Format can be selected via content negotiation.
-
-        - YAML: application/vnd.oai.openapi
-        - JSON: application/vnd.oai.openapi+json
+      operationId: tracker_reminders_retrieve
       parameters:
-      - in: query
-        name: format
+      - in: path
+        name: id
         schema:
-          type: string
-          enum:
-          - json
-          - yaml
-      - in: query
-        name: lang
-        schema:
-          type: string
-          enum:
-          - af
-          - ar
-          - ar-dz
-          - ast
-          - az
-          - be
-          - bg
-          - bn
-          - br
-          - bs
-          - ca
-          - ckb
-          - cs
-          - cy
-          - da
-          - de
-          - dsb
-          - el
-          - en
-          - en-au
-          - en-gb
-          - eo
-          - es
-          - es-ar
-          - es-co
-          - es-mx
-          - es-ni
-          - es-ve
-          - et
-          - eu
-          - fa
-          - fi
-          - fr
-          - fy
-          - ga
-          - gd
-          - gl
-          - he
-          - hi
-          - hr
-          - hsb
-          - hu
-          - hy
-          - ia
-          - id
-          - ig
-          - io
-          - is
-          - it
-          - ja
-          - ka
-          - kab
-          - kk
-          - km
-          - kn
-          - ko
-          - ky
-          - lb
-          - lt
-          - lv
-          - mk
-          - ml
-          - mn
-          - mr
-          - ms
-          - my
-          - nb
-          - ne
-          - nl
-          - nn
-          - os
-          - pa
-          - pl
-          - pt
-          - pt-br
-          - ro
-          - ru
-          - sk
-          - sl
-          - sq
-          - sr
-          - sr-latn
-          - sv
-          - sw
-          - ta
-          - te
-          - tg
-          - th
-          - tk
-          - tr
-          - tt
-          - udm
-          - ug
-          - uk
-          - ur
-          - uz
-          - vi
-          - zh-hans
-          - zh-hant
+          type: integer
+        required: true
       tags:
-      - schema
+      - tracker
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
-            application/vnd.oai.openapi:
-              schema:
-                type: object
-                additionalProperties: {}
-            application/yaml:
-              schema:
-                type: object
-                additionalProperties: {}
-            application/vnd.oai.openapi+json:
-              schema:
-                type: object
-                additionalProperties: {}
             application/json:
               schema:
-                type: object
-                additionalProperties: {}
+                $ref: '#/components/schemas/Reminder'
           description: ''
-  /api/sleep/:
-    get:
-      operationId: sleep_list
+    put:
+      operationId: tracker_reminders_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
       tags:
-      - sleep
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Reminder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Reminder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Reminder'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reminder'
+          description: ''
+    patch:
+      operationId: tracker_reminders_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedReminder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedReminder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedReminder'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reminder'
+          description: ''
+    delete:
+      operationId: tracker_reminders_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/tracker/sleep/:
+    get:
+      operationId: tracker_sleep_list
+      tags:
+      - tracker
       security:
       - jwtAuth: []
       responses:
@@ -988,9 +1620,9 @@ paths:
                   $ref: '#/components/schemas/Sleep'
           description: ''
     post:
-      operationId: sleep_create
+      operationId: tracker_sleep_create
       tags:
-      - sleep
+      - tracker
       requestBody:
         content:
           application/json:
@@ -1012,14 +1644,110 @@ paths:
               schema:
                 $ref: '#/components/schemas/Sleep'
           description: ''
-  /api/token/:
+  /api/tracker/sleep/{id}/:
+    get:
+      operationId: tracker_sleep_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sleep'
+          description: ''
+    put:
+      operationId: tracker_sleep_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sleep'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Sleep'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Sleep'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sleep'
+          description: ''
+    patch:
+      operationId: tracker_sleep_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSleep'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSleep'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSleep'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sleep'
+          description: ''
+    delete:
+      operationId: tracker_sleep_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tracker
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/tracker/token/:
     post:
-      operationId: token_create
+      operationId: tracker_token_create
       description: |-
         Takes a set of user credentials and returns an access and refresh JSON web
         token pair to prove the authentication of those credentials.
       tags:
-      - token
+      - tracker
       requestBody:
         content:
           application/json:
@@ -1039,14 +1767,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/TokenObtainPair'
           description: ''
-  /api/token/refresh/:
+  /api/tracker/token/refresh/:
     post:
-      operationId: token_refresh_create
+      operationId: tracker_token_refresh_create
       description: |-
         Takes a refresh type JSON web token and returns an access type JSON web
         token if the refresh token is valid.
       tags:
-      - token
+      - tracker
       requestBody:
         content:
           application/json:
@@ -1085,6 +1813,7 @@ components:
           maxLength: 10
         user:
           type: integer
+          readOnly: true
       required:
       - birth_date
       - gender
@@ -1096,9 +1825,9 @@ components:
       properties:
         feeding_insights: {}
         sleep_insights: {}
-      required:
-      - feeding_insights
-      - sleep_insights
+        growth_insights: {}
+        diaper_insights: {}
+        comprehensive_insights: {}
     BabyStats:
       type: object
       properties:
@@ -1117,6 +1846,20 @@ components:
     BlankEnum:
       enum:
       - ''
+    CategoryEnum:
+      enum:
+      - physical
+      - social
+      - cognitive
+      - language
+      - emotional
+      type: string
+      description: |-
+        * `physical` - Physical
+        * `social` - Social
+        * `cognitive` - Cognitive
+        * `language` - Language
+        * `emotional` - Emotional
     DiaperChange:
       type: object
       properties:
@@ -1213,7 +1956,7 @@ components:
         last_side:
           nullable: true
           oneOf:
-          - $ref: '#/components/schemas/tracker.models.Feeding.FEEDING_SIDE_CHOICES'
+          - $ref: '#/components/schemas/LastSideEnum'
           - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
         baby:
@@ -1290,8 +2033,9 @@ components:
           format: double
         unit:
           type: integer
-          maximum: 2147483647
-          minimum: -2147483648
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
         recipe:
           type: integer
       required:
@@ -1301,6 +2045,16 @@ components:
       - quantity
       - recipe
       - unit
+    LastSideEnum:
+      enum:
+      - left_feeding
+      - right_feeding
+      - both_feeding
+      type: string
+      description: |-
+        * `left_feeding` - LEFT
+        * `right_feeding` - RIGHT
+        * `both_feeding` - BOTH
     Medication:
       type: object
       properties:
@@ -1324,6 +2078,7 @@ components:
           nullable: true
         user:
           type: integer
+          readOnly: true
       required:
       - dosage
       - frequency
@@ -1331,6 +2086,31 @@ components:
       - name
       - start_date
       - user
+    Milestone:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 255
+        category:
+          $ref: '#/components/schemas/CategoryEnum'
+        date_achieved:
+          type: string
+          format: date
+        notes:
+          type: string
+          nullable: true
+        baby:
+          type: integer
+      required:
+      - baby
+      - category
+      - date_achieved
+      - id
+      - title
     NullEnum:
       enum:
       - null
@@ -1351,6 +2131,47 @@ components:
           maxLength: 10
         user:
           type: integer
+          readOnly: true
+    PatchedDiaperChange:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        time:
+          type: string
+          format: date-time
+          readOnly: true
+        diaper_type:
+          $ref: '#/components/schemas/DiaperTypeEnum'
+        baby:
+          type: integer
+    PatchedDoctorAppointment:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        doctor_name:
+          type: string
+          maxLength: 100
+        location:
+          type: string
+          maxLength: 255
+        date:
+          type: string
+          format: date
+        time:
+          type: string
+          format: time
+        reason:
+          type: string
+          nullable: true
+        notes:
+          type: string
+          nullable: true
+        baby:
+          type: integer
     PatchedFeeding:
       type: object
       properties:
@@ -1370,11 +2191,95 @@ components:
         last_side:
           nullable: true
           oneOf:
-          - $ref: '#/components/schemas/tracker.models.Feeding.FEEDING_SIDE_CHOICES'
+          - $ref: '#/components/schemas/LastSideEnum'
           - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
         baby:
           type: integer
+    PatchedGrowthMilestone:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        date:
+          type: string
+          format: date
+        height:
+          type: number
+          format: double
+          description: Height in cm
+        weight:
+          type: number
+          format: double
+          description: Weight in kg
+        notes:
+          type: string
+          nullable: true
+        baby:
+          type: integer
+    PatchedMedication:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        dosage:
+          type: string
+          maxLength: 100
+        frequency:
+          $ref: '#/components/schemas/FrequencyEnum'
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+          nullable: true
+        user:
+          type: integer
+          readOnly: true
+    PatchedMilestone:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 255
+        category:
+          $ref: '#/components/schemas/CategoryEnum'
+        date_achieved:
+          type: string
+          format: date
+        notes:
+          type: string
+          nullable: true
+        baby:
+          type: integer
+    PatchedPumpingSession:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        time:
+          type: string
+          format: date-time
+          readOnly: true
+        side:
+          $ref: '#/components/schemas/SideEnum'
+        quantity:
+          type: number
+          format: double
+          description: Milk pumped in ounces/ml
+        user:
+          type: integer
+          readOnly: true
     PatchedRecipe:
       type: object
       properties:
@@ -1408,6 +2313,38 @@ components:
           type: boolean
         public_edits:
           type: boolean
+    PatchedReminder:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        message:
+          type: string
+          maxLength: 255
+        time:
+          type: string
+          format: date-time
+        user:
+          type: integer
+          readOnly: true
+        baby:
+          type: integer
+    PatchedSleep:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        start_time:
+          type: string
+          format: date-time
+        end_time:
+          type: string
+          format: date-time
+          nullable: true
+        baby:
+          type: integer
     PumpingSession:
       type: object
       properties:
@@ -1419,13 +2356,14 @@ components:
           format: date-time
           readOnly: true
         side:
-          $ref: '#/components/schemas/tracker.models.PumpingSession.PUMPING_SIDE_CHOICES'
+          $ref: '#/components/schemas/SideEnum'
         quantity:
           type: number
           format: double
           description: Milk pumped in ounces/ml
         user:
           type: integer
+          readOnly: true
       required:
       - id
       - quantity
@@ -1472,6 +2410,25 @@ components:
       - id
       - instructions
       - name
+    Register:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        password:
+          type: string
+          writeOnly: true
+        email:
+          type: string
+          format: email
+      required:
+      - email
+      - password
+      - username
     Reminder:
       type: object
       properties:
@@ -1486,6 +2443,7 @@ components:
           format: date-time
         user:
           type: integer
+          readOnly: true
         baby:
           type: integer
       required:
@@ -1494,6 +2452,16 @@ components:
       - message
       - time
       - user
+    SideEnum:
+      enum:
+      - left_pump
+      - right_pump
+      - both_pump
+      type: string
+      description: |-
+        * `left_pump` - LEFT
+        * `right_pump` - RIGHT
+        * `both_pump` - BOTH
     Sleep:
       type: object
       properties:
@@ -1544,26 +2512,6 @@ components:
       required:
       - access
       - refresh
-    tracker.models.Feeding.FEEDING_SIDE_CHOICES:
-      enum:
-      - left_feeding
-      - right_feeding
-      - both_feeding
-      type: string
-      description: |-
-        * `left_feeding` - LEFT
-        * `right_feeding` - RIGHT
-        * `both_feeding` - BOTH
-    tracker.models.PumpingSession.PUMPING_SIDE_CHOICES:
-      enum:
-      - left_pump
-      - right_pump
-      - both_pump
-      type: string
-      description: |-
-        * `left_pump` - LEFT
-        * `right_pump` - RIGHT
-        * `both_pump` - BOTH
   securitySchemes:
     jwtAuth:
       type: http

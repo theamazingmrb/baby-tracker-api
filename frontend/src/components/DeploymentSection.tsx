@@ -154,49 +154,152 @@ const DeploymentSection = () => {
               <p className="mb-4 text-gray-800">Critical environment variables for production deployment:</p>
               
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
+                <table className="min-w-full divide-y divide-gray-200 text-gray-900">
+                  <thead className="bg-slate-900">
                     <tr>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-900 uppercase">Variable</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-900 uppercase">Production Value</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-900 uppercase">Description</th>
+                      <th className="px-4 py-3 text-left text-xs font-bold text-white uppercase">Variable</th>
+                      <th className="px-4 py-3 text-left text-xs font-bold text-white uppercase">Description</th>
+                      <th className="px-4 py-3 text-left text-xs font-bold text-white uppercase">Production Value</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-200">
+                  <tbody className="divide-y divide-slate-700 bg-slate-800">
+                    {/* Core Django Settings */}
                     <tr>
-                      <td className="px-4 py-3 text-sm font-medium text-red-600">DEBUG</td>
-                      <td className="px-4 py-3 text-sm font-mono text-gray-800">False</td>
-                      <td className="px-4 py-3 text-sm text-gray-800">MUST be False in production</td>
+                      <td className="px-4 py-3 text-sm font-medium text-white">DJANGO_DEBUG</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">Enable debug mode</td>
+                      <td className="px-4 py-3 text-sm font-mono text-yellow-400">False</td>
                     </tr>
                     <tr>
-                      <td className="px-4 py-3 text-sm font-medium text-red-600">SECRET_KEY</td>
-                      <td className="px-4 py-3 text-sm font-mono text-gray-800">random-50-char-string</td>
-                      <td className="px-4 py-3 text-sm text-gray-800">Generate secure random key</td>
+                      <td className="px-4 py-3 text-sm font-medium text-white">SECRET_KEY</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">Django secret key</td>
+                      <td className="px-4 py-3 text-sm font-mono text-yellow-400">random-50-char-string</td>
                     </tr>
                     <tr>
-                      <td className="px-4 py-3 text-sm font-medium text-indigo-600">PRODUCTION_DOMAIN</td>
-                      <td className="px-4 py-3 text-sm font-mono text-gray-800">api.yourdomain.com</td>
-                      <td className="px-4 py-3 text-sm text-gray-800">Your API backend domain</td>
+                      <td className="px-4 py-3 text-sm font-medium text-white">ENVIRONMENT</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">Environment type</td>
+                      <td className="px-4 py-3 text-sm font-mono text-yellow-400">production</td>
+                    </tr>
+
+                    {/* Network Configuration */}
+                    <tr>
+                      <td className="px-4 py-3 text-sm font-medium text-white">NETWORK_HOST</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">Host to bind the Django server to</td>
+                      <td className="px-4 py-3 text-sm font-mono text-yellow-400">0.0.0.0</td>
                     </tr>
                     <tr>
-                      <td className="px-4 py-3 text-sm font-medium text-indigo-600">FRONTEND_DOMAIN</td>
-                      <td className="px-4 py-3 text-sm font-mono text-gray-800">app.yourdomain.com</td>
-                      <td className="px-4 py-3 text-sm text-gray-800">Your frontend application domain</td>
+                      <td className="px-4 py-3 text-sm font-medium text-white">NETWORK_PORT</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">Port for the Django server</td>
+                      <td className="px-4 py-3 text-sm font-mono text-yellow-400">8000</td>
                     </tr>
                     <tr>
-                      <td className="px-4 py-3 text-sm font-medium text-indigo-600">ALLOWED_HOSTS</td>
-                      <td className="px-4 py-3 text-sm font-mono text-gray-800">yourdomain.com,www.yourdomain.com</td>
-                      <td className="px-4 py-3 text-sm text-gray-800">Your domain and www subdomain</td>
+                      <td className="px-4 py-3 text-sm font-medium text-white">WEB_PORT</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">Port to expose the web service on host</td>
+                      <td className="px-4 py-3 text-sm font-mono text-yellow-400">80</td>
+                    </tr>
+
+                    {/* Domain Configuration */}
+                    <tr>
+                      <td className="px-4 py-3 text-sm font-medium text-white">ALLOWED_HOSTS</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">Comma-separated list of allowed host names</td>
+                      <td className="px-4 py-3 text-sm font-mono text-yellow-400">yourdomain.com,www.yourdomain.com</td>
                     </tr>
                     <tr>
-                      <td className="px-4 py-3 text-sm font-medium text-indigo-600">DATABASE_URL</td>
-                      <td className="px-4 py-3 text-sm font-mono text-gray-800">postgresql://...</td>
-                      <td className="px-4 py-3 text-sm text-gray-800">Production database connection</td>
+                      <td className="px-4 py-3 text-sm font-medium text-white">PRODUCTION_DOMAIN</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">Your API backend domain</td>
+                      <td className="px-4 py-3 text-sm font-mono text-yellow-400">api.yourdomain.com</td>
                     </tr>
                     <tr>
-                      <td className="px-4 py-3 text-sm font-medium text-indigo-600">CORS_ALLOWED_ORIGINS</td>
-                      <td className="px-4 py-3 text-sm font-mono text-gray-800">http://yourdomain.com,https://yourdomain.com,http://www.yourdomain.com,https://www.yourdomain.com</td>
-                      <td className="px-4 py-3 text-sm text-gray-800">Both HTTP and HTTPS versions of your domains</td>
+                      <td className="px-4 py-3 text-sm font-medium text-white">FRONTEND_DOMAIN</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">Your frontend application domain</td>
+                      <td className="px-4 py-3 text-sm font-mono text-yellow-400">app.yourdomain.com</td>
+                    </tr>
+
+                    {/* CORS Settings */}
+                    <tr>
+                      <td className="px-4 py-3 text-sm font-medium text-white">CORS_ALLOW_ALL_ORIGINS</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">Allow all origins for CORS</td>
+                      <td className="px-4 py-3 text-sm font-mono text-yellow-400">False</td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-3 text-sm font-medium text-white">CORS_ALLOWED_ORIGINS</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">Comma-separated list of allowed origins</td>
+                      <td className="px-4 py-3 text-sm font-mono text-yellow-400">https://yourdomain.com,https://www.yourdomain.com</td>
+                    </tr>
+
+                    {/* Database Configuration */}
+                    <tr>
+                      <td className="px-4 py-3 text-sm font-medium text-white">DATABASE_URL</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">Database connection string</td>
+                      <td className="px-4 py-3 text-sm font-mono text-yellow-400">postgresql://user:pass@db/babytracker</td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-3 text-sm font-medium text-white">POSTGRES_USER</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">PostgreSQL username (Docker)</td>
+                      <td className="px-4 py-3 text-sm font-mono text-yellow-400">postgres</td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-3 text-sm font-medium text-white">POSTGRES_PASSWORD</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">PostgreSQL password (Docker)</td>
+                      <td className="px-4 py-3 text-sm font-mono text-yellow-400">secure-password-here</td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-3 text-sm font-medium text-white">POSTGRES_DB</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">PostgreSQL database name (Docker)</td>
+                      <td className="px-4 py-3 text-sm font-mono text-yellow-400">baby_tracker</td>
+                    </tr>
+
+                    {/* Email Configuration */}
+                    <tr>
+                      <td className="px-4 py-3 text-sm font-medium text-white">EMAIL_BACKEND</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">Django email backend</td>
+                      <td className="px-4 py-3 text-sm font-mono text-yellow-400">django.core.mail.backends.smtp.EmailBackend</td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-3 text-sm font-medium text-white">EMAIL_HOST</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">SMTP server hostname</td>
+                      <td className="px-4 py-3 text-sm font-mono text-yellow-400">smtp.gmail.com</td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-3 text-sm font-medium text-white">EMAIL_PORT</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">SMTP server port</td>
+                      <td className="px-4 py-3 text-sm font-mono text-yellow-400">587</td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-3 text-sm font-medium text-white">EMAIL_USE_TLS</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">Use TLS for email</td>
+                      <td className="px-4 py-3 text-sm font-mono text-yellow-400">True</td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-3 text-sm font-medium text-white">EMAIL_HOST_USER</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">Email username</td>
+                      <td className="px-4 py-3 text-sm font-mono text-yellow-400">your-email@example.com</td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-3 text-sm font-medium text-white">EMAIL_HOST_PASSWORD</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">Email password</td>
+                      <td className="px-4 py-3 text-sm font-mono text-yellow-400">your-email-password</td>
+                    </tr>
+
+                    {/* AWS Settings (Optional) */}
+                    <tr>
+                      <td className="px-4 py-3 text-sm font-medium text-white">AWS_ACCESS_KEY_ID</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">AWS access key (for S3/EB)</td>
+                      <td className="px-4 py-3 text-sm font-mono text-yellow-400">your-access-key</td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-3 text-sm font-medium text-white">AWS_SECRET_ACCESS_KEY</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">AWS secret key (for S3/EB)</td>
+                      <td className="px-4 py-3 text-sm font-mono text-yellow-400">your-secret-key</td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-3 text-sm font-medium text-white">AWS_STORAGE_BUCKET_NAME</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">AWS S3 bucket name</td>
+                      <td className="px-4 py-3 text-sm font-mono text-yellow-400">your-bucket-name</td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-3 text-sm font-medium text-white">AWS_S3_REGION_NAME</td>
+                      <td className="px-4 py-3 text-sm text-slate-300">AWS region</td>
+                      <td className="px-4 py-3 text-sm font-mono text-yellow-400">us-west-2</td>
                     </tr>
                   </tbody>
                 </table>

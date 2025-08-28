@@ -224,7 +224,7 @@ const ApiSection = () => {
           {/* Authentication Section */}
           <div className="mt-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-elevated border border-gray-200 overflow-hidden transition-shadow hover:shadow-lg">
             <div className="p-6">
-              <h3 className="text-xl text-gray-900 font-bold mb-4 text-primary">Authentication</h3>
+              <h3 className="text-xl text-gray-900 font-bold mb-4">Authentication</h3>
               <p className="mb-4 text-secondary">Baby Tracker uses JWT (JSON Web Token) authentication. All endpoints except registration and token obtaining require authentication.</p>
               
               <div className="grid md:grid-cols-2 gap-6">
@@ -358,6 +358,20 @@ const ApiSection = () => {
                       <li><span className="text-white">feeding_type:</span> <span className="text-yellow-400">breastfeeding | bottle | solid</span></li>
                       <li><span className="text-white">quantity:</span> <span className="text-yellow-400">float (ounces/ml)</span></li>
                       <li><span className="text-white">last_side:</span> <span className="text-yellow-400">left_feeding | right_feeding | both_feeding</span></li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div>
+                  <h4 className="font-semibold mb-2 text-gray-900">Milestone Model</h4>
+                  <div className="bg-slate-900 text-slate-100 p-4 rounded-xl text-sm font-mono overflow-x-auto ring-1 ring-white/10">
+                    <ul className="space-y-2">
+                      <li><span className="text-white">id:</span> <span className="text-yellow-400">integer (read-only)</span></li>
+                      <li><span className="text-white">baby:</span> <span className="text-yellow-400">integer (required)</span></li>
+                      <li><span className="text-white">title:</span> <span className="text-yellow-400">string (required)</span></li>
+                      <li><span className="text-white">category:</span> <span className="text-yellow-400">physical | social | cognitive | language | emotional</span></li>
+                      <li><span className="text-white">date_achieved:</span> <span className="text-yellow-400">date (required)</span></li>
+                      <li><span className="text-white">notes:</span> <span className="text-yellow-400">string (optional)</span></li>
                     </ul>
                   </div>
                 </div>
