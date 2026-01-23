@@ -261,13 +261,13 @@ ENABLE_RATE_LIMITING=True
 #### **6. Database Setup**
 ```bash
 # Create database user (if needed)
-sudo -u postgres createuser --interactive --pwprompt babytracker
+createuser --interactive --pwprompt babytracker
 
 # Grant permissions
-sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE babytracker_dev TO babytracker;"
+psql -c "GRANT ALL PRIVILEGES ON DATABASE babytracker_dev TO babytracker;"
 
 # Test connection
-uv run python manage.py dbshell --command "SELECT version();"
+psql -d babytracker_dev -c "SELECT version();"
 ```
 
 #### **7. Run Django Migrations**
@@ -277,7 +277,7 @@ uv run python manage.py makemigrations
 uv run python manage.py migrate
 
 # Verify tables created
-uv run python manage.py dbshell --command "\dt"
+psql -d babytracker_dev -c "\dt"
 ```
 
 #### **8. Create Superuser**
@@ -311,7 +311,7 @@ After setup, verify everything works:
 curl http://localhost:8000/api/
 
 # [ ] Database connection works
-uv run python manage.py dbshell --command "SELECT 1;"
+psql -d babytracker_dev -c "SELECT 1;"
 
 # [ ] Redis connection works
 redis-cli ping
@@ -335,7 +335,7 @@ brew services list | grep postgresql  # macOS
 sudo systemctl status postgresql     # Linux
 
 # Reset PostgreSQL password
-sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'newpassword';"
+psql -c "ALTER USER postgres PASSWORD 'newpassword';"
 ```
 
 #### **Redis Connection Issues**
