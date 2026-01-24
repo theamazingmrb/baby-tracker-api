@@ -1,6 +1,6 @@
 from rest_framework import generics
-from .models import Baby,Feeding,DiaperChange,Sleep,Reminder,GrowthMilestone, Milestone, PumpingSession, DoctorAppointment, Medication, Recipe, Ingredient
-from .serializers import BabySerializer,BabyInsightSerializer ,FeedingSerializer,DiaperChangeSerializer,SleepSerializer,ReminderSerializer,GrowthMilestoneSerializer,PumpingSessionSerializer,DoctorAppointmentSerializer,MedicationSerializer,BabyStatsSerializer, MilestoneSerializer, RegisterSerializer, RecipeSerializer, IngredientSerializer
+from .models import Baby,Feeding,DiaperChange,Sleep,Reminder,GrowthMeasurement, DevelopmentalMilestone, PumpingSession, DoctorAppointment, Medication, Recipe, Ingredient
+from .serializers import BabySerializer,BabyInsightSerializer ,FeedingSerializer,DiaperChangeSerializer,SleepSerializer,ReminderSerializer,GrowthMeasurementSerializer,PumpingSessionSerializer,DoctorAppointmentSerializer,MedicationSerializer,BabyStatsSerializer, DevelopmentalMilestoneSerializer, RegisterSerializer, RecipeSerializer, IngredientSerializer
 from django.contrib.auth.models import User
 from rest_framework import permissions
 from rest_framework.response import Response
@@ -73,13 +73,13 @@ class ReminderDetailView(UserOwnedDetailView):
     serializer_class = ReminderSerializer
     model = Reminder
 
-class GrowthMilestoneListCreateView(BabyOwnedCreateView):
-    serializer_class = GrowthMilestoneSerializer
-    model = GrowthMilestone
+class GrowthMeasurementListCreateView(BabyOwnedCreateView):
+    serializer_class = GrowthMeasurementSerializer
+    model = GrowthMeasurement
 
-class GrowthMilestoneDetailView(BabyOwnedDetailView):
-    serializer_class = GrowthMilestoneSerializer
-    model = GrowthMilestone
+class GrowthMeasurementDetailView(BabyOwnedDetailView):
+    serializer_class = GrowthMeasurementSerializer
+    model = GrowthMeasurement
 
 
 class BabyStatsView(APIView):
@@ -145,13 +145,13 @@ class MedicationDetailView(UserOwnedDetailView):
     serializer_class = MedicationSerializer
     model = Medication
 
-class MilestoneListCreateView(BabyOwnedCreateView):
-    serializer_class = MilestoneSerializer
-    model = Milestone
+class DevelopmentalMilestoneListCreateView(BabyOwnedCreateView):
+    serializer_class = DevelopmentalMilestoneSerializer
+    model = DevelopmentalMilestone
 
-class MilestoneDetailView(BabyOwnedDetailView):
-    serializer_class = MilestoneSerializer
-    model = Milestone
+class DevelopmentalMilestoneDetailView(BabyOwnedDetailView):
+    serializer_class = DevelopmentalMilestoneSerializer
+    model = DevelopmentalMilestone
 
 class BabyAIInsightsView(APIView):
     serializer_class = BabyInsightSerializer

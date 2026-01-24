@@ -3,12 +3,12 @@ from .views import (
     BabyListCreateView, BabyDetailView, BabyStatsView,
     FeedingListCreateView, FeedingDetailView,
     DiaperChangeListCreateView, DiaperChangeDetailView, SleepListCreateView, SleepDetailView,
-    ReminderListCreateView, ReminderDetailView, GrowthMilestoneListCreateView, GrowthMilestoneDetailView, BabyAIInsightsView,
+    ReminderListCreateView, ReminderDetailView, GrowthMeasurementListCreateView, GrowthMeasurementDetailView, BabyAIInsightsView,
     MedicationListCreateView, MedicationDetailView,
     PumpingSessionListCreateView, PumpingSessionDetailView,
     DoctorAppointmentListCreateView, DoctorAppointmentDetailView,
     RegisterView,
-    MilestoneListCreateView, MilestoneDetailView,
+    DevelopmentalMilestoneListCreateView, DevelopmentalMilestoneDetailView,
     InsightsVisualizationView,
     RecipeListCreateView, RecipeDetailView,
     IngredientListCreateView, IngredientDetailView
@@ -33,8 +33,8 @@ urlpatterns = [
     path("reminders/", ReminderListCreateView.as_view(), name="reminder-list"),
     path("reminders/<int:pk>/", ReminderDetailView.as_view(), name="reminder-detail"),
 
-    path("growth-milestones/", GrowthMilestoneListCreateView.as_view(), name="growth-milestone-list"),
-    path("growth-milestones/<int:pk>/", GrowthMilestoneDetailView.as_view(), name="growth-milestone-detail"),
+    path("growth-measurements/", GrowthMeasurementListCreateView.as_view(), name="growth-measurement-list"),
+    path("growth-measurements/<int:pk>/", GrowthMeasurementDetailView.as_view(), name="growth-measurement-detail"),
 
     path("babies/<int:baby_id>/ai-insights/", BabyAIInsightsView.as_view(), name="baby-ai-insights"),
     path("babies/<int:baby_id>/visualizations/", InsightsVisualizationView.as_view(), name="baby-insights-visualizations"),
@@ -49,8 +49,8 @@ urlpatterns = [
     path("appointments/", DoctorAppointmentListCreateView.as_view(), name="doctor-appointment-list"),
     path("appointments/<int:pk>/", DoctorAppointmentDetailView.as_view(), name="doctor-appointment-detail"),
 
-    path("babies/<int:baby_id>/milestones/", MilestoneListCreateView.as_view(), name='milestone-list'),
-    path("babies/<int:baby_id>/milestones/<int:pk>/", MilestoneDetailView.as_view(), name='milestone-detail'),
+    path("babies/<int:baby_id>/developmental-milestones/", DevelopmentalMilestoneListCreateView.as_view(), name='developmental-milestone-list'),
+    path("babies/<int:baby_id>/developmental-milestones/<int:pk>/", DevelopmentalMilestoneDetailView.as_view(), name='developmental-milestone-detail'),
 
     path("recipes/", RecipeListCreateView.as_view(), name='recipe-list'),
     path("recipes/<int:pk>/", RecipeDetailView.as_view(), name='recipe-detail'),

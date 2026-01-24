@@ -114,8 +114,8 @@ class Reminder(models.Model):
     def __str__(self):
         return f"Reminder for {self.baby.name}: {self.message} at {self.time}"
 
-class GrowthMilestone(models.Model):
-    baby = models.ForeignKey(Baby, on_delete=models.CASCADE, related_name="growth_milestones")
+class GrowthMeasurement(models.Model):
+    baby = models.ForeignKey(Baby, on_delete=models.CASCADE, related_name="growth_measurements")
     date = models.DateField()
     height = models.FloatField(help_text="Height in cm")
     weight = models.FloatField(help_text="Weight in kg")
@@ -124,7 +124,7 @@ class GrowthMilestone(models.Model):
     def __str__(self):
         return f"{self.baby.name} - {self.height} cm, {self.weight} kg on {self.date}"
 
-class Milestone(models.Model):
+class DevelopmentalMilestone(models.Model):
     MILESTONE_CATEGORIES = [
         ("physical", "Physical"),
         ("social", "Social"),
@@ -133,7 +133,7 @@ class Milestone(models.Model):
         ("emotional", "Emotional"),
     ]
     
-    baby = models.ForeignKey(Baby, on_delete=models.CASCADE, related_name="milestones")
+    baby = models.ForeignKey(Baby, on_delete=models.CASCADE, related_name="developmental_milestones")
     title = models.CharField(max_length=255)
     category = models.CharField(max_length=20, choices=MILESTONE_CATEGORIES)
     date_achieved = models.DateField()

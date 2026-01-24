@@ -4,7 +4,7 @@ from datetime import timedelta, datetime
 from scipy import stats
 from sklearn.cluster import KMeans
 from sklearn.linear_model import LinearRegression
-from .models import Feeding, Sleep, GrowthMilestone, DiaperChange
+from .models import Feeding, Sleep, GrowthMeasurement, DiaperChange
 import warnings
 
 # Suppress pandas FutureWarning
@@ -554,8 +554,8 @@ class AIInsights:
         return max(0, months)  # Ensure non-negative
     
     def get_growth_insights(self):
-        """Analyze growth milestones (height and weight) to provide insights."""
-        milestones = GrowthMilestone.objects.filter(baby=self.baby).values(
+        """Analyze growth measurements (height and weight) to provide insights."""
+        milestones = GrowthMeasurement.objects.filter(baby=self.baby).values(
             "date", "height", "weight"
         ).order_by("date")
         

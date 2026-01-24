@@ -237,7 +237,7 @@ LOGGING = {
             'formatter': 'verbose',
         },
         'console': {
-            'level': 'DEBUG',
+            'level': 'WARNING',  # Changed from DEBUG to WARNING to reduce test noise
             'class': 'logging.StreamHandler',
             'formatter': 'simple',
         },
