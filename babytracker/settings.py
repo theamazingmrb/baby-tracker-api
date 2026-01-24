@@ -102,7 +102,6 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / 'templates',
             BASE_DIR / 'babytracker' / 'templates'
         ],
         'APP_DIRS': True,
@@ -166,9 +165,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
 
 # Media files
 MEDIA_URL = '/media/'
@@ -208,14 +204,6 @@ CORS_ALLOWED_ORIGINS = [origin.strip() for origin in cors_origins.split(',') if 
 if not CORS_ALLOWED_ORIGINS:
     CORS_ALLOWED_ORIGINS = [f'http://{NETWORK_HOST}:{NETWORK_PORT}']
     
-# Add frontend domain if specified
-FRONTEND_DOMAIN = os.environ.get('FRONTEND_DOMAIN', '')
-if FRONTEND_DOMAIN:
-    if FRONTEND_DOMAIN.startswith('http'):
-        CORS_ALLOWED_ORIGINS.append(FRONTEND_DOMAIN)
-    else:
-        CORS_ALLOWED_ORIGINS.append(f'https://{FRONTEND_DOMAIN}')
-        CORS_ALLOWED_ORIGINS.append(f'http://{FRONTEND_DOMAIN}')
 CORS_ALLOW_CREDENTIALS = True
 
 # JWT settings
