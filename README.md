@@ -404,8 +404,8 @@ The Baby Tracker API uses JWT (JSON Web Token) authentication. To access protect
 | `/api/tracker/diaper-changes/<int:pk>/` | GET, PUT, DELETE | Manage specific diaper change | Required |
 | `/api/tracker/sleep/` | GET, POST | Track sleep sessions | Required |
 | `/api/tracker/sleep/<int:pk>/` | GET, PUT, DELETE | Manage specific sleep session | Required |
-| `/api/tracker/growth-milestones/` | GET, POST | Track growth milestones | Required |
-| `/api/tracker/growth-milestones/<int:pk>/` | GET, PUT, DELETE | Manage specific growth milestone | Required |
+| `/api/tracker/growth-measurements/` | GET, POST | Track growth measurements (height/weight) | Required |
+| `/api/tracker/growth-measurements/<int:pk>/` | GET, PUT, DELETE | Manage specific growth measurement | Required |
 | `/api/tracker/appointments/` | GET, POST | Manage doctor appointments | Required |
 | `/api/tracker/appointments/<int:pk>/` | GET, PUT, DELETE | Manage specific appointment | Required |
 | `/api/tracker/medications/` | GET, POST | Track medications | Required |
@@ -418,8 +418,8 @@ The Baby Tracker API uses JWT (JSON Web Token) authentication. To access protect
 | `/api/tracker/recipes/<int:pk>/` | GET, PUT, DELETE | Manage specific recipe | Required |
 | `/api/tracker/ingredients/` | GET, POST | Manage recipe ingredients | Required |
 | `/api/tracker/ingredients/<int:pk>/` | GET, PUT, DELETE | Manage specific ingredient | Required |
-| `/api/tracker/babies/<int:baby_id>/milestones/` | GET, POST | Manage developmental milestones | Required |
-| `/api/tracker/babies/<int:baby_id>/milestones/<int:pk>/` | GET, PUT, DELETE | Manage specific milestone | Required |
+| `/api/tracker/babies/<int:baby_id>/developmental-milestones/` | GET, POST | Manage developmental milestones | Required |
+| `/api/tracker/babies/<int:baby_id>/developmental-milestones/<int:pk>/` | GET, PUT, DELETE | Manage specific developmental milestone | Required |
 | `/api/tracker/babies/<int:baby_id>/ai-insights/` | GET | Get AI-powered insights | Required |
 | `/api/tracker/babies/<int:baby_id>/visualizations/` | GET | Get insights visualizations | Required |
 
