@@ -1,0 +1,55 @@
+services:
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data/
+    env_file:
+      - .env.development
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_DB=${POSTGRES_DB:-babytracker_dev}
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file:
+      - .env.development
+    environment:
+      - DJANGO_DEBUG=True
+      - DATABASE_URL=postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-babytracker_dev}
+      - REDIS_URL=redis://redis:6379/1
+    volumes:
+      - ./babytracker:/app/babytracker
+      - ./tracker:/app/tracker
+      - ./templates:/app/templates
+      - ./static:/app/static
+      - ./manage.py:/app/manage.py
+    ports:
+      - "8000:8000"
+    command: python manage.py runserver 0.0.0.0:8000
+
+volumes:
+  postgres_dev_data:
