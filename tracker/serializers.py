@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Baby, Feeding, DiaperChange, Sleep, Reminder, GrowthMilestone, Medication, DoctorAppointment, PumpingSession, Milestone, Recipe, Ingredient
+from .models import Baby, Feeding, DiaperChange, Sleep, Reminder, GrowthMeasurement, DevelopmentalMilestone, Medication, DoctorAppointment, PumpingSession, Recipe, Ingredient
 from django.contrib.auth.models import User
 
 class BabyInsightSerializer(serializers.Serializer):
@@ -41,9 +41,9 @@ class ReminderSerializer(serializers.ModelSerializer):
         fields = "__all__"
         read_only_fields = ['user']
 
-class GrowthMilestoneSerializer(serializers.ModelSerializer):
+class GrowthMeasurementSerializer(serializers.ModelSerializer):
     class Meta:
-        model = GrowthMilestone
+        model = GrowthMeasurement
         fields = "__all__"
 
 class PumpingSessionSerializer(serializers.ModelSerializer):
@@ -63,9 +63,9 @@ class MedicationSerializer(serializers.ModelSerializer):
         fields = "__all__"
         read_only_fields = ['user']
 
-class MilestoneSerializer(serializers.ModelSerializer):
+class DevelopmentalMilestoneSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Milestone
+        model = DevelopmentalMilestone
         fields = '__all__'
 
 class RegisterSerializer(serializers.ModelSerializer):

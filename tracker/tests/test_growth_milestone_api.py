@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from rest_framework.test import APIClient
 from rest_framework import status
-from tracker.models import Baby, GrowthMilestone
+from tracker.models import Baby, GrowthMeasurement
 from datetime import datetime, date
 import pytz
 
@@ -37,8 +37,8 @@ class GrowthMilestoneAPITestCase(TestCase):
             user=self.user2
         )
         
-        # Create growth milestones for each baby
-        self.growth_milestone1 = GrowthMilestone.objects.create(
+        # Create growth measurements for each baby
+        self.growth_measurement1 = GrowthMeasurement.objects.create(
             baby=self.baby1,
             date='2023-03-01',
             height=60.5,
@@ -46,12 +46,12 @@ class GrowthMilestoneAPITestCase(TestCase):
             notes='3-month checkup'
         )
         
-        self.growth_milestone2 = GrowthMilestone.objects.create(
+        self.growth_measurement2 = GrowthMeasurement.objects.create(
             baby=self.baby2,
             date='2023-04-01',
             height=62.0,
-            weight=5.5,
-            notes='2-month checkup'
+            weight=6.1,
+            notes='4-month checkup'
         )
         
         # Create API clients
@@ -63,11 +63,11 @@ class GrowthMilestoneAPITestCase(TestCase):
         
         self.unauthenticated_client = APIClient()
     
-    def test_growth_milestone_list_endpoint(self):
-        """Test growth milestone list endpoint"""
-        url = reverse('growth-milestone-list')
+    def test_growth_measurement_list_endpoint(self):
+        """Test growth measurement list endpoint"""
+        url = reverse('growth-measurement-list')
         
-        # Test authenticated user can list their growth milestones
+        # Test authenticated user can list their growth measurements
         response = self.client1.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
@@ -75,23 +75,23 @@ class GrowthMilestoneAPITestCase(TestCase):
         self.assertEqual(float(response.data[0]['height']), 60.5)
         self.assertEqual(float(response.data[0]['weight']), 5.2)
         
-        # Test second user can list their growth milestones
+        # Test second user can list their growth measurements
         response = self.client2.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]['baby'], self.baby2.id)
         self.assertEqual(float(response.data[0]['height']), 62.0)
-        self.assertEqual(float(response.data[0]['weight']), 5.5)
+        self.assertEqual(float(response.data[0]['weight']), 6.1)
         
-        # Test unauthenticated user cannot list growth milestones
+        # Test unauthenticated user cannot list growth measurements
         response = self.unauthenticated_client.get(url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
     
-    def test_growth_milestone_create_endpoint(self):
-        """Test growth milestone create endpoint"""
-        url = reverse('growth-milestone-list')
+    def test_growth_measurement_create_endpoint(self):
+        """Test growth measurement create endpoint"""
+        url = reverse('growth-measurement-list')
         
-        # Test authenticated user can create a growth milestone for their baby
+        # Test authenticated user can create a growth measurement for their baby
         data = {
             'baby': self.baby1.id,
             'date': '2023-06-01',
@@ -106,29 +106,29 @@ class GrowthMilestoneAPITestCase(TestCase):
         self.assertEqual(float(response.data['weight']), 6.5)
         self.assertEqual(response.data['notes'], '6-month checkup')
         
-        # Verify growth milestone was created in database
-        self.assertEqual(GrowthMilestone.objects.filter(baby=self.baby1).count(), 2)
+        # Verify growth measurement was created in database
+        self.assertEqual(GrowthMeasurement.objects.filter(baby=self.baby1).count(), 2)
         
-        # Test user cannot create growth milestone for another user's baby
+        # Test user cannot create growth measurement for another user's baby
         data = {
             'baby': self.baby2.id,
             'date': '2023-06-01',
             'height': 65.0,
             'weight': 6.5,
-            'notes': 'Unauthorized milestone'
+            'notes': 'Unauthorized measurement'
         }
         response = self.client1.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         
-        # Test unauthenticated user cannot create a growth milestone
+        # Test unauthenticated user cannot create a growth measurement
         response = self.unauthenticated_client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
     
-    def test_growth_milestone_retrieve_endpoint(self):
-        """Test growth milestone retrieve endpoint"""
-        url = reverse('growth-milestone-detail', kwargs={'pk': self.growth_milestone1.id})
+    def test_growth_measurement_retrieve_endpoint(self):
+        """Test growth measurement retrieve endpoint"""
+        url = reverse('growth-measurement-detail', kwargs={'pk': self.growth_measurement1.id})
         
-        # Test owner can retrieve their growth milestone
+        # Test owner can retrieve their growth measurement
         response = self.client1.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['baby'], self.baby1.id)
@@ -142,11 +142,11 @@ class GrowthMilestoneAPITestCase(TestCase):
         response = self.unauthenticated_client.get(url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
     
-    def test_growth_milestone_update_endpoint(self):
-        """Test growth milestone update endpoint"""
-        url = reverse('growth-milestone-detail', kwargs={'pk': self.growth_milestone1.id})
+    def test_growth_measurement_update_endpoint(self):
+        """Test growth measurement update endpoint"""
+        url = reverse('growth-measurement-detail', kwargs={'pk': self.growth_measurement1.id})
         
-        # Test owner can update their growth milestone
+        # Test owner can update their growth measurement
         data = {
             'baby': self.baby1.id,
             'date': '2023-03-01',
@@ -160,13 +160,13 @@ class GrowthMilestoneAPITestCase(TestCase):
         self.assertEqual(float(response.data['weight']), 5.3)
         self.assertEqual(response.data['notes'], 'Updated 3-month checkup')
         
-        # Verify growth milestone was updated in database
-        self.growth_milestone1.refresh_from_db()
-        self.assertEqual(self.growth_milestone1.height, 61.0)
-        self.assertEqual(self.growth_milestone1.weight, 5.3)
+        # Verify growth measurement was updated in database
+        self.growth_measurement1.refresh_from_db()
+        self.assertEqual(self.growth_measurement1.height, 61.0)
+        self.assertEqual(self.growth_measurement1.weight, 5.3)
         
         # Test non-owner cannot update
-        url = reverse('growth-milestone-detail', kwargs={'pk': self.growth_milestone2.id})
+        url = reverse('growth-measurement-detail', kwargs={'pk': self.growth_measurement2.id})
         response = self.client1.put(url, data)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
         
@@ -174,24 +174,24 @@ class GrowthMilestoneAPITestCase(TestCase):
         response = self.unauthenticated_client.put(url, data)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
     
-    def test_growth_milestone_delete_endpoint(self):
-        """Test growth milestone delete endpoint"""
-        url = reverse('growth-milestone-detail', kwargs={'pk': self.growth_milestone1.id})
+    def test_growth_measurement_delete_endpoint(self):
+        """Test growth measurement delete endpoint"""
+        url = reverse('growth-measurement-detail', kwargs={'pk': self.growth_measurement1.id})
         
         # Test non-owner cannot delete
         response = self.client2.delete(url)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-        self.assertEqual(GrowthMilestone.objects.filter(id=self.growth_milestone1.id).count(), 1)
+        self.assertEqual(GrowthMeasurement.objects.filter(id=self.growth_measurement1.id).count(), 1)
         
-        # Test owner can delete their growth milestone
+        # Test owner can delete their growth measurement
         response = self.client1.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         
-        # Verify growth milestone was deleted from database
-        self.assertEqual(GrowthMilestone.objects.filter(id=self.growth_milestone1.id).count(), 0)
+        # Verify growth measurement was deleted from database
+        self.assertEqual(GrowthMeasurement.objects.filter(id=self.growth_measurement1.id).count(), 0)
         
         # Test unauthenticated user cannot delete
-        url = reverse('growth-milestone-detail', kwargs={'pk': self.growth_milestone2.id})
+        url = reverse('growth-measurement-detail', kwargs={'pk': self.growth_measurement2.id})
         response = self.unauthenticated_client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-        self.assertEqual(GrowthMilestone.objects.filter(id=self.growth_milestone2.id).count(), 1)
+        self.assertEqual(GrowthMeasurement.objects.filter(id=self.growth_measurement2.id).count(), 1)
