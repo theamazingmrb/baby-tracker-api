@@ -4,7 +4,6 @@ from .serializers import BabySerializer,BabyInsightSerializer ,FeedingSerializer
 from django.contrib.auth.models import User
 from rest_framework import permissions
 from rest_framework.response import Response
-from django.db.models import Avg
 from datetime import timedelta, date
 from rest_framework.views import APIView
 from .ai_insights import AIInsights
@@ -101,9 +100,17 @@ class BabyStatsView(APIView):
             today = date.today()
             feedings_today = Feeding.objects.filter(baby=baby, time__date=today).count()
 
-            avg_feed_interval = Feeding.objects.filter(baby=baby).aggregate(
-                avg_time=Avg("time")
-            )["avg_time"]
+            feeding_times = list(
+                Feeding.objects.filter(baby=baby).order_by("time").values_list("time", flat=True)
+            )
+            if len(feeding_times) >= 2:
+                intervals = [
+                    (feeding_times[i+1] - feeding_times[i]).total_seconds() / 3600
+                    for i in range(len(feeding_times) - 1)
+                ]
+                avg_feed_interval = round(sum(intervals) / len(intervals), 2)
+            else:
+                avg_feed_interval = None
 
             sleep_sessions = Sleep.objects.filter(baby=baby, start_time__gte=today - timedelta(days=7))
             total_sleep_seconds = sum(
