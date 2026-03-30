@@ -4,8 +4,6 @@ from django.contrib.auth.models import User
 from rest_framework.test import APIClient
 from rest_framework import status
 from tracker.models import Baby, DevelopmentalMilestone
-from datetime import datetime, date
-import pytz
 
 
 class DevelopmentalMilestoneAPITestCase(TestCase):
@@ -89,7 +87,7 @@ class DevelopmentalMilestoneAPITestCase(TestCase):
     
     def test_milestone_create_endpoint(self):
         """Test milestone create endpoint"""
-        url = reverse('milestone-list', kwargs={'baby_id': self.baby1.id})
+        url = reverse('developmental-milestone-list', kwargs={'baby_id': self.baby1.id})
         
         # Test authenticated user can create a milestone for their baby
         data = {
@@ -125,7 +123,7 @@ class DevelopmentalMilestoneAPITestCase(TestCase):
     
     def test_milestone_retrieve_endpoint(self):
         """Test milestone retrieve endpoint"""
-        url = reverse('milestone-detail', kwargs={'baby_id': self.baby1.id, 'pk': self.milestone1.id})
+        url = reverse('developmental-milestone-detail', kwargs={'baby_id': self.baby1.id, 'pk': self.milestone1.id})
         
         # Test owner can retrieve their milestone
         response = self.client1.get(url)
@@ -143,7 +141,7 @@ class DevelopmentalMilestoneAPITestCase(TestCase):
     
     def test_milestone_update_endpoint(self):
         """Test milestone update endpoint"""
-        url = reverse('milestone-detail', kwargs={'baby_id': self.baby1.id, 'pk': self.milestone1.id})
+        url = reverse('developmental-milestone-detail', kwargs={'baby_id': self.baby1.id, 'pk': self.milestone1.id})
         
         # Test owner can update their milestone
         data = {
@@ -164,7 +162,7 @@ class DevelopmentalMilestoneAPITestCase(TestCase):
         self.assertEqual(self.milestone1.notes, 'Updated: Baby smiled intentionally for the first time')
         
         # Test non-owner cannot update
-        url = reverse('milestone-detail', kwargs={'baby_id': self.baby2.id, 'pk': self.milestone2.id})
+        url = reverse('developmental-milestone-detail', kwargs={'baby_id': self.baby2.id, 'pk': self.milestone2.id})
         response = self.client1.put(url, data)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
         
@@ -174,7 +172,7 @@ class DevelopmentalMilestoneAPITestCase(TestCase):
     
     def test_milestone_delete_endpoint(self):
         """Test milestone delete endpoint"""
-        url = reverse('milestone-detail', kwargs={'baby_id': self.baby1.id, 'pk': self.milestone1.id})
+        url = reverse('developmental-milestone-detail', kwargs={'baby_id': self.baby1.id, 'pk': self.milestone1.id})
         
         # Test non-owner cannot delete
         response = self.client2.delete(url)
@@ -189,7 +187,7 @@ class DevelopmentalMilestoneAPITestCase(TestCase):
         self.assertEqual(DevelopmentalMilestone.objects.filter(id=self.milestone1.id).count(), 0)
         
         # Test unauthenticated user cannot delete
-        url = reverse('milestone-detail', kwargs={'baby_id': self.baby2.id, 'pk': self.milestone2.id})
+        url = reverse('developmental-milestone-detail', kwargs={'baby_id': self.baby2.id, 'pk': self.milestone2.id})
         response = self.unauthenticated_client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertEqual(DevelopmentalMilestone.objects.filter(id=self.milestone2.id).count(), 1)

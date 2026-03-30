@@ -79,6 +79,8 @@ reset-db: ## Reset the database (WARNING: deletes all data)
 	docker-compose -f docker-compose.dev.yml down -v
 	docker-compose -f docker-compose.dev.yml up -d db redis
 	sleep 5
+	docker-compose -f docker-compose.dev.yml up -d web
+	sleep 3
 	$(MAKE) migrate
 	$(MAKE) createsuperuser
 
