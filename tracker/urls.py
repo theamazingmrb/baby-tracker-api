@@ -19,7 +19,7 @@ urlpatterns = [
     path("register/", RegisterView.as_view(), name="register"),
     path("babies/", BabyListCreateView.as_view(), name="baby-list"),
     path("babies/<int:pk>/", BabyDetailView.as_view(), name="baby-detail"),
-    path("babies/stats/", BabyStatsView.as_view(), name="baby-stats"),
+    path("babies/<int:baby_id>/stats/", BabyStatsView.as_view(), name="baby-stats"),
     
     path("feedings/", FeedingListCreateView.as_view(), name="feeding-list"),
     path("feedings/<int:pk>/", FeedingDetailView.as_view(), name="feeding-detail"),
