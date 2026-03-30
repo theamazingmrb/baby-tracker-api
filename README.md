@@ -1,33 +1,56 @@
-# Baby Tracker API
+# Baby Tracker
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/)
 [![Django](https://img.shields.io/badge/django-4.2.10-green.svg)](https://www.djangoproject.com/)
 [![UV](https://img.shields.io/badge/UV-lightning__fast__package__manager-purple.svg)](https://github.com/astral-sh/uv)
 
-A production-grade API for tracking baby activities including feedings, diapers, sleep, growth milestones, and more. Built with Django REST Framework and optimized for performance and security.
+**Baby Tracker** is a complete solution for tracking your baby's daily activities including feedings, diaper changes, sleep patterns, growth milestones, and more. Built with privacy and security in mind, giving you full control over your baby's data.
 
-## 🚀 Production-Ready Baby Tracking Solution
+---
 
-Baby Tracker is a privacy-first, self-hostable solution that gives parents complete control over their baby's data. Features enterprise-grade optimizations including rate limiting, caching, structured logging, and database indexing for optimal performance.
+## Overview
 
-## ✨ Key Features
+Baby Tracker helps you stay organized and informed about your baby's daily routine. From feeding schedules to sleep patterns, growth milestones to doctor appointments - everything you need in one secure, private place. Perfect for busy parents who want to track their baby's development without worrying about data privacy.
 
-### Core Functionality
-- **Baby Management**: Create and manage baby profiles
-- **Activity Tracking**:
-  - Feedings (breastfeeding, bottle, solid food)
-  - Diaper changes
-  - Sleep sessions
-  - Growth milestones
-  - Doctor appointments
-  - Medications
-  - Pumping sessions
-- **AI Insights**: Get recommendations for feeding times and sleep patterns based on historical data
-- **Recipe Management**: Store and manage baby food recipes
-- **JWT Authentication**: Secure API access with token-based authentication
+## Features
 
-### Production Features
+### Daily Tracking
+- **🍼 Feedings**: Breastfeeding, bottle feeding, and solid foods with detailed tracking including side and quantity
+- **👕 Diaper Changes**: Keep track of wet, dirty, and mixed diapers with timestamps
+- **😴 Sleep Sessions**: Monitor nap times and nighttime sleep patterns with start/end times
+- **📏 Growth Milestones**: Height, weight, and important developmental milestones with notes
+- **🏥 Doctor Appointments**: Never miss a checkup or vaccination with doctor details and location
+- **💊 Medications**: Track doses, frequency, and timing for any medications with start/end dates
+- **🤱 Pumping Sessions**: For breastfeeding moms tracking milk supply with side and quantity
+- **⏰ Reminders**: Set helpful reminders for feeding times, appointments, and more
+- **🎯 Developmental Milestones**: Track physical, social, cognitive, language, and emotional milestones
+- **📖 Recipe Management**: Store and organize baby food recipes with ingredients and instructions
+
+### Smart Features
+- **🤖 AI Insights**: Get personalized recommendations based on your baby's patterns
+- **📱 Recipe Management**: Store and organize baby food recipes
+- **⏰ Reminders**: Set helpful reminders for feeding times, appointments, and more
+- **🔒 Secure Access**: Your data stays private and secure
+
+## Architecture
+
+### Technology Stack
+
+| Component | Technology | Version |
+|-----------|------------|---------|
+| **Backend Framework** | Django | 4.2.10 |
+| **API Framework** | Django REST Framework | 3.14.0 |
+| **Database** | PostgreSQL | Latest |
+| **Package Manager** | UV | Latest |
+| **Authentication** | JWT (djangorestframework-simplejwt) | 5.2.2 |
+| **Documentation** | OpenAPI 3.0 (drf-spectacular) | 0.26.5 |
+| **Data Analysis** | Pandas, NumPy, SciPy, Scikit-learn | Latest |
+| **Caching** | Redis | Latest |
+| **Rate Limiting** | django-ratelimit | 4.1.0 |
+
+### Security Features
+
 - **🔒 Security Hardening**: XSS protection, secure headers, HTTPS enforcement
 - **⚡ Rate Limiting**: User-based rate limiting (100-1000 requests/hour)
 - **🗄️ Database Optimization**: Strategic indexing for lightning-fast queries
@@ -36,105 +59,219 @@ Baby Tracker is a privacy-first, self-hostable solution that gives parents compl
 - **🛡️ Permission System**: Robust user/baby ownership validation
 - **📈 Monitoring Ready**: Debug toolbar and observability features
 
-## 🛠 Tech Stack
+## Installation
 
-### Backend
-- **Framework**: Django 4.2.10 + Django REST Framework 3.14.0
-- **Package Manager**: UV (10-100x faster than pip)
-- **Database**: PostgreSQL with optimized indexing
-- **Authentication**: JWT (djangorestframework-simplejwt)
-- **Documentation**: OpenAPI 3.0 (drf-spectacular)
-- **Data Analysis**: Pandas, NumPy, SciPy, Scikit-learn
-- **Caching**: Redis
-- **Rate Limiting**: django-ratelimit
-- **Security**: django-cors-headers, security middleware
+### Prerequisites
 
-### Development Tools
-- **Debug Toolbar**: django-debug-toolbar for development
-- **Configuration**: python-decouple for environment management
-- **Logging**: Structured logging with rotation
-- **Testing**: Django test framework with coverage support
+Before you begin, make sure you have these installed:
 
-## API Endpoints
+**For Docker Setup (Recommended):**
+```bash
+# Check Docker is installed
+docker --version
 
-| Endpoint | Description |
-|----------|-------------|
-| `/api/babies/` | Baby management |
-| `/api/feedings/` | Feeding tracking |
-| `/api/diaper-changes/` | Diaper change tracking |
-| `/api/sleep/` | Sleep tracking |
-| `/api/growth-milestones/` | Growth milestone tracking |
-| `/api/appointments/` | Doctor appointment management |
-| `/api/medications/` | Medication tracking |
-| `/api/milestones/` | Developmental milestone tracking |
-| `/api/pumping-sessions/` | Breast milk pumping tracking |
-| `/api/reminders/` | Reminder management |
-| `/api/recipes/` | Baby food recipe management |
-| `/api/ai-insights/` | AI-powered insights and recommendations |
-| `/api/auth/` | Authentication endpoints |
-| `/api/token/` | JWT token authentication |
-
-## Building a Custom Frontend
-
-This project provides a robust API but does not include a user-facing frontend application for tracking babies. The included Next.js application serves as documentation only. To create a functional baby tracking application, you'll need to build your own frontend.
-
-### Getting Started with a Custom Frontend
-
-1. **Choose a Framework**: React, Vue, Angular, or any other frontend framework
-2. **Authentication**: Implement JWT authentication flow using the `/api/auth/` endpoints
-3. **Core Features**: Build UI components for:
-   - Baby profiles
-   - Feeding tracking
-   - Diaper change logging
-   - Sleep tracking
-   - Growth milestone recording
-   - Doctor appointment management
-
-### API Integration Example
-
-```javascript
-// Example React code for fetching baby data
-async function fetchBabies() {
-  const token = localStorage.getItem('token');
-  const response = await fetch('http://your-api-url/api/babies/', {
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    }
-  });
-  return await response.json();
-}
+# Check Docker Compose is available
+docker-compose --version
 ```
 
-### Mobile Considerations
-
-Consider building a mobile-first interface or even a native mobile app, as parents often need to log events quickly on mobile devices while caring for their baby.
-
-## 🚀 Complete Setup Guide (From Scratch)
-
-### 📋 Prerequisites Checklist
-
-Before starting, ensure you have these installed:
-
+**For Manual Setup:**
 ```bash
-# Check Python version (requires 3.11)
+# Check Python version (needs 3.11)
 python --version
 
-# Check if Redis is installed
-redis-cli --version
-
-# Check if PostgreSQL is installed
+# Check if PostgreSQL is available
 psql --version
+
+# Check if Redis is available
+redis-cli --version
 
 # Check if UV is installed
 uv --version
 ```
 
-### 🔧 System Dependencies Installation
+### Installation Options
 
-#### **macOS**
+You have two ways to set up the Baby Tracker API:
+
+#### Option 1: Docker Setup (Recommended)
+
+**Quick Start with Docker Compose**
+
 ```bash
-# Install system dependencies
+# Clone the repository
+git clone https://github.com/theamazingmrb/baby-tracker-api.git
+cd baby-tracker-api
+
+# Copy environment settings
+cp .env.development .env
+
+# Start everything with Docker Compose
+docker-compose -f docker-compose.dev.yml up -d
+
+# Create admin account
+docker-compose -f docker-compose.dev.yml exec web python manage.py createsuperuser
+
+# Visit your app at http://localhost:8000
+```
+
+**Quick Start with Make (Recommended)**
+
+```bash
+# Clone the repository
+git clone https://github.com/theamazingmrb/baby-tracker-api.git
+cd baby-tracker-api
+
+# Copy environment settings
+cp .env.development .env
+
+# Quick start (builds, starts, migrates, creates superuser)
+make quick-start
+
+# Visit your app at http://localhost:8000
+```
+
+**Docker handles everything for you:**
+- Python 3.11 environment
+- PostgreSQL database
+- Redis caching
+- All Python dependencies
+- Environment configuration
+
+#### Option 2: Manual Setup (Advanced)
+
+If you prefer to set up without Docker, follow these steps:
+
+**System Dependencies:**
+
+```bash
+# macOS
+brew install python@3.11 postgresql redis uv
+brew services start postgresql
+brew services start redis
+createdb babytracker_dev
+
+# Ubuntu/Debian
+sudo apt update
+sudo apt install python3.11 python3.11-venv postgresql redis-server uv
+sudo systemctl start postgresql
+sudo systemctl start redis-server
+sudo -u postgres createdb babytracker_dev
+
+# Windows (WSL2)
+sudo apt update
+sudo apt install python3.11 python3.11-venv postgresql redis-server
+sudo systemctl start postgresql
+sudo systemctl start redis-server
+sudo -u postgres createdb babytracker_dev
+```
+
+**Python Environment:**
+
+```bash
+# Create virtual environment
+uv venv --python 3.11
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Install dependencies
+uv pip install -r requirements.txt
+uv pip install -e .
+```
+
+**Database and Django Setup:**
+
+```bash
+# Create database user (if needed)
+createuser --interactive --pwprompt babytracker
+psql -c "GRANT ALL PRIVILEGES ON DATABASE babytracker_dev TO babytracker;"
+
+# Django setup
+uv run python manage.py makemigrations
+uv run python manage.py migrate
+uv run python manage.py createsuperuser
+uv run python manage.py collectstatic --noinput
+uv run python manage.py runserver
+
+# Visit your app at http://localhost:8000
+```
+
+### Project Setup
+
+**With Docker and Make (Recommended)**
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/theamazingmrb/baby-tracker-api.git
+   cd baby-tracker-api
+   ```
+
+2. **Configure environment**
+   ```bash
+   # Copy development settings
+   cp .env.development .env
+   # Edit .env if needed (defaults work for local testing)
+   nano .env
+   ```
+
+3. **Quick start**
+   ```bash
+   make quick-start
+   ```
+
+4. **Visit your app** at http://localhost:8000
+
+**Manual Docker Setup**
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/theamazingmrb/baby-tracker-api.git
+   cd baby-tracker-api
+   ```
+
+2. **Configure environment**
+   ```bash
+   # Copy development settings
+   cp .env.development .env
+   # Edit .env if needed (defaults work for local testing)
+   nano .env
+   ```
+
+3. **Start with Docker Compose**
+   ```bash
+   docker-compose -f docker-compose.dev.yml up -d
+   ```
+
+4. **Create admin account**
+   ```bash
+   docker-compose -f docker-compose.dev.yml exec web python manage.py createsuperuser
+   ```
+
+5. **Visit your app** at http://localhost:8000
+
+**Manual Setup (Advanced)**
+
+If you prefer to set up without Docker, follow these steps:
+
+#### Prerequisites
+
+```bash
+# Check Python version (needs 3.11)
+python --version
+
+# Check if PostgreSQL is available
+psql --version
+
+# Check if Redis is available
+redis-cli --version
+
+# Check if UV is installed
+uv --version
+```
+
+#### System Dependencies
+
+**macOS:**
+```bash
+# Install dependencies
 brew install python@3.11 postgresql redis uv
 
 # Start services
@@ -145,9 +282,9 @@ brew services start redis
 createdb babytracker_dev
 ```
 
-#### **Ubuntu/Debian**
+**Ubuntu/Debian:**
 ```bash
-# Install system dependencies
+# Install dependencies
 sudo apt update
 sudo apt install python3.11 python3.11-venv postgresql redis-server uv
 
@@ -159,7 +296,7 @@ sudo systemctl start redis-server
 sudo -u postgres createdb babytracker_dev
 ```
 
-#### **Windows (WSL2)**
+**Windows (WSL2):**
 ```bash
 # Install in WSL2 Ubuntu
 sudo apt update
@@ -173,92 +310,22 @@ sudo systemctl start redis-server
 sudo -u postgres createdb babytracker_dev
 ```
 
-### 🏗️ Project Setup (Step-by-Step)
+#### Python Setup
 
-#### **1. Clone and Navigate**
 ```bash
-git clone https://github.com/theamazingmrb/baby-tracker-api.git
-cd baby-tracker-api
-```
-
-#### **2. Install UV Package Manager**
-```bash
-# If not already installed
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# Verify installation
-uv --version
-```
-
-#### **3. Create Virtual Environment**
-```bash
-# Create Python 3.11 environment
+# Create virtual environment
 uv venv --python 3.11
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 
-# Activate environment
-source .venv/bin/activate  # Linux/macOS
-# On Windows: .venv\Scripts\activate
-```
-
-#### **4. Install Dependencies**
-```bash
-# Lightning fast installation with UV
+# Install dependencies
 uv pip install -r requirements.txt
 
-# Verify installation
-uv run python --version
-uv run django-admin --version
+# Install the package in development mode
+uv pip install -e .
 ```
 
-#### **5. Setup Environment Variables**
-```bash
-# Copy environment template
-cp .env.example .env
+#### Database Setup
 
-# Edit .env file (required changes below)
-nano .env  # or use your preferred editor
-```
-
-**Critical .env settings you MUST change:**
-```bash
-# Django Core Settings
-SECRET_KEY=your-secret-key-here-change-in-production
-DEBUG=True
-ENVIRONMENT=development
-ALLOWED_HOSTS=localhost,127.0.0.1
-
-# Network Configuration
-NETWORK_HOST=0.0.0.0
-NETWORK_PORT=8000
-
-# Database Configuration
-DATABASE_URL=postgres://postgres:postgres@localhost:5432/babytracker_dev
-
-# Redis Configuration (Required for rate limiting and caching)
-REDIS_URL=redis://127.0.0.1:6379/1
-
-# Security Settings
-CORS_ALLOWED_ORIGINS=http://localhost:3000,http://localhost:8080,http://127.0.0.1:3000
-CSRF_TRUSTED_ORIGINS=http://localhost:3000,http://localhost:8080
-
-# JWT Authentication Settings
-JWT_ACCESS_TOKEN_LIFETIME=1
-JWT_REFRESH_TOKEN_LIFETIME=7
-
-# Logging Configuration
-LOG_LEVEL=INFO
-LOG_FILE=logs/babytracker.log
-
-# Email Configuration
-EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
-
-# Feature Flags
-ENABLE_AI_INSIGHTS=True
-ENABLE_DEBUG_TOOLBAR=True
-ENABLE_RATE_LIMITING=True
-```
-
-#### **6. Database Setup**
 ```bash
 # Create database user (if needed)
 createuser --interactive --pwprompt babytracker
@@ -270,221 +337,410 @@ psql -c "GRANT ALL PRIVILEGES ON DATABASE babytracker_dev TO babytracker;"
 psql -d babytracker_dev -c "SELECT version();"
 ```
 
-#### **7. Run Django Migrations**
+#### Django Setup
+
 ```bash
 # Create and apply migrations
 uv run python manage.py makemigrations
 uv run python manage.py migrate
 
-# Verify tables created
-psql -d babytracker_dev -c "\dt"
-```
-
-#### **8. Create Superuser**
-```bash
-# Create admin user
+# Create superuser
 uv run python manage.py createsuperuser
 
-# Follow prompts to create username/password
-```
-
-#### **9. Collect Static Files**
-```bash
-# Create static files directory
+# Collect static files
 uv run python manage.py collectstatic --noinput
-```
 
-#### **10. Start Development Server**
-```bash
 # Start the server
 uv run python manage.py runserver
 
-# Server will be available at http://localhost:8000
+# Visit your app at http://localhost:8000
 ```
 
-### ✅ Verification Checklist
+## API Reference
 
-After setup, verify everything works:
+### Authentication
 
-```bash
-# [ ] Server starts without errors
-curl http://localhost:8000/api/
+The Baby Tracker API uses JWT (JSON Web Token) authentication. To access protected endpoints:
 
-# [ ] Database connection works
-psql -d babytracker_dev -c "SELECT 1;"
+1. **Register a new account**
+   ```bash
+   curl -X POST http://localhost:8000/api/tracker/register/ \
+     -H "Content-Type: application/json" \
+     -d '{"username":"testuser","email":"test@example.com","password":"testpass123"}'
+   ```
 
-# [ ] Redis connection works
-redis-cli ping
+2. **Login to get token**
+   ```bash
+   curl -X POST http://localhost:8000/api/tracker/token/ \
+     -H "Content-Type: application/json" \
+     -d '{"username":"testuser","password":"testpass123"}'
+   ```
 
-# [ ] Admin panel accessible
-curl http://localhost:8000/admin/
+3. **Use token in requests**
+   ```bash
+   curl -H "Authorization: Bearer YOUR_TOKEN" \
+     http://localhost:8000/api/tracker/babies/
+   ```
 
-# [ ] API docs accessible
-curl http://localhost:8000/api/docs/
+4. **Refresh token**
+   ```bash
+   curl -X POST http://localhost:8000/api/tracker/token/refresh/ \
+     -H "Authorization: Bearer YOUR_REFRESH_TOKEN"
+   ```
 
-# [ ] Debug toolbar visible (if DEBUG=True)
-# Visit http://localhost:8000/admin/ and look for debug toolbar
+### Endpoints
+
+| Endpoint | Method | Description | Authentication |
+|----------|--------|-------------|----------------|
+| `/api/tracker/register/` | POST | Register new account | None |
+| `/api/tracker/token/` | POST | Login and get token | None |
+| `/api/tracker/token/refresh/` | POST | Refresh JWT token | Required |
+| `/api/tracker/babies/` | GET, POST | Manage baby profiles | Required |
+| `/api/tracker/babies/<int:pk>/` | GET, PUT, DELETE | Manage specific baby | Required |
+| `/api/tracker/babies/stats/` | GET | Get baby statistics | Required |
+| `/api/tracker/feedings/` | GET, POST | Track feeding activities | Required |
+| `/api/tracker/feedings/<int:pk>/` | GET, PUT, DELETE | Manage specific feeding | Required |
+| `/api/tracker/diaper-changes/` | GET, POST | Track diaper changes | Required |
+| `/api/tracker/diaper-changes/<int:pk>/` | GET, PUT, DELETE | Manage specific diaper change | Required |
+| `/api/tracker/sleep/` | GET, POST | Track sleep sessions | Required |
+| `/api/tracker/sleep/<int:pk>/` | GET, PUT, DELETE | Manage specific sleep session | Required |
+| `/api/tracker/growth-measurements/` | GET, POST | Track growth measurements (height/weight) | Required |
+| `/api/tracker/growth-measurements/<int:pk>/` | GET, PUT, DELETE | Manage specific growth measurement | Required |
+| `/api/tracker/appointments/` | GET, POST | Manage doctor appointments | Required |
+| `/api/tracker/appointments/<int:pk>/` | GET, PUT, DELETE | Manage specific appointment | Required |
+| `/api/tracker/medications/` | GET, POST | Track medications | Required |
+| `/api/tracker/medications/<int:pk>/` | GET, PUT, DELETE | Manage specific medication | Required |
+| `/api/tracker/pumping-sessions/` | GET, POST | Track pumping sessions | Required |
+| `/api/tracker/pumping-sessions/<int:pk>/` | GET, PUT, DELETE | Manage specific pumping session | Required |
+| `/api/tracker/reminders/` | GET, POST | Manage reminders | Required |
+| `/api/tracker/reminders/<int:pk>/` | GET, PUT, DELETE | Manage specific reminder | Required |
+| `/api/tracker/recipes/` | GET, POST | Manage baby food recipes | Required |
+| `/api/tracker/recipes/<int:pk>/` | GET, PUT, DELETE | Manage specific recipe | Required |
+| `/api/tracker/ingredients/` | GET, POST | Manage recipe ingredients | Required |
+| `/api/tracker/ingredients/<int:pk>/` | GET, PUT, DELETE | Manage specific ingredient | Required |
+| `/api/tracker/babies/<int:baby_id>/developmental-milestones/` | GET, POST | Manage developmental milestones | Required |
+| `/api/tracker/babies/<int:baby_id>/developmental-milestones/<int:pk>/` | GET, PUT, DELETE | Manage specific developmental milestone | Required |
+| `/api/tracker/babies/<int:baby_id>/ai-insights/` | GET | Get AI-powered insights | Required |
+| `/api/tracker/babies/<int:baby_id>/visualizations/` | GET | Get insights visualizations | Required |
+
+### Data Models
+
+#### Baby
+```json
+{
+  "id": 1,
+  "name": "Emma",
+  "birth_date": "2023-05-15",
+  "gender": "female"
+}
 ```
 
-### 🔧 Common Setup Issues & Solutions
-
-#### **PostgreSQL Connection Issues**
-```bash
-# Check if PostgreSQL is running
-brew services list | grep postgresql  # macOS
-sudo systemctl status postgresql     # Linux
-
-# Reset PostgreSQL password
-psql -c "ALTER USER postgres PASSWORD 'newpassword';"
+#### Feeding
+```json
+{
+  "id": 1,
+  "baby": 1,
+  "time": "2023-12-01T10:30:00Z",
+  "feeding_type": "breastfeeding",
+  "quantity": 2.5,
+  "last_side": "left"
+}
 ```
 
-#### **Redis Connection Issues**
-```bash
-# Check if Redis is running
-redis-cli ping
-
-# Start Redis manually
-redis-server
-
-# Check Redis logs
-tail -f /usr/local/var/log/redis.log  # macOS
+#### Diaper Change
+```json
+{
+  "id": 1,
+  "baby": 1,
+  "time": "2023-12-01T11:00:00Z",
+  "diaper_type": "wet"
+}
 ```
 
-#### **Python/UV Issues**
-```bash
-# Recreate virtual environment
-rm -rf .venv
-uv venv --python 3.11
-source .venv/bin/activate
-uv pip install -r requirements.txt
+#### Sleep Session
+```json
+{
+  "id": 1,
+  "baby": 1,
+  "start_time": "2023-12-01T20:00:00Z",
+  "end_time": "2023-12-01T06:00:00Z"
+}
 ```
 
-#### **Permission Issues**
-```bash
-# Fix log directory permissions
-mkdir -p logs
-chmod 755 logs
-
-# Fix static files directory
-mkdir -p staticfiles
-chmod 755 staticfiles
+#### Growth Milestone
+```json
+{
+  "id": 1,
+  "baby": 1,
+  "date": "2023-12-01",
+  "height": 65.0,
+  "weight": 7.2,
+  "notes": "Growing well!"
+}
 ```
 
-### 🎯 Quick Test Commands
-
-```bash
-# Test API endpoints
-curl -X POST http://localhost:8000/api/auth/register/ \
-  -H "Content-Type: application/json" \
-  -d '{"username":"testuser","email":"test@example.com","password":"testpass123"}'
-
-# Test authentication
-curl -X POST http://localhost:8000/api/auth/login/ \
-  -H "Content-Type: application/json" \
-  -d '{"username":"testuser","password":"testpass123"}'
-
-# Test rate limiting (should work)
-for i in {1..5}; do
-  curl http://localhost:8000/api/babies/
-done
+#### Developmental Milestone
+```json
+{
+  "id": 1,
+  "baby": 1,
+  "title": "First Steps",
+  "category": "physical",
+  "date_achieved": "2023-12-01",
+  "notes": "Took first steps today!"
+}
 ```
 
-### 🚀 Next Steps After Setup
+#### Doctor Appointment
+```json
+{
+  "id": 1,
+  "baby": 1,
+  "doctor_name": "Dr. Smith",
+  "location": "Pediatric Clinic",
+  "date": "2023-12-15",
+  "time": "10:30:00",
+  "reason": "Regular checkup",
+  "notes": "All vaccinations up to date"
+}
+```
 
-1. **Explore API Documentation**: Visit http://localhost:8000/api/docs/
-2. **Create Test Data**: Use admin panel at http://localhost:8000/admin/
-3. **Run Tests**: `uv run python manage.py test`
-4. **Check Logs**: `tail -f logs/babytracker.log`
-5. **Monitor Redis**: `redis-cli monitor`
+#### Medication
+```json
+{
+  "id": 1,
+  "user": 1,
+  "name": "Vitamin D",
+  "dosage": "400 IU",
+  "frequency": "daily",
+  "start_date": "2023-12-01",
+  "end_date": null
+}
+```
 
-### 📱 Development Workflow
+#### Pumping Session
+```json
+{
+  "id": 1,
+  "user": 1,
+  "time": "2023-12-01T09:00:00Z",
+  "side": "left",
+  "quantity": 3.0
+}
+```
+
+#### Reminder
+```json
+{
+  "id": 1,
+  "user": 1,
+  "baby": 1,
+  "message": "Feeding time",
+  "time": "2023-12-01T10:00:00Z"
+}
+```
+
+#### Recipe
+```json
+{
+  "id": 1,
+  "name": "Sweet Potato Puree",
+  "cover_image": "data:image/jpeg;base64,...",
+  "description": "Nutritious and delicious",
+  "instructions": "Bake sweet potato, then blend until smooth",
+  "category": "baby food",
+  "is_private": false
+}
+```
+
+#### Ingredient
+```json
+{
+  "id": 1,
+  "name": "Sweet Potato",
+  "recipe": 1,
+  "quantity": 2.0,
+  "unit": "cups"
+}
+```
+
+## Building a Frontend
+
+This project provides the complete backend system for baby tracking. While it doesn't include a ready-to-use mobile app, it gives you everything needed to build your own custom interface.
+
+### Integration Example
+
+```javascript
+// Example of connecting to your baby tracking data
+async function getBabyData() {
+  const token = localStorage.getItem('token');
+  const response = await fetch('http://your-server/api/tracker/babies/', {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  });
+  return await response.json();
+}
+
+// Example of logging a feeding
+async function logFeeding(babyId, feedingData) {
+  const token = localStorage.getItem('token');
+  const response = await fetch(`http://your-server/api/tracker/feedings/`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      baby: babyId,
+      ...feedingData
+    })
+  });
+  return await response.json();
+}
+
+// Example of getting AI insights
+async function getAIInsights(babyId) {
+  const token = localStorage.getItem('token');
+  const response = await fetch(`http://your-server/api/tracker/babies/${babyId}/ai-insights/`, {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  });
+  return await response.json();
+}
+```
+
+### Mobile Considerations
+
+Since parents are often on the go, consider building a mobile-first design that allows quick one-handed logging of activities while caring for your baby.
+
+### Development
+
+### Environment Variables
+
+Key environment variables in `.env`:
 
 ```bash
-# Daily development workflow
-source .venv/bin/activate
-uv run python manage.py runserver
+# Django settings
+SECRET_KEY=your-secret-key-here-change-in-production
+DJANGO_DEBUG=True
+ENVIRONMENT=development
+ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
 
-# In another terminal - run tests
-uv run python manage.py test
+# Database setup
+DATABASE_URL=postgres://postgres:postgres@localhost:5432/babytracker_dev
+
+# Redis setup
+REDIS_URL=redis://127.0.0.1:6379/1
+
+# Features
+ENABLE_AI_INSIGHTS=True
+ENABLE_DEBUG_TOOLBAR=True
+ENABLE_RATE_LIMITING=True
+```
+
+### Development Commands
+
+The project includes a Makefile with convenient commands:
+
+```bash
+# Show all available commands
+make help
+
+# Quick start for new setup
+make quick-start
+
+# Development workflow
+make up          # Start containers
+make logs        # Show logs
+make shell       # Django shell
+make test        # Run tests
+make migrate     # Run migrations
+make createsuperuser  # Create admin user
+
+# Database management
+make db-shell    # PostgreSQL shell
+make reset-db    # Reset database (WARNING: deletes data)
+make load-demo   # Load demo data
+
+# Code quality
+make format      # Format code
+make lint        # Run linting
+make check       # Run all checks
+
+# Utilities
+make status      # Show container status
+make clean       # Clean up Docker resources
+make info         # Show development info
+```
+
+### Testing
+
+```bash
+# Run all tests
+make test
+
+# Run with coverage
+make test-coverage
+
+# Run tests for specific app
+make test-app APP=tracker
+```
+
+### Debug Tools
+
+When `DEBUG=True`, you get access to helpful debugging tools:
+- SQL query analysis
+- Performance profiling  
+- Request/response inspection
+- Debug toolbar at http://localhost:8000/__debug__/
+
+### Development Workflow
+
+```bash
+# Start development
+make dev
+
+# Run tests and linting
+make dev-test
+
+# Make changes and restart
+make restart
 
 # Check logs
-tail -f logs/babytracker.log
+make logs
 
-# Monitor Redis
-redis-cli monitor
+# Database operations
+make migrations
+make migrate
+
+# Create admin user
+make createsuperuser
 ```
 
-## 🔧 Development Features
+## Performance
 
-### Debug Toolbar
-When `DEBUG=True`, the Django Debug Toolbar is available for:
-- SQL query analysis
-- Performance profiling
-- Request/response inspection
+### Response Times
 
-### Structured Logging
-Logs are written to both console and `logs/babytracker.log`:
-```python
-import logging
-logger = logging.getLogger(__name__)
-logger.info("User action completed", extra={'user_id': request.user.id})
-```
-
-### Rate Limiting
-API endpoints are rate-limited per user:
-- **GET requests**: 100-200/hour
-- **POST requests**: 1000/hour  
-- **PUT requests**: 500/hour
-- **DELETE requests**: 100/hour
-
-### Database Optimization
-The API includes strategic database indexing for optimal performance:
-- **User-based queries**: Indexed on `user_id` fields
-- **Time-based queries**: Indexed on `time` and `date` fields  
-- **Composite indexes**: Multi-field indexes for common query patterns
-- **Foreign key optimization**: All foreign keys are indexed
-
-### Security Features
-- **HTTPS Enforcement**: Automatic redirect to HTTPS in production
-- **Secure Headers**: XSS protection, content type sniffing protection
-- **CSRF Protection**: Built-in Django CSRF middleware
-- **Secure Cookies**: HttpOnly and Secure flags in production
-
-## 📊 Performance Metrics
-
-### Response Times (with optimizations)
 - **Baby list**: <50ms (indexed queries)
 - **Activity creation**: <100ms (cached validation)
 - **AI insights**: <500ms (optimized ML pipelines)
 - **Statistics**: <30ms (cached aggregations)
 
 ### Rate Limits
-- **Burst capacity**: 1000 requests/hour for writes
-- **Sustained rate**: 200 requests/hour for reads
-- **Per-user isolation**: Limits don't affect other users
 
-## 🧪 Testing
+- **GET requests**: 100-200/hour
+- **POST requests**: 1000/hour  
+- **PUT requests**: 500/hour
+- **DELETE requests**: 100/hour
 
-Run the comprehensive test suite:
-```bash
-# Run all tests
-uv run python manage.py test
+## Deployment
 
-# Run with coverage
-uv run coverage run --source='.' manage.py test
-uv run coverage report
-```
+### Production Setup
 
-## 📝 API Documentation
-
-- **Interactive Docs**: http://localhost:8000/api/docs/ (Swagger UI)
-- **ReDoc**: http://localhost:8000/api/redoc/
-- **OpenAPI Schema**: http://localhost:8000/api/schema/
-- **Admin Panel**: http://localhost:8000/admin/
-
-## 🚀 Deployment
-
-### Production Considerations
 - Use PostgreSQL for production database
 - Configure Redis for caching and rate limiting
 - Set `DEBUG=False` in production
@@ -492,22 +748,49 @@ uv run coverage report
 - Use environment variables for secrets
 - Set up monitoring and logging
 
-### Docker Support
+### Docker Deployment
+
 ```bash
 # Build and run with Docker
 docker build -t baby-tracker-api .
 docker run -p 8000:8000 baby-tracker-api
 ```
 
-## 🤝 Contributing
+## Security
 
-1. Fork the repository
+### Multi-Tenancy
+
+The API implements complete tenant isolation to ensure data security:
+
+- **Permission Control**: Custom permission classes ensure users can only access their own data
+- **Query Filtering**: All API endpoints filter data based on the authenticated user
+- **Validation**: Serializers validate that users can only create/modify data for their own babies
+- **Comprehensive Testing**: Tenant isolation is verified through extensive test coverage
+
+### Security Features
+
+- **HTTPS Protection**: Automatic secure connections in production
+- **Security Headers**: Protection against common web attacks
+- **CSRF Protection**: Built-in protection against cross-site requests
+- **Secure Cookies**: Extra protection for user data in production
+
+## Documentation
+
+- **Interactive API Docs**: http://localhost:8000/api/docs/ (Swagger UI)
+- **Clean Documentation**: http://localhost:8000/api/redoc/
+- **Technical Schema**: http://localhost:8000/api/schema/
+- **Admin Panel**: http://localhost:8000/admin/
+- **Debug Toolbar**: http://localhost:8000/__debug__/ (when DEBUG=True)
+
+## Contributing
+
+1. Fork the project
 2. Create a feature branch
-3. Add tests for new functionality
-4. Ensure all tests pass
+3. Add tests for new features
+4. Make sure all tests pass
 5. Submit a pull request
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
@@ -516,14 +799,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 To run the test suite locally:
 
 ```bash
-python manage.py test
+docker-compose -f docker-compose.dev.yml exec web python manage.py test
 ```
 
 To run tests with coverage reporting:
 
 ```bash
-coverage run --source='.' manage.py test
-coverage report
+docker-compose -f docker-compose.dev.yml exec web coverage run --source='.' manage.py test
+docker-compose -f docker-compose.dev.yml exec web coverage report
 ```
 
 ### Test Structure
@@ -565,55 +848,26 @@ babytracker/          # Main Django project directory
 
 tracker/              # Main application directory
 ├── ai_insights.py    # AI insights and analytics module
+├── base_views.py     # Base view classes for baby/user-owned models
+├── enums.py          # Enums for feeding and pumping sides
 ├── models.py         # Database models
 ├── permissions.py    # Custom permission classes
 ├── serializers.py    # API serializers
 ├── urls.py           # API URL routing
 ├── views.py          # API views
 └── tests/            # Test directory
-    ├── test_ai_insights.py       # Tests for AI insights
-    ├── test_ai_insights_api.py   # Tests for AI insights API
+    ├── test_ai_insights_api.py       # Tests for AI insights
     ├── test_baby_api.py          # Tests for baby management API
-    ├── test_baby_stats_api.py    # Tests for baby statistics API
     ├── test_diaper_change_api.py # Tests for diaper change API
     ├── test_doctor_appointment_api.py # Tests for doctor appointments API
     ├── test_feeding_api.py       # Tests for feeding API
     ├── test_growth_milestone_api.py # Tests for growth milestones API
     ├── test_medication_api.py    # Tests for medication API
-    ├── test_milestone_api.py     # Tests for milestones API
-    ├── test_permissions.py       # Tests for permissions
+    ├── test_milestone_api.py     # Tests for developmental milestones API
     ├── test_pumping_session_api.py # Tests for pumping sessions API
     ├── test_reminder_api.py      # Tests for reminders API
-    ├── test_serializers.py       # Tests for serializers
     ├── test_sleep_api.py         # Tests for sleep API
-    ├── test_tenant_isolation.py  # Tests for tenant isolation
     └── test_visualization_api.py # Tests for visualization API
-
-recipes/              # Recipe management app
-├── models.py         # Recipe models
-├── serializers.py    # Recipe serializers
-├── views.py          # Recipe views
-└── tests/            # Recipe tests
-    └── test_recipe_api.py        # Tests for recipe API
-
-frontend/             # Next.js documentation site
-├── public/           # Static assets
-├── src/              # Source code
-│   ├── app/          # Next.js app directory
-│   │   ├── api-docs/       # API documentation page
-│   │   ├── contribute/     # Contribution guide page
-│   │   ├── deployment-guide/ # Deployment guide page
-│   │   ├── setup-guide/    # Setup guide page
-│   │   ├── testing-guide/  # Testing guide page
-│   │   └── page.tsx        # Home page
-│   ├── components/   # React components
-│   │   ├── ApiSection.tsx        # API documentation component
-│   │   ├── ContributeSection.tsx # Contribution guide component
-│   │   ├── DeploymentSection.tsx # Deployment guide component
-│   │   ├── Header.tsx            # Header component
-│   │   ├── SetupSection.tsx      # Setup guide component
-│   │   └── TestingGuideSection.tsx # Testing guide component
-│   └── styles/       # CSS styles
 
 templates/            # HTML templates
 ├── index.html        # Default template
@@ -689,7 +943,6 @@ The easiest way to deploy Baby Tracker to production is using AWS EC2 with Docke
    # Make sure to set:
    # - DJANGO_DEBUG=False
    # - PRODUCTION_DOMAIN=your-domain.com
-   # - FRONTEND_DOMAIN=your-domain.com
    # - ALLOWED_HOSTS=localhost,127.0.0.1,your-domain.com,www.your-domain.com
    # - CORS_ALLOWED_ORIGINS=http://your-domain.com,https://your-domain.com,http://www.your-domain.com,https://www.your-domain.com
    ```
@@ -756,7 +1009,7 @@ The easiest way to deploy Baby Tracker to production is using AWS EC2 with Docke
 
 8. **Access your application** at http://your-domain.com/ (or https://your-domain.com/ if using HTTPS) and the admin interface at http://your-domain.com/admin/ (or https://your-domain.com/admin/)
 
-### Local Docker Deployment
+### Local Docker Deployment (Recommended)
 
 For local development or self-hosting on your own hardware:
 
@@ -766,53 +1019,41 @@ For local development or self-hosting on your own hardware:
    cd baby-tracker-api
    ```
 
-2. Create an `.env` file from the example:
+2. Create an `.env` file from the development template:
    ```bash
-   cp .env.example .env
-   # Edit .env with your settings
+   cp .env.development .env
+   # Edit .env with your settings (defaults work for local development)
    ```
 
 3. Build and start the containers:
    ```bash
-   docker-compose up -d
+   docker-compose -f docker-compose.dev.yml up -d
    ```
 
 4. Create a superuser:
    ```bash
-   docker-compose exec web python manage.py createsuperuser
+   docker-compose -f docker-compose.dev.yml exec web python manage.py createsuperuser
    ```
 
-5. Access the API at http://localhost:80/api/ and admin interface at http://localhost:80/admin/
+5. Access the application:
+   - **API Documentation**: http://localhost:8000/
+   - **Admin Interface**: http://localhost:8000/admin/
+   - **API Endpoints**: http://localhost:8000/api/tracker/
 
-### Documentation Site Deployment
-
-The project includes a Next.js documentation site that can be deployed separately:
-
-1. Navigate to the frontend directory:
+6. Development workflow:
    ```bash
-   cd frontend
+   # View logs
+   docker-compose -f docker-compose.dev.yml logs -f web
+   
+   # Run migrations
+   docker-compose -f docker-compose.dev.yml exec web python manage.py migrate
+   
+   # Run tests
+   docker-compose -f docker-compose.dev.yml exec web python manage.py test
+   
+   # Stop environment
+   docker-compose -f docker-compose.dev.yml down
    ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Build the documentation site:
-   ```bash
-   npm run build
-   ```
-
-4. Start the documentation server:
-   ```bash
-   npm start
-   ```
-
-5. Access the documentation at http://localhost:3000/
-
-Alternatively, you can deploy the documentation site to a service like Vercel or Netlify for production use.
-
-**Note**: This frontend is for documentation purposes only and does not provide a user interface for the baby tracking functionality. Developers using this API would need to build their own frontend application to interact with the API endpoints.
 
 ### Custom Deployment Options
 
@@ -833,20 +1074,49 @@ Key configuration for any production deployment:
 
 The following environment variables should be configured for deployment:
 
-- `PRODUCTION_DOMAIN`: Your API backend domain (e.g., babytracker.xyz or EC2 IP address)
-- `FRONTEND_DOMAIN`: Your frontend application domain (e.g., babytracker.xyz)
-- `ALLOWED_HOSTS`: Comma-separated list of domains allowed to serve the application (e.g., localhost,127.0.0.1,babytracker.xyz,www.babytracker.xyz)
-- `CORS_ALLOWED_ORIGINS`: Comma-separated list of origins allowed to access the API (should include both HTTP and HTTPS versions of your domains)
-- `CORS_ALLOW_ALL_ORIGINS`: Set to 'True' to allow all origins (not recommended for production)
-- `DATABASE_URL`: PostgreSQL connection string
-- `SECRET_KEY`: Django secret key (use a strong, random value)
+#### Core Django Settings
+- `SECRET_KEY`: Django secret key (use a strong, random value in production)
 - `DJANGO_DEBUG`: Set to 'False' in production
+- `ENVIRONMENT`: Set to 'production' for production deployments
+- `ALLOWED_HOSTS`: Comma-separated list of domains allowed to serve the application
+
+#### Network Configuration
+- `NETWORK_HOST`: Host to bind the Django server to (default: 0.0.0.0)
+- `NETWORK_PORT`: Port for the Django server (default: 8000)
+- `PRODUCTION_DOMAIN`: Your API backend domain (e.g., babytracker.xyz)
+
+#### Database Configuration
+- `DATABASE_URL`: PostgreSQL connection string
 - `POSTGRES_USER`: PostgreSQL username (used by Docker)
 - `POSTGRES_PASSWORD`: PostgreSQL password (used by Docker)
 - `POSTGRES_DB`: PostgreSQL database name (used by Docker)
+
+#### Redis Configuration
+- `REDIS_URL`: Redis connection URL for caching and rate limiting
+
+#### Security Settings
+- `CORS_ALLOWED_ORIGINS`: Comma-separated list of origins allowed to access the API
+- `CORS_ALLOW_ALL_ORIGINS`: Set to 'True' to allow all origins (not recommended for production)
+- `CSRF_TRUSTED_ORIGINS`: Comma-separated list of trusted origins for CSRF
+
+#### JWT Authentication
+- `JWT_ACCESS_TOKEN_LIFETIME`: Access token lifetime in days (default: 1)
+- `JWT_REFRESH_TOKEN_LIFETIME`: Refresh token lifetime in days (default: 7)
+
+#### Logging
+- `LOG_LEVEL`: Logging level (INFO, DEBUG, WARNING, ERROR)
+- `LOG_FILE`: Path to log file
+
+#### Email Configuration
+- `EMAIL_BACKEND`: Email backend for sending notifications
+
+#### Feature Flags
+- `ENABLE_AI_INSIGHTS`: Enable/disable AI insights feature
+- `ENABLE_DEBUG_TOOLBAR`: Enable debug toolbar in development
+- `ENABLE_RATE_LIMITING`: Enable/disable API rate limiting
+
+#### Docker/Deployment
 - `WEB_PORT`: Port to expose the web service on (default: 80)
-- `NETWORK_HOST`: Host to bind the Django server to (default: 0.0.0.0)
-- `NETWORK_PORT`: Port for the Django server (default: 8000)
 
 These variables should be set in your `.env` file for Docker Compose deployments.
 
