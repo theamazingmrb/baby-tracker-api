@@ -28,6 +28,9 @@ RUN pip install -e .
 # Set permissions
 RUN chmod +x manage.py
 
+# Create logs directory
+RUN mkdir -p /app/logs
+
 # Expose port
 EXPOSE 8000
 
