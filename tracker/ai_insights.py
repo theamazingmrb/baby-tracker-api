@@ -1019,7 +1019,7 @@ class AIInsights:
                         })
         
         # Age-specific developmental recommendations
-        if baby_age_months <= 3:
+        if baby_age_months < 3:
             recommendations.append({
                 "category": "development",
                 "title": "Tummy time",
