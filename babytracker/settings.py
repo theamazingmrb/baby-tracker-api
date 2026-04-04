@@ -213,8 +213,9 @@ SPECTACULAR_SETTINGS = {
 CORS_ALLOW_ALL_ORIGINS = os.environ.get('CORS_ALLOW_ALL_ORIGINS', str(DEBUG)).lower() == 'true'
 
 # Parse CORS allowed origins from environment variable
+# Strip trailing slashes - Django CORS headers rejects origins with paths
 cors_origins = os.environ.get('CORS_ALLOWED_ORIGINS', '')
-CORS_ALLOWED_ORIGINS = [origin.strip() for origin in cors_origins.split(',') if origin.strip()]
+CORS_ALLOWED_ORIGINS = [origin.strip().rstrip('/') for origin in cors_origins.split(',') if origin.strip()]
 
 # Add default development origins if none specified
 if not CORS_ALLOWED_ORIGINS:
