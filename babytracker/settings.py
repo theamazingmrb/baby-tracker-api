@@ -38,6 +38,22 @@ NETWORK_PORT = os.environ.get('NETWORK_PORT', '8000')
 # Build allowed hosts
 allowed_hosts = os.environ.get('ALLOWED_HOSTS', '')
 ALLOWED_HOSTS = [host.strip() for host in allowed_hosts.split(',') if host.strip()]
+
+# Railway sets RAILWAY_PUBLIC_DOMAIN automatically
+railway_domain = os.environ.get('RAILWAY_PUBLIC_DOMAIN', '')
+if railway_domain:
+    ALLOWED_HOSTS.append(railway_domain)
+
+# Also check for Railway's PUBLIC_DOMAIN variable
+public_domain = os.environ.get('PUBLIC_DOMAIN', '')
+if public_domain:
+    ALLOWED_HOSTS.append(public_domain)
+
+# In production, allow all Railway.app subdomains if no hosts specified
+import re
+if os.environ.get('ENVIRONMENT', '').lower() == 'production' and not ALLOWED_HOSTS:
+    ALLOWED_HOSTS = ['.railway.app', '.up.railway.app']
+
 if not ALLOWED_HOSTS:
     ALLOWED_HOSTS = [
         'localhost',
