@@ -233,30 +233,6 @@ class IngredientDetailView(generics.RetrieveUpdateDestroyAPIView):
     
     def get_queryset(self):
         return Ingredient.objects.filter(recipe__user=self.request.user)
-            
-    def post(self, request, baby_id):
-        try:
-            baby = Baby.objects.get(id=baby_id, user=request.user)
-        except Baby.DoesNotExist:
-            return Response({"error": "Baby not found"}, status=404)
-            
-        # Generate report based on request data
-        # For now, we'll return the same data as the GET method with type=all
-        ai = AIInsights(baby)
-        
-        feeding_insights = ai.get_feeding_insights()
-        sleep_insights = ai.get_sleep_insights()
-        growth_insights = ai.get_growth_insights()
-        diaper_insights = ai.get_diaper_insights()
-        comprehensive_insights = ai.get_comprehensive_insights()
-        
-        return Response({
-            "feeding_insights": feeding_insights,
-            "sleep_insights": sleep_insights,
-            "growth_insights": growth_insights,
-            "diaper_insights": diaper_insights,
-            "comprehensive_insights": comprehensive_insights
-        })
 
 
 class InsightsVisualizationView(APIView):
